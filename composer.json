@@ -1,0 +1,10 @@
+{
+    "name": "mesd/jasper-report-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "Jasper Reports bundle",
+    "autoload": {
+        "psr-0": { "MESD\\Jasper\\ReportBundle": "" }
+    },
+    "target-dir": "MESD/Jasper/ReportBundle"
+}
