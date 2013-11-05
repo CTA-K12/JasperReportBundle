@@ -9,11 +9,11 @@
     ,"target-dir": "MESD/Jasper/ReportBundle"
     ,"repositories": [
     {
-        "type" : "vcs",
-        "url": "https://github.com/MESD/JasperClient.git"
+        "type" : "vcs"
+        ,"url": "https://github.com/MESD/JasperClient.git"
     }
     ]
     ,"require": {
-        "mesd/jasper-client": "dev-master",
+        "mesd/jasper-client": "dev-master"
     }
 }
