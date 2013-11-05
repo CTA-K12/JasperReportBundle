@@ -6,7 +6,7 @@
     ,"autoload": {
         "psr-0": { "MESD\\Jasper\\ReportBundle": "" }
     }
-    ,"target-dir": "MESD/Jasper/ReportBundle",
+    ,"target-dir": "MESD/Jasper/ReportBundle"
     ,"repositories": [
     {
         "type" : "vcs",
