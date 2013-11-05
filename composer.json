@@ -10,10 +10,10 @@
     ,"repositories": [
     {
         "type" : "vcs",
-        "url": "https://github.com/MESD/JasperReportBundle.git"
+        "url": "https://github.com/MESD/JasperClient.git"
     }
     ]
     ,"require": {
-        "mesd/jasper-client-bundle": "dev-master",
+        "mesd/jasper-client": "dev-master",
     }
 }
