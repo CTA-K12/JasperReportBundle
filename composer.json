@@ -1,10 +1,19 @@
 {
-    "name": "mesd/jasper-report-bundle",
-    "license": "MIT",
-    "type": "symfony-bundle",
-    "description": "Jasper Reports bundle",
-    "autoload": {
+    "name": "mesd/jasper-report-bundle"
+    ,"license": "MIT"
+    ,"type": "symfony-bundle"
+    ,"description": "Jasper Reports bundle"
+    ,"autoload": {
         "psr-0": { "MESD\\Jasper\\ReportBundle": "" }
-    },
-    "target-dir": "MESD/Jasper/ReportBundle"
+    }
+    ,"target-dir": "MESD/Jasper/ReportBundle",
+    ,"repositories": [
+    {
+        "type" : "vcs",
+        "url": "https://github.com/MESD/JasperReportBundle.git"
+    }
+    ]
+    ,"require": {
+        "mesd/jasper-client-bundle": "dev-master",
+    }
 }
