@@ -1,0 +1,32 @@
+<?php
+
+namespace MESD\Jasper\ReportBundle\DependencyInjection;
+
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\Definition\Processor;
+
+class MESDJasperReportExtension extends Extension
+{
+    /**
+     * Build the extension services
+     *
+     * @param array $configs
+     * @param ContainerBuilder $container
+     */
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $processor = new Processor();
+
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
+
+        $configuration = new Configuration();
+        $config = $processor->processConfiguration($configuration, $configs);
+
+        $reportClientDefinition = $container->getDefinition('mesd.jasperreport.client');
+        $reportClientDefinition->addMethodCall('setFunTimeString', var_dump($config));
+    }
+}
