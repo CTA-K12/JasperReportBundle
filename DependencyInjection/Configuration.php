@@ -14,6 +14,7 @@ class Configuration implements ConfigurationInterface
         $builder->root('mesd_jasper_report')
             ->addDefaultsIfNotSet()
             ->children()
+                ->scalarNode('default_folder')->defaultValue('/reports')->end()
                 ->arrayNode('connection')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -29,9 +30,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('cache_dir')->defaultValue('app/cache')->end()
                         ->scalarNode('cache_timeout')->defaultValue(30)->end()
                     ->end()
-                ->end()
-                ->scalarNode('default_folder')
-                ->defaultValue('/reports')
                 ->end()
             ->end()
         ;

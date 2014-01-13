@@ -3,3 +3,4 @@ parameters:
 services:
     mesd.jasperreport.client:
         class: MESD\Jasper\ReportBundle\Client\JasperReportClientServiceLayer
+        arguments: [ @security.context ]
