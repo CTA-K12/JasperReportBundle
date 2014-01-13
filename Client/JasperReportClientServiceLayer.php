@@ -30,11 +30,11 @@ class JasperReportClientServiceLayer
         // $this->appReportCacheTimeout = $appReportCacheTimeout
         // $this->securityContext = $securityContext
 
-        //Build the japser client object
+        /*//Build the japser client object
         $this->jasperClient = new Client(null, $this->appReportHost, $this->appReportUser, $this->appReportPass);
 
         //get the user 
-        $this->user = $securityContext->getToken()->getUser();
+        $this->user = $securityContext->getToken()->getUser();*/
     }
 
     public function getServerInfo() {

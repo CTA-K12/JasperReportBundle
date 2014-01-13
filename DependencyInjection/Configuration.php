@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
     {
         $builder = new TreeBuilder();
 
-        $builder->root('mesd_jasperreport')
+        $builder->root('mesd_jasper_report')
             ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('connection')
