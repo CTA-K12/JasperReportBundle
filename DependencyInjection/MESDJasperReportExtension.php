@@ -31,6 +31,11 @@ class MESDJasperReportExtension extends Extension
         //Set the default folder
         $reportClientDefinition->addMethodCall('setReportDefaultFolder', array($config['default_folder']));
 
+        //Set the presentation settings
+        $reportClientDefinition->addMethodCall('setOpenFolderIcon', array($config['presentation']['openFolderIconClass']));
+        $reportClientDefinition->addMethodCall('setClosedFolderIcon', array($config['presentation']['closedFolderIconClass']));
+        $reportClientDefinition->addMethodCall('setReportIcon', array($config['presentation']['reportIconClass']));
+
         //Connect to the server
         $reportClientDefinition->addMethodCall('connect');
     }

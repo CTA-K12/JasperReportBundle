@@ -1,0 +1,9 @@
+mesd_jasperreport_resource_list:
+    pattern:    /resourcelist
+    defaults:   { _controller: MESDJasperReportBundle:Report:resourceList }
+
+mesd_jasperreport_report_view:
+    pattern:    /reportview/{reportUri}
+    defaults:   { _controller: MESDJasperReportBundle:Report:reportView }
+    requirements:
+        reportUri: \d+

@@ -1,0 +1,17 @@
+<div>
+    <div class="btn-group">
+        <a href="#" class="btn"><span class="icon-file"></span> PDF</a>
+        <a href="#" class="btn"><span class="icon-th"></span> XLS</a>
+    </div>
+    <div class="btn-group">
+        <a href="{{ controlLinks['firstPage'] }}" class="btn {% if controlLinks['firstPage'] == '#' %}disabled{% endif %}"><span class="icon-fast-backward"></span></a>
+        <a href="{{ controlLinks['backTen'] }}" class="btn {% if controlLinks['backTen'] == '#' %}disabled{% endif %}"><span class="icon-step-backward"></span></a>
+        <a href="{{ controlLinks['back'] }}" class="btn {% if controlLinks['back'] == '#' %}disabled{% endif %}"><span class="icon-backward"></span></a>
+        <a href="{{ controlLinks['next'] }}" class="btn {% if controlLinks['next'] == '#' %}disabled{% endif %}"><span class="icon-forward"></span></a>
+        <a href="{{ controlLinks['nextTen'] }}" class="btn {% if controlLinks['nextTen'] == '#' %}disabled{% endif %}"><span class="icon-step-forward"></span></a>
+        <a href="{{ controlLinks['lastPage'] }}" class="btn {% if controlLinks['lastPage'] == '#' %}disabled{% endif %}"><span class="icon-fast-forward"></span></a>
+    </div>
+</div>
+<div>
+    {{ reportOutput.build|raw }}
+</div>

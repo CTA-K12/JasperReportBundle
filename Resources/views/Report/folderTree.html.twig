@@ -1,0 +1,9 @@
+<ul>
+{% for label, resource in folderTree['Folders'] %}
+    <li><span class="icon-folder-open-alt"></span> {{label}}</li>
+    {% include 'MESDJasperReportBundle:Report:folderTree.html.twig' with { 'folderTree': resource } %}
+{% endfor %}
+{% for label, resource in folderTree['Reports'] %}
+    <li><span class="icon-file-alt"></span> {{label}}</li>
+{% endfor %}
+</ul>

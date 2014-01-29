@@ -1,0 +1,31 @@
+<ul class="mesdResourceList">
+    {# two for loops, one for folders, one for reports, thus the foldrs always appear at top of list #}
+    {% for resource in resources if resource.wsType == 'folder' %}
+        <li><a data-isopen="false" data-hasopened="false" href="{{ url('mesd_jasperreport_resource_list', { 'folderUri': resource.uriString }) }}" class="mesdJasperFolderLink"><span class="{{ renderingParams['closedFolderIcon'] }}"></span> {{ resource.label }}</a></li>
+    {% endfor %}
+    {% for resource in resources if resource.wsType == 'reportUnit' %}
+        <li><span class="{{ renderingParams['reportIcon'] }}"></span> {{ resource.label }}</li>
+    {% endfor %}
+</ul>
+
+{% javascripts '@MESDJasperReportBundle/Resources/public/js/resourceList.js' %}
+<script type="text/javascript">
+    //Check that the script is not currently in DOM
+    if (document.getElementById("{{ asset_url }}") === null) {
+        //Set the class name of the folders to that given from the config
+        var openFolderIconClass = "{{ renderingParams['openFolderIcon'] }}";
+        var closedFolderIconClass = "{{ renderingParams['closedFolderIcon'] }}";
+
+        //Append the script to the end of the dom
+        window.onload = (function() {
+            var resourceListScript = document.createElement( "script" );
+            resourceListScript.type = "text/javascript";
+            resourceListScript.src = "{{ asset_url }}";
+            //Give the script the asset url as id also
+            resourceListScript.id = "{{ asset_url }}";
+                //Add the script to the DOM at the end of the body tag
+                document.getElementsByTagName("body")[0].appendChild(resourceListScript);
+        });
+    }
+</script>
+{% endjavascripts %}
