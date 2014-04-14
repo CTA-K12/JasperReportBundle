@@ -3,7 +3,7 @@ parameters:
 services:
     mesd.jasperreport.client:
         class: MESD\Jasper\ReportBundle\Client\JasperReportClientServiceLayer
-        arguments: [ @security.context, @event_dispatcher, @router ]
+        arguments: [ @service_container ]
 
     mesd.jasperreport.display_helper:
         class: MESD\Jasper\ReportBundle\Helper\DisplayHelper

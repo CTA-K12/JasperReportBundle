@@ -5,22 +5,75 @@ namespace MESD\Jasper\ReportBundle\Client;
 use JasperClient\Client\Client;
 use JasperClient\Client\Report;
 use JasperClient\Client\ReportBuilder;
+use JasperClient\Client\ReportLoader;
 
 use MESD\Jasper\ReportBundle\Event\ReportFolderOpenEvent;
 use MESD\Jasper\ReportBundle\Event\ReportViewerRequestEvent;
 
+use MESD\Jasper\ReportBundle\Exception\JasperNotConnectedException;
+use MESD\Jasper\ReportBundle\Factories\InputControlFactory;
+
+use Symfony\Component\DependencyInjection\Container;
+
+/**
+ * Service class that acts as a wrapper around the jasper client class in the jasper client library
+ */
 class JasperReportClientServiceLayer 
 {
-    private $jasperClient;
-    private $user;
+    ///////////////
+    // CONSTANTS //
+    ///////////////
+    
+    const DEFAULT_REPORT_FORMAT = 'html';
+    const DEFAULT_REPORT_PAGE_NUMBER = 1;
+    
+    const FALLBACK_ASSET_URL = '';
 
-    private $reportServer;
+    //These are the placeholders that are given to the routers generate function, which CANNOT have the '{}' characters Jasper looks for
+    const ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER = 'tempvar-contextPath';
+    const ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER = 'tempvar-reportExecutionId';
+    const ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER = 'tempvar-exportOptions';
+
+    //These are the placeholders that Jasper will look for that will replace the ones placed into the url originally
+    const ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR = '{contextPath}';
+    const ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR = '{reportExecutionId}';
+    const ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR = '{exportOptions}';
+
+    //Error Messages
+    const EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE = 'Requested Options Handler service does not implement Options Handler Interface';
+
+    ///////////////
+    // VARIABLES //
+    ///////////////
+
+    /**
+     * Reference to the jasper client that is initialized by the connect method
+     * with the parameters passed via dependency injection
+     * @var JasperClient\Client\Client
+     */
+    private $jasperClient;
+
+    /**
+     * Default symfony route to send asset requests to 
+     * @var string
+     */
+    private $defaultAssetRoute;
+
+    /**
+     * The Symfony Service Container
+     * @var Symfony\Component\DependencyInjection\Container
+     */
+    private $container;
+
+    private $reportHost;
     private $reportUser;
     private $reportPass;
     private $reportDefaultFolder;
     private $reportUseCache;
     private $reportCacheDir;
     private $reportCacheTimeout;
+    
+    private $optionHandlerServiceName;
 
     private $eventDispatcher;
     private $router;
@@ -36,24 +89,113 @@ class JasperReportClientServiceLayer
     //Saves the exception from a failed connection (useful for testing)
     private $connectionException;
 
-    //Constructor (requires the secuirty context to get the user)
-    public function __construct($securityContext, $eventDispatcher, $router) {
-        //get the user (used to pass security onto the special input fields)
-        $this->user = $securityContext->getToken()->getUser();
+
+    //////////////////
+    // BASE METHODS //
+    //////////////////
+
+
+    /**
+     * Constructor used via Symfony's dependency injection container to intialize the needed dependencies
+     * 
+     * @param Symfony\Component\DependencyInjection\Container $container The Symfony Service Container
+     */
+    public function __construct(Container $container) {
+        //Set stuff
+        $this->container = $container;
 
         //Set connected flag to false until the connect function is able to successfully login
         $this->connected = false;
 
-        //Get the event dispatcher
-        $this->eventDispatcher = $eventDispatcher;
-
-        //Get the router
-        $this->router = $router;
+        
     }
 
-    /*
-     * The following a set methods used by the extension class to set stuff from the config file
+
+    ///////////////////
+    // CLASS METHODS //
+    ///////////////////
+
+
+    /**
+     * Connect to the Jasper Report Server with the current set of parameters
+     * (This is function is called automatically during the dependency injection container setup)
+     * 
+     * @return boolean Indicator of whether the connection was successful
      */
+    public function connect() {
+        //Attempt to initialize the client and login to the report server
+        try {
+            //Give this object's stored parameters to initialize the jasper client 
+            $this->jasperClient = new Client($this->reportHost, $this->reportUser, $this->reportPass);
+
+            //Login and set the connection flag to the return of the login method
+            $this->connected = $this->jasperClient->login();
+        } catch (\Exception $e) {
+            //Set the connection status to false
+            $this->connected = false;
+
+            //Rethrow the exception
+            throw $e;
+        }
+
+        //Return the connection flag
+        return $this->connected;
+    }
+
+
+
+    public function buildReportInputForm($reportUri, $getICFrom = 'Fallback', $data = null, $options = []) {
+        //Get the options handler from the dependency container
+        $optionsHandler = $this->container->get($this->optionHandlerServiceName);
+
+        //Check that the options handler implements the option handler interface
+        if (!in_array('MESD\Jasper\ReportBundle\Interfaces\OptionsHandlerInterface', class_implements($optionsHandler))) {
+            throw new \Exception(self::EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE);
+        }
+
+        //Create a new input control factory
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'MESD\Jasper\ReportBundle\InputControl\\');
+
+        //Load the input controls from the client using the factory and the options handler
+        $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
+
+        //Build the form
+        $form = $this->container->get('form.factory')->createBuilder('form', $data, $options);
+        foreach($inputControls as $inputControl) {
+            $inputControl->attachInputToFormBuilder($form);
+        }
+
+        //Return the completed form
+        return $form->getForm();
+    }
+
+
+
+    ////////
+    // GETTERS AND SETTERS
+    //////
+
+    /**
+     * Sets the default asset route
+     * 
+     * @param  string $defaultAssetRoute The string representation of a symfony route to set as the default asset route
+     *
+     * @return MESD\Jasper\ReportBundle\Client\JasperReportClientServiceLayer Reference to this
+     */
+    public function setDefaultAssetRoute($defaultAssetRoute) {
+        $this->defaultAssetRoute = $defaultAssetRoute;
+
+        return $this;
+    }
+
+    /**
+     * Gets the default asset route
+     *
+     * @return string The symfony route that was set as the default to handle asset requests
+     */
+    public function getDefaultAssetRoute() {
+        return $this->defaultAssetRoute;
+    }
 
     public function setReportUsername($username) {
         $this->reportUser = $username;
@@ -63,8 +205,8 @@ class JasperReportClientServiceLayer
         $this->reportPass = $password;
     }
 
-    public function setReportServer($server) {
-        $this->reportServer = $server;
+    public function setReportHost($host) {
+        $this->reportHost = $host;
     }
 
     public function setReportDefaultFolder($defaultFolder) {
@@ -98,23 +240,6 @@ class JasperReportClientServiceLayer
 
     public function getReportCacheTimeout() {
         return $this->reportCacheTimeout;
-    }
-
-    //Connect to the server (this is mostly used by the report bundle extension class)
-    public function connect() {
-        try {
-            $this->jasperClient = new Client($this->reportServer, $this->reportUser, $this->reportPass);
-            $this->jasperClient->login();
-        } catch (\Exception $e) {
-            //Set the connection exception to e and return false
-            $this->connectionException = $e;
-            $this->connected = false;
-            return false;
-        }
-
-        //If the catch block was not invoked set the connected flag to true and return true
-        $this->connected = true;
-        return true;
     }
 
     //Get a folder resource (leavng the argument null returns the default folder)
@@ -245,7 +370,7 @@ class JasperReportClientServiceLayer
     //Returns specified asset from a report with the specified jsessionid
     public function getReportAsset($assetUri, $jSessionId) {
         //Create a connection with the given jSessionId
-        $assetClient = new Client($this->reportServer, $this->reportUser, $this->reportPass, $jSessionId);
+        $assetClient = new Client($this->reportHost, $this->reportUser, $this->reportPass, $jSessionId);
         return $assetClient->getReportAsset($assetUri);
     }
 
@@ -268,7 +393,7 @@ class JasperReportClientServiceLayer
 
     }
 
-    //Check if the object currently has a valid connection to the report server
+    //Check if the object currently has a valid connection to the report host
     public function isConnected() {
         return $this->connected;
     }
@@ -339,4 +464,57 @@ class JasperReportClientServiceLayer
         );
     }
 
+    //TEST!!!!!!!
+    public function startReportExecution($a, $b = []) {
+        return $this->jasperClient->startReportExecution($a, $b);
+    }
+
+    public function getExecutedReport($a, $f = 'html') {
+        return $this->jasperClient->getExecutedReport($a, $f);
+    }
+
+    public function pollReportExecution($a) {
+        return $this->jasperClient->pollReportExecution($a);
+    }
+
+    public function getReportExecutionStatus($a) {
+        return $this->jasperClient->getReportExecutionStatus($a);
+    }
+
+    public function cacheReportExecution($a, $b = []) {
+        return $this->jasperClient->cacheReportExecution($a, $b);
+    }
+
+    public function getReportOutput($a, $b, $c = [], $d) {
+        $r = new ReportLoader($d);
+        return $r->getCachedReport($a, $b, $c);
+    }
+
+    public function createReportBuilder($a, $b = 'Jasper') {
+        return $this->jasperClient->createReportBuilder($a, $b);
+    }
+
+
+    ////////////////////////
+    // GETTERS AND SETTER //
+    ////////////////////////
+
+    /**
+     * Sets the option handler service name
+     * @param string $optionHandlerServiceName The option handler service name
+     */
+    public function setOptionHandlerServiceName($optionHandlerServiceName) {
+        $this->optionHandlerServiceName = $optionHandlerServiceName;
+
+        return $this;
+    }
+
+
+    /**
+     * Returns the option handler service name
+     * @return string Option handler service name
+     */
+    public function getOptionHandlerServiceName() {
+        return $this->optionHandlerServiceName;
+    }
 }

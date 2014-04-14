@@ -21,20 +21,21 @@ class MESDJasperReportExtension extends Extension
         //Set the connection settings from the config file
         $reportClientDefinition->addMethodCall('setReportUsername', array($config['connection']['username']));
         $reportClientDefinition->addMethodCall('setReportPassword', array($config['connection']['password']));
-        $reportClientDefinition->addMethodCall('setReportServer', array($config['connection']['server']));
+        $reportClientDefinition->addMethodCall('setReportHost', array($config['connection']['host']));
 
         //Set the cache settings
         $reportClientDefinition->addMethodCall('setReportUseCache', array($config['cache']['use_cache']));
         $reportClientDefinition->addMethodCall('setReportCacheDir', array($config['cache']['cache_dir']));
         $reportClientDefinition->addMethodCall('setReportCacheTimeout', array($config['cache']['cache_timeout']));
 
+        //Set the input control settings
+        $reportClientDefinition->addMethodCall('setOptionHandlerServiceName', array($config['options_handler']));
+
         //Set the default folder
         $reportClientDefinition->addMethodCall('setReportDefaultFolder', array($config['default_folder']));
 
         //Set the presentation settings
-        $reportClientDefinition->addMethodCall('setOpenFolderIcon', array($config['presentation']['openFolderIconClass']));
-        $reportClientDefinition->addMethodCall('setClosedFolderIcon', array($config['presentation']['closedFolderIconClass']));
-        $reportClientDefinition->addMethodCall('setReportIcon', array($config['presentation']['reportIconClass']));
+        $reportClientDefinition->addMethodCall('setDefaultAssetRoute', array($config['routing']['defaultAssetRoute']));
 
         //Connect to the server
         $reportClientDefinition->addMethodCall('connect');
