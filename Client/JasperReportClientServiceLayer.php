@@ -143,8 +143,27 @@ class JasperReportClientServiceLayer
     }
 
 
+    /**
+     * Builds a symfony form from the inputs from the requested report uri
+     *
+     * @param  string $reportUri   The uri of the report whose input controls to construct the form from
+     * @param  string $targetRoute The route to serve as the action for the form
+     * @param  array  $options     Options array:  
+     *                               'getICFrom' => Where to get the control options from
+     *                               'routeParameters' => additional parameters to generate the action url with
+     *                               'data' => data parameter for the form builder
+     *                               'options' => array of options to send to the form builder
+     *
+     * @return Symfony\Component\Form\Form The input controls form
+     */
+    public function buildReportInputForm($reportUri, $targetRoute, $options = []) {
+        //Handle the options array
+        //$getICFrom = 'Fallback', $data = null, $options = []
+        $routeParameters = (isset($options['routeParameters']) && null != $options['routeParameters']) ? $options['routeParameters'] : array();
+        $getICFrom = (isset($options['getICFrom']) && null != $options['getICFrom']) ? $options['getICFrom'] : 'Fallback';
+        $data = (isset($options['data']) && null != $options['data']) ? $options['data'] : null;
+        $formOptions = (isset($options['options']) && null != $options['options']) ? $options['options'] : array();
 
-    public function buildReportInputForm($reportUri, $getICFrom = 'Fallback', $data = null, $options = []) {
         //Get the options handler from the dependency container
         $optionsHandler = $this->container->get($this->optionHandlerServiceName);
 
@@ -160,10 +179,13 @@ class JasperReportClientServiceLayer
         $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
 
         //Build the form
-        $form = $this->container->get('form.factory')->createBuilder('form', $data, $options);
+        $form = $this->container->get('form.factory')->createBuilder('form', $data, $formOptions);
+        $form->setAction($this->container->get('router')->generate($targetRoute, $routeParameters));
+        $form->setMethod('POST');
         foreach($inputControls as $inputControl) {
             $inputControl->attachInputToFormBuilder($form);
         }
+        $form->add('Run', 'submit');
 
         //Return the completed form
         return $form->getForm();
