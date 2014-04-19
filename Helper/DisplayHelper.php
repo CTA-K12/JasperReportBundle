@@ -5,17 +5,69 @@ namespace MESD\Jasper\ReportBundle\Helper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+use MESD\Jasper\ReportBundle\Helper\PageLinkManager;
+
 class DisplayHelper {
-    //Service Container
+
+    ///////////////
+    // VARIABLES //
+    ///////////////
+
+
+    /**
+     * The Symfony service container
+     * @var Symfony\Component\DependencyInjection\ContainerInterface
+     */
     private $container;
 
-    //Constructor
-    //This helper class requires the twig engine so it can render twigs to pass back to the twig extension
-    //BUT giving this class the templating engine service directly causes a circular reference, which can be
-    //worked around by just using the container
+
+    //////////////////
+    // BASE METHODS //
+    //////////////////
+
+
+    /**
+     * Constructor
+     *   NOTE: This helper class requires the twig engine so it can render twigs to pass back to the twig extension
+     *         BUT giving this class the templating engine service directly creates a circular reference, which can
+     *         be worked around by just using the container
+     *
+     * @param ContainerInterface $container [description]
+     */
     public function __construct(ContainerInterface $container) {
+        //Set stuff
         $this->container = $container; 
     }
+
+
+    ///////////////////
+    // CLASS METHODS //
+    ///////////////////
+
+
+    /**
+     * Renders a set of page links for html report views
+     *
+     * @param  JasperClient\Client\Report $report Report Object
+     * @param  string                     $route  The route to the action that handles html page loads
+     *
+     * @return string                             The rendered output of the report page links
+     */
+    public function renderPageLinks(\JasperClient\Client\Report $report, $route) {
+        //Check that the report is in html and has a page and total page number
+        if ('html' !== $report->getFormat() || null === $report->getPage() || null === $report->getTotalPages() || null == $route) {
+            return '';
+        }
+
+        //Generate the urls
+        $url = $this->container->get('templating.helper.router')->generate($route, array('page' => '!page!', 'requestId' => $report->getRequestId()));
+        $pageLinks = new PageLinkManager();
+        $pageLinks->generatePageLinks($url, $report->getPage(), $report->getTotalPages());
+
+        //Render
+        return $pageLinks->printLinks();
+    }
+
 
     //RenderReportView
     //Renders a report and its controls from a report builder object

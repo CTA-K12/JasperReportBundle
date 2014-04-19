@@ -65,29 +65,75 @@ class JasperReportClientServiceLayer
      */
     private $container;
 
+    /**
+     * The Host Name of the report server
+     * @var string
+     */
     private $reportHost;
-    private $reportUser;
-    private $reportPass;
-    private $reportDefaultFolder;
-    private $reportUseCache;
+
+    /**
+     * Jasper Servers port
+     * @var string
+     */
+    private $reportPort;
+
+    /**
+     * Username for the jasper server account
+     * @var string
+     */
+    private $reportUsername;
+
+    /**
+     * Password for the jasper server account
+     * @var string
+     */
+    private $reportPassword;
+
+    /**
+     * Whether to cache resource lists or not
+     * @var boolean
+     */
+    private $useFolderCache;
+
+    /**
+     * Directory of the resource list cache
+     * @var string
+     */
+    private $folderCacheDir;
+
+    /**
+     * How long a resource list cache is considered fresh
+     * @var int
+     */
+    private $folderCacheTimeout;
+
+    /**
+     * Where to cache reports
+     * @var string
+     */
     private $reportCacheDir;
-    private $reportCacheTimeout;
-    
+
+    /**
+     * The service name of the application specific input control option handler
+     * @var string
+     */
     private $optionHandlerServiceName;
+
+    /**
+     * Default Folder to go to when getting the resource list if no other folder is specified
+     * @var string
+     */
+    private $defaultFolder;
 
     private $eventDispatcher;
     private $router;
     private $routeHelper;
 
-    private $openFolderIcon;
-    private $closeFolderIcon;
-    private $reportIcon;
-
-    //Boolean to track whether this class is connected to the service or not
+    /**
+     * Whether the client is connected to the jasper server or not
+     * @var boolean
+     */
     private $connected;
-
-    //Saves the exception from a failed connection (useful for testing)
-    private $connectionException;
 
 
     //////////////////
@@ -126,7 +172,7 @@ class JasperReportClientServiceLayer
         //Attempt to initialize the client and login to the report server
         try {
             //Give this object's stored parameters to initialize the jasper client 
-            $this->jasperClient = new Client($this->reportHost, $this->reportUser, $this->reportPass);
+            $this->jasperClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUsername, $this->reportPassword);
 
             //Login and set the connection flag to the return of the login method
             $this->connected = $this->jasperClient->login();
@@ -156,7 +202,7 @@ class JasperReportClientServiceLayer
      *
      * @return Symfony\Component\Form\Form The input controls form
      */
-    public function buildReportInputForm($reportUri, $targetRoute, $options = []) {
+    public function buildReportInputForm($reportUri, $targetRoute = null, $options = []) {
         //Handle the options array
         //$getICFrom = 'Fallback', $data = null, $options = []
         $routeParameters = (isset($options['routeParameters']) && null != $options['routeParameters']) ? $options['routeParameters'] : array();
@@ -180,7 +226,11 @@ class JasperReportClientServiceLayer
 
         //Build the form
         $form = $this->container->get('form.factory')->createBuilder('form', $data, $formOptions);
-        $form->setAction($this->container->get('router')->generate($targetRoute, $routeParameters));
+        
+        if ($targetRoute) {
+            $form->setAction($this->container->get('router')->generate($targetRoute, $routeParameters));
+        }
+        
         $form->setMethod('POST');
         foreach($inputControls as $inputControl) {
             $inputControl->attachInputToFormBuilder($form);
@@ -192,86 +242,44 @@ class JasperReportClientServiceLayer
     }
 
 
+    /**
+     * Returns a report loader with the report cache config injected
+     *
+     * @return JasperClient\Client\ReportLoader The report loader
+     */
+    public function getReportLoader() {
+        return new ReportLoader($this->reportCacheDir);
+    }
 
-    ////////
-    // GETTERS AND SETTERS
-    //////
 
     /**
-     * Sets the default asset route
-     * 
-     * @param  string $defaultAssetRoute The string representation of a symfony route to set as the default asset route
+     * Creates a new report builder object with some of the bundle configuration passed in
      *
-     * @return MESD\Jasper\ReportBundle\Client\JasperReportClientServiceLayer Reference to this
-     */
-    public function setDefaultAssetRoute($defaultAssetRoute) {
-        $this->defaultAssetRoute = $defaultAssetRoute;
-
-        return $this;
-    }
-
-    /**
-     * Gets the default asset route
+     * @param  string $resourceUri Uri of the report on the jasper server
+     * @param  string $getICFrom   Where to get the input control options from
      *
-     * @return string The symfony route that was set as the default to handle asset requests
+     * @return FormBuilder         The form builder
      */
-    public function getDefaultAssetRoute() {
-        return $this->defaultAssetRoute;
+    public function createReportBuilder($resourceUri, $getICFrom = 'Fallback') {
+        //Get the report builder started from the client
+        $reportBuilder = $this->jasperClient->createReportBuilder($resourceUri, $getICFrom);
+
+        //Set the stuff from the bundle configuration
+        $reportBuilder->setReportCache($this->reportCacheDir);
+
+        //return the report builder
+        return $reportBuilder;
     }
 
-    public function setReportUsername($username) {
-        $this->reportUser = $username;
-    }
-
-    public function setReportPassword($password) {
-        $this->reportPass = $password;
-    }
-
-    public function setReportHost($host) {
-        $this->reportHost = $host;
-    }
-
-    public function setReportDefaultFolder($defaultFolder) {
-        $this->reportDefaultFolder = $defaultFolder;
-    }
-
-    public function setReportUseCache($useCache) {
-        $this->reportUseCache = $useCache;
-    }
-
-    public function setReportCacheDir($cacheDir) {
-        $this->reportCacheDir = $cacheDir;
-    }
-
-    public function setReportCacheTimeout($cacheTimeout) {
-        $this->reportCacheTimeout = $cacheTimeout;
-    }
-
-    //Gets for the non confidential settings
-    public function getReportDefaultFolder() {
-        return $this->reportDefaultFolder;
-    }
-
-    public function getReportUseCache() {
-        return $this->reportUseCache;
-    }
-
-    public function getReportCacheDir() {
-        return $this->reportCacheDir;
-    }
-
-    public function getReportCacheTimeout() {
-        return $this->reportCacheTimeout;
-    }
 
     //Get a folder resource (leavng the argument null returns the default folder)
     public function getFolder($folderUri = null) {
         //If the connection is valid, then try and get the resourceCollection with the given or default folderUri
         if ($this->isConnected()) {
             if ($folderUri) {
-                return $this->jasperClient->getFolder($folderUri, $this->reportUseCache, $this->reportCacheDir, $this->reportCacheTimeout);
+                return $this->jasperClient->getFolder($folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
             } else {
-                return $this->jasperClient->getFolder($this->reportDefaultFolder, $this->reportUseCache, $this->reportCacheDir, $this->reportCacheTimeout);
+                return $this->jasperClient->getFolder($this->reportDefaultFolder, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
             }
         } else {
             return false;
@@ -296,7 +304,7 @@ class JasperReportClientServiceLayer
             }
 
             //Open the folder uri in the jasper client and return it
-            $contents = $this->jasperClient->getFolder($folderUri, $this->reportUseCache, $this->reportCacheDir, $this->reportCacheTimeout);
+            $contents = $this->jasperClient->getFolder($folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
 
             //Get the parent uri
             $strippedUri = rtrim($folderUri, '/');
@@ -392,7 +400,7 @@ class JasperReportClientServiceLayer
     //Returns specified asset from a report with the specified jsessionid
     public function getReportAsset($assetUri, $jSessionId) {
         //Create a connection with the given jSessionId
-        $assetClient = new Client($this->reportHost, $this->reportUser, $this->reportPass, $jSessionId);
+        $assetClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUser, $this->reportPass, $jSessionId);
         return $assetClient->getReportAsset($assetUri);
     }
 
@@ -410,110 +418,14 @@ class JasperReportClientServiceLayer
         }
     }
 
-    //Get ReportBuilder
-    public function getReportBuilder($report) {
 
-    }
-
-    //Check if the object currently has a valid connection to the report host
+    /**
+     * Returns a boolean indicating whether the client is connected to the jasper server or not
+     *
+     * @return boolean Whether the client is connected with the server or not
+     */
     public function isConnected() {
         return $this->connected;
-    }
-
-    //Used for testing
-    public function getServerInfo() {
-        return $this->jasperClient->getServerInfo();
-    }
-
-    /**
-     *  Set the openFolderIcon class for the report controller
-     */
-    public function setOpenFolderIcon($openFolderIcon) {
-        $this->openFolderIcon = $openFolderIcon;
-    }
-
-    /**
-     *  Get the openFolderIcon class 
-     *
-     *  @return string
-     */
-    public function getOpenFolderIcon() {
-        return $this->openFolderIcon;
-    }
-
-    /**
-     *  Set the closedFolderIcon class for the report controller
-     */
-    public function setClosedFolderIcon($closedFolderIcon) {
-        $this->closedFolderIcon = $closedFolderIcon;
-    }
-
-    /**
-     *  Get the closedFolderIcon class 
-     *
-     *  @return string
-     */
-    public function getClosedFolderIcon() {
-        return $this->closedFolderIcon;
-    }
-
-    /**
-     *  Set the reportIcon class for the report controller
-     */
-    public function setReportIcon($reportIcon) {
-        $this->reportIcon = $reportIcon;
-    }
-
-    /**
-     *  Get the reportIcon class 
-     *
-     *  @return string
-     */
-    public function getReportIcon() {
-        return $this->reportIcon;
-    }
-
-    /**
-     *  Returns the rendering parameters either specified in the users config or the bundle's defaults
-     *
-     *  @return array
-     */
-    public function getRenderingParameters() {
-        return array(
-              'openFolderIcon'      => $this->openFolderIcon
-            , 'closedFolderIcon'    => $this->closedFolderIcon
-            , 'reportIcon'          => $this->reportIcon
-        );
-    }
-
-    //TEST!!!!!!!
-    public function startReportExecution($a, $b = []) {
-        return $this->jasperClient->startReportExecution($a, $b);
-    }
-
-    public function getExecutedReport($a, $f = 'html') {
-        return $this->jasperClient->getExecutedReport($a, $f);
-    }
-
-    public function pollReportExecution($a) {
-        return $this->jasperClient->pollReportExecution($a);
-    }
-
-    public function getReportExecutionStatus($a) {
-        return $this->jasperClient->getReportExecutionStatus($a);
-    }
-
-    public function cacheReportExecution($a, $b = []) {
-        return $this->jasperClient->cacheReportExecution($a, $b);
-    }
-
-    public function getReportOutput($a, $b, $c = [], $d) {
-        $r = new ReportLoader($d);
-        return $r->getCachedReport($a, $b, $c);
-    }
-
-    public function createReportBuilder($a, $b = 'Jasper') {
-        return $this->jasperClient->createReportBuilder($a, $b);
     }
 
 
@@ -521,22 +433,390 @@ class JasperReportClientServiceLayer
     // GETTERS AND SETTER //
     ////////////////////////
 
+
     /**
-     * Sets the option handler service name
-     * @param string $optionHandlerServiceName The option handler service name
+     * Gets the Reference to the jasper client that is initialized by the connect method
+     *   with the parameters passed via dependency injection.
+     *
+     * @return JasperClient\Client\Client
      */
-    public function setOptionHandlerServiceName($optionHandlerServiceName) {
+    public function getJasperClient()
+    {
+        return $this->jasperClient;
+    }
+
+    /**
+     * Sets the Reference to the jasper client that is initialized by the connect method
+     *   with the parameters passed via dependency injection.
+     *
+     * @param JasperClient\Client\Client $jasperClient the jasper client
+     *
+     * @return self
+     */
+    public function setJasperClient(JasperClient\Client\Client $jasperClient)
+    {
+        $this->jasperClient = $jasperClient;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Default symfony route to send asset requests to.
+     *
+     * @return string
+     */
+    public function getDefaultAssetRoute()
+    {
+        return $this->defaultAssetRoute;
+    }
+
+    /**
+     * Sets the Default symfony route to send asset requests to.
+     *
+     * @param string $defaultAssetRoute the default asset route
+     *
+     * @return self
+     */
+    public function setDefaultAssetRoute($defaultAssetRoute)
+    {
+        $this->defaultAssetRoute = $defaultAssetRoute;
+
+        return $this;
+    }
+
+    /**
+     * Gets the The Symfony Service Container.
+     *
+     * @return Symfony\Component\DependencyInjection\Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Sets the The Symfony Service Container.
+     *
+     * @param Symfony\Component\DependencyInjection\Container $container the container
+     *
+     * @return self
+     */
+    public function setContainer(Symfony\Component\DependencyInjection\Container $container)
+    {
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * Gets the The Host Name of the report server.
+     *
+     * @return string
+     */
+    public function getReportHost()
+    {
+        return $this->reportHost;
+    }
+
+    /**
+     * Sets the The Host Name of the report server.
+     *
+     * @param string $reportHost the report host
+     *
+     * @return self
+     */
+    public function setReportHost($reportHost)
+    {
+        $this->reportHost = $reportHost;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Jasper Servers port.
+     *
+     * @return string
+     */
+    public function getReportPort()
+    {
+        return $this->reportPort;
+    }
+
+    /**
+     * Sets the Jasper Servers port.
+     *
+     * @param string $reportPort the report port
+     *
+     * @return self
+     */
+    public function setReportPort($reportPort)
+    {
+        $this->reportPort = $reportPort;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Username for the jasper server account.
+     *
+     * @return string
+     */
+    public function getReportUsername()
+    {
+        return $this->reportUsername;
+    }
+
+    /**
+     * Sets the Username for the jasper server account.
+     *
+     * @param string $reportUser the report user
+     *
+     * @return self
+     */
+    public function setReportUsername($reportUsername)
+    {
+        $this->reportUsername = $reportUsername;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Password for the jasper server account.
+     *
+     * @return string
+     */
+    public function getReportPassword()
+    {
+        return $this->reportPassword;
+    }
+
+    /**
+     * Sets the Password for the jasper server account.
+     *
+     * @param string $reportPass the report pass
+     *
+     * @return self
+     */
+    public function setReportPassword($reportPassword)
+    {
+        $this->reportPassword = $reportPassword;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Whether to cache resource lists or not.
+     *
+     * @return boolean
+     */
+    public function getUseFolderCache()
+    {
+        return $this->useFolderCache;
+    }
+
+    /**
+     * Sets the Whether to cache resource lists or not.
+     *
+     * @param boolean $useFolderCache the use folder cache
+     *
+     * @return self
+     */
+    public function setUseFolderCache($useFolderCache)
+    {
+        $this->useFolderCache = $useFolderCache;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Directory of the resource list cache.
+     *
+     * @return string
+     */
+    public function getFolderCacheDir()
+    {
+        return $this->folderCacheDir;
+    }
+
+    /**
+     * Sets the Directory of the resource list cache.
+     *
+     * @param string $folderCacheDir the folder cache dir
+     *
+     * @return self
+     */
+    public function setFolderCacheDir($folderCacheDir)
+    {
+        $this->folderCacheDir = $folderCacheDir;
+
+        return $this;
+    }
+
+    /**
+     * Gets the How long a resource list cache is considered fresh.
+     *
+     * @return int
+     */
+    public function getFolderCacheTimeout()
+    {
+        return $this->folderCacheTimeout;
+    }
+
+    /**
+     * Sets the How long a resource list cache is considered fresh.
+     *
+     * @param int $folderCacheTimeout the folder cache timeout
+     *
+     * @return self
+     */
+    public function setFolderCacheTimeout($folderCacheTimeout)
+    {
+        $this->folderCacheTimeout = $folderCacheTimeout;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Where to cache reports.
+     *
+     * @return string
+     */
+    public function getReportCacheDir()
+    {
+        return $this->reportCacheDir;
+    }
+
+    /**
+     * Sets the Where to cache reports.
+     *
+     * @param string $reportCacheDir the report cache dir
+     *
+     * @return self
+     */
+    public function setReportCacheDir($reportCacheDir)
+    {
+        $this->reportCacheDir = $reportCacheDir;
+
+        return $this;
+    }
+
+    /**
+     * Gets the The service name of the application specific input control option handler.
+     *
+     * @return string
+     */
+    public function getOptionHandlerServiceName()
+    {
+        return $this->optionHandlerServiceName;
+    }
+
+    /**
+     * Sets the The service name of the application specific input control option handler.
+     *
+     * @param string $optionHandlerServiceName the option handler service name
+     *
+     * @return self
+     */
+    public function setOptionHandlerServiceName($optionHandlerServiceName)
+    {
         $this->optionHandlerServiceName = $optionHandlerServiceName;
 
         return $this;
     }
 
+    /**
+     * Gets the value of eventDispatcher.
+     *
+     * @return mixed
+     */
+    public function getEventDispatcher()
+    {
+        return $this->eventDispatcher;
+    }
 
     /**
-     * Returns the option handler service name
-     * @return string Option handler service name
+     * Sets the value of eventDispatcher.
+     *
+     * @param mixed $eventDispatcher the event dispatcher
+     *
+     * @return self
      */
-    public function getOptionHandlerServiceName() {
-        return $this->optionHandlerServiceName;
+    public function setEventDispatcher($eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of router.
+     *
+     * @return mixed
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    /**
+     * Sets the value of router.
+     *
+     * @param mixed $router the router
+     *
+     * @return self
+     */
+    public function setRouter($router)
+    {
+        $this->router = $router;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of routeHelper.
+     *
+     * @return mixed
+     */
+    public function getRouteHelper()
+    {
+        return $this->routeHelper;
+    }
+
+    /**
+     * Sets the value of routeHelper.
+     *
+     * @param mixed $routeHelper the route helper
+     *
+     * @return self
+     */
+    public function setRouteHelper($routeHelper)
+    {
+        $this->routeHelper = $routeHelper;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Default Folder to go to when getting the resource list if no other folder is specified.
+     *
+     * @return string
+     */
+    public function getDefaultFolder()
+    {
+        return $this->defaultFolder;
+    }
+
+    /**
+     * Sets the Default Folder to go to when getting the resource list if no other folder is specified.
+     *
+     * @param string $defaultFolder the default folder
+     *
+     * @return self
+     */
+    public function setDefaultFolder($defaultFolder)
+    {
+        $this->defaultFolder = $defaultFolder;
+
+        return $this;
     }
 }

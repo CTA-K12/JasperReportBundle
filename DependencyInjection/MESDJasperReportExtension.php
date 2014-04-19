@@ -22,17 +22,21 @@ class MESDJasperReportExtension extends Extension
         $reportClientDefinition->addMethodCall('setReportUsername', array($config['connection']['username']));
         $reportClientDefinition->addMethodCall('setReportPassword', array($config['connection']['password']));
         $reportClientDefinition->addMethodCall('setReportHost', array($config['connection']['host']));
+        $reportClientDefinition->addMethodCall('setReportPort', array($config['connection']['port']));
 
-        //Set the cache settings
-        $reportClientDefinition->addMethodCall('setReportUseCache', array($config['cache']['use_cache']));
-        $reportClientDefinition->addMethodCall('setReportCacheDir', array($config['cache']['cache_dir']));
-        $reportClientDefinition->addMethodCall('setReportCacheTimeout', array($config['cache']['cache_timeout']));
+        //Set the report cache settings
+        $reportClientDefinition->addMethodCall('setReportCacheDir', array($config['report_cache']['cache_dir']));
+
+        //Set the resource list cache settings
+        $reportClientDefinition->addMethodCall('setUseFolderCache', array($config['folder_cache']['use_cache']));
+        $reportClientDefinition->addMethodCall('setFolderCacheDir', array($config['folder_cache']['cache_dir']));
+        $reportClientDefinition->addMethodCall('setFolderCacheTimeout', array($config['folder_cache']['cache_timeout']));
 
         //Set the input control settings
         $reportClientDefinition->addMethodCall('setOptionHandlerServiceName', array($config['options_handler']));
 
         //Set the default folder
-        $reportClientDefinition->addMethodCall('setReportDefaultFolder', array($config['default_folder']));
+        $reportClientDefinition->addMethodCall('setDefaultFolder', array($config['default_folder']));
 
         //Set the presentation settings
         $reportClientDefinition->addMethodCall('setDefaultAssetRoute', array($config['routing']['defaultAssetRoute']));
