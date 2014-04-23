@@ -16,6 +16,7 @@ class MESDJasperReportExtension extends Extension
         $loader = new YamlFileLoader( $container, new FileLocator( __DIR__.'/../Resources/config' ) );
         $loader->load( 'services.yml' );
 
+        //Setup the client service interface
         $reportClientDefinition = $container->getDefinition('mesd.jasperreport.client');
 
         //Set the connection settings from the config file
@@ -38,11 +39,23 @@ class MESDJasperReportExtension extends Extension
         //Set the default folder
         $reportClientDefinition->addMethodCall('setDefaultFolder', array($config['default_folder']));
 
-        //Set the presentation settings
-        $reportClientDefinition->addMethodCall('setDefaultAssetRoute', array($config['routing']['defaultAssetRoute']));
-
         //Connect to the server
         $reportClientDefinition->addMethodCall('connect');
+
+        //Setup the report loader service
+        $reportLoaderDefinition = $container->getDefinition('mesd.jasperreport.loader');
+
+        //Set the defaults
+        $reportLoaderDefinition->addMethodCall('setReportCacheDir', array($config['report_cache']['cache_dir']));
+        $reportLoaderDefinition->addMethodCall('setDefaultAttachAssetUrl', array($config['report_loader']['default_attach_asset_url']));
+        $reportLoaderDefinition->addMethodCall('setDefaultAssetRoute', array($config['report_loader']['default_asset_route']));
+        $reportLoaderDefinition->addMethodCall('setDefaultPage', array($config['report_loader']['default_page']));
+
+        //Setup the display helper
+        $displayHelperDefinition = $container->getDefinition('mesd.jasperreport.display_helper');
+
+        //Set the defaults
+        $displayHelperDefinition->addMethodCall('setDefaultExportRoute', array($config['display']['default_export_route']));
     }
 
     public function getAlias() {

@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Client;
+namespace MESD\Jasper\ReportBundle\Services;
 
 use JasperClient\Client\Client;
 use JasperClient\Client\Report;
@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Container;
 /**
  * Service class that acts as a wrapper around the jasper client class in the jasper client library
  */
-class JasperReportClientServiceLayer 
+class ClientService
 {
     ///////////////
     // CONSTANTS //
@@ -239,16 +239,6 @@ class JasperReportClientServiceLayer
 
         //Return the completed form
         return $form->getForm();
-    }
-
-
-    /**
-     * Returns a report loader with the report cache config injected
-     *
-     * @return JasperClient\Client\ReportLoader The report loader
-     */
-    public function getReportLoader() {
-        return new ReportLoader($this->reportCacheDir);
     }
 
 

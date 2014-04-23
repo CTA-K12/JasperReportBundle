@@ -2,8 +2,12 @@ parameters:
 
 services:
     mesd.jasperreport.client:
-        class: MESD\Jasper\ReportBundle\Client\JasperReportClientServiceLayer
+        class: MESD\Jasper\ReportBundle\Services\ClientService
         arguments: [ @service_container ]
+
+    mesd.jasperreport.loader:
+        class: MESD\Jasper\ReportBundle\Services\LoaderService
+        arguments: [ @router ]
 
     mesd.jasperreport.display_helper:
         class: MESD\Jasper\ReportBundle\Helper\DisplayHelper

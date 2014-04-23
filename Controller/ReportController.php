@@ -9,29 +9,76 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Contains actions to help with display and interface.
  * To use these actions the report bundle's routes will need to be included into the main projects route file
- *
- * NOTE: these actions are to remain OPTIONAL, and should not be required to use the report bundle
  */
 class ReportController extends ContainerAware
 {
+    ///////////////
+    // CONSTANTS //
+    ///////////////
+
+    const FORMAT_PDF = 'pdf';
+
+    /////////////
+    // ACTIONS //
+    /////////////
+
+
     /**
-     * Returns the resource with the given uri
-     * 
-     * Gets parameters via query string in the request
-     *   uri -> uri of the asset to get
-     *   jsessionid -> the current jsessionid of the report to get the asset for
-     * 
-     * @return string             The raw output of the asset in string form
+     * Renders an asset from a cached report
+     *
+     * @param  string $asset     The image path relative to the cache folder (e.g. images/img_0_0_2.png)
+     * @param  string $requestId The request id of the report the asset is attached to
+     *
+     * @return Response          The raw asset
      */
-    public function downloadReportAssetAction() {
-        //Get the query string parameter
-        $assetUri = $this->container->get('request')->query->get('uri');
-        $jSessionId = $this->container->get('request')->query->get('jsessionid');
-
-        //Get the asset from the client
-        $asset = $this->container->get('mesd.jasperreport.client')->getReportAsset($assetUri, $jSessionId);
-
-        //Return the response
-        return new Response($asset);
+    public function displayCachedAssetAction($asset, $requestId) {
+        $asset = $this->container->get('mesd.jasperreport.loader')->getReportLoader()->getCachedAsset($asset, $requestId);
+        return new Response($asset, 200, array());
     }
+
+
+    /**
+     * Serves report exports 
+     *
+     * @param  string $requestId The request id of the report to export
+     * @param  string $format    The format of the report to return
+     *
+     * @return Response          The exported report
+     */
+    public function exportCachedReportAction($requestId, $format) {
+        //Get the export data
+        $export = $this->container->get('mesd.jasperreport.loader')->getReportLoader()->getCachedReport($requestId, $format);
+
+        //Create the response
+        $response = new Response();
+
+        //Set the headers
+        if (self::FORMAT_PDF === $format) {
+            $response->headers->set('Content-Type', 'application/pdf');
+        }
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $export->getUri() . '.' . $format . '"');
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+
+        //Set the content of the response
+        $response->setContent($export->getOutput());
+
+        //Return the final response
+        return $response;
+    }
+
+
+    /**
+     * Displays a page in html format from a cached report
+     *
+     * @param  string $requestId The request id of the cached report to display
+     * @param  string $page      The page number to display
+     *
+     * @return Symfony\Component\HttpFoundation\RenderedResponse The rendered response
+     */
+    // public function displayCachedReportPageAction($requestId, $page = 1) {
+
+    // }
+
 }

@@ -29,6 +29,12 @@ class ReportExtension extends \Twig_Extension {
      */
     private $defaultPageRoute;
 
+    /**
+     * The default route to handle assets
+     * @var string
+     */
+    private $defaultAssetRoute;
+
 
     //////////////////
     // BASE METHODS //
@@ -41,6 +47,7 @@ class ReportExtension extends \Twig_Extension {
      * @param DisplayHelper $displayHelper The display helper reference
      */
     public function __construct(DisplayHelper $displayHelper) {
+        //Set stuff
         $this->displayHelper = $displayHelper;
     }
 
@@ -59,9 +66,9 @@ class ReportExtension extends \Twig_Extension {
     public function getFunctions() {
         //Function definition
         return array(
-            'mesd_report_render_folder_view'    => new \Twig_Function_Method($this, 'renderFolderView', array('is_safe' => array('html'))),
-            'mesd_report_render_report_view'    => new \Twig_Function_Method($this, 'renderReportView', array('is_safe' => array('html'))),
-            'mesd_report_render_page_links'     => new \Twig_Function_Method($this, 'renderPageLinks',  array('is_safe' => array('html')))
+            'mesd_report_render_page_links'     => new \Twig_Function_Method($this, 'renderPageLinks',  array('is_safe' => array('html'))),
+            'mesd_report_render_output'         => new \Twig_Function_Method($this, 'renderReportOutput', array('is_safe' => array('html'))),
+            'mesd_report_render_export_links'   => new \Twig_Function_Method($this, 'renderExportLinks', array('is_safe' => array('html')))
         );
     }
 
@@ -76,24 +83,6 @@ class ReportExtension extends \Twig_Extension {
     ///////////////
 
 
-    //Displays the list of contents from the given folder collection object
-    //generate tree is a flag to determine wether to make a tree from root or just show its contents
-    //maxDepth is how many folders deep to display, 0 will display whole tree under the root, 1 will only display the contents of root
-    public function renderFolderView($folderView, $stopAtDefault = true, $generateTree = false, $maxDepth = 0) {
-        return $this->displayHelper->renderFolderView($folderView, $stopAtDefault, $generateTree, $maxDepth);
-    }
-
-    //Renders a report and its associated controls
-    public function renderReportView($reportBuilder) {
-        //If the passed in object is a string (a png from the report) then just return the string
-        if (is_string($reportBuilder)) {
-            $this->environment->display('MESDJasperReportBundle:Report:rawString.html.twig', array('output' => $reportBuilder));
-        } else {
-            return $this->displayHelper->renderReportView($reportBuilder);
-        }
-    }
-
-
     /**
      * Renders links for the html pages of a report
      *
@@ -105,5 +94,30 @@ class ReportExtension extends \Twig_Extension {
      */
     public function renderPageLinks($report, $route = null) {
         return $this->displayHelper->renderPageLinks($report, $route ?: $this->defaultPageRoute);
+    }
+
+
+    /**
+     * Renders the output of a report
+     *
+     * @param  JasperClient\Client\Report $report The report to render
+     *
+     * @return string                             The rendered output
+     */
+    public function renderReportOutput($report) {
+        return $this->displayHelper->renderReportOutput($report);
+    }
+
+
+    /**
+     * Renders export links for a cached report
+     *
+     * @param  JasperClient\Client\Report $report      The report object to export
+     * @param  string                     $exportRoute Optional override to the default export route
+     *
+     * @return string                                  Rendered output
+     */
+    public function renderExportLinks($report, $exportRoute = null) {
+        return $this->displayHelper->renderExportLinks($report, $exportRoute);
     }
 }

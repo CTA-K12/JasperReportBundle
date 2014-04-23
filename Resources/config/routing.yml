@@ -1,3 +1,7 @@
-mesd_jasperreport_download_report_asset:
-    pattern:    /report_asset
-    defaults:   { _controller: MESDJasperReportBundle:Report:downloadReportAsset }
+mesd_jasperreport_render_cached_asset:
+    pattern:    /assets/{asset}/{requestId}
+    defaults:   { _controller: MESDJasperReportBundle:Report:displayCachedAsset }
+
+mesd_jasperreport_export_cached_report:
+    pattern:    /export/{requestId}/{format}
+    defaults:   { _controller: MESDJasperReportBundle:Report:exportCachedReport }
