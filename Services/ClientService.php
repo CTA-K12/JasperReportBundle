@@ -153,7 +153,8 @@ class ClientService
         //Set connected flag to false until the connect function is able to successfully login
         $this->connected = false;
 
-        
+        //Defaults
+        $this->reportDefaultFolder = '';
     }
 
 
@@ -259,6 +260,39 @@ class ClientService
 
         //return the report builder
         return $reportBuilder;
+    }
+
+
+    /**
+     * Gets a list of resources under the given or default folder
+     *
+     * @param  string  $folderUri The uri of the folder on the jasper server to use as the root (default if not given)
+     * @param  boolean $recursive Whether to get all the contents of the folders or just the reports in the given folder
+     *                              NOTE: this can be S-L-O-W
+     *
+     * @return array              Array of ResourceDescriptors
+     */
+    public function getResourceList($folderUri = null, $recursive = false) {
+        //Set whether to use the given folderuri or the default
+        $folderUri = $folderUri ?: $this->defaultFolder;
+
+        //Get the resources in the requested folder
+        $return = $this->jasperClient->getFolder($folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
+
+        //if the recursive flag is set get the contents of each folder
+        if ($recursive) {
+            foreach($return as $resource) {
+                if ('folder' === $resource->getWsType()) {
+                    $children = $this->getResourceList($resource->getUriString(), $recursive);
+                    foreach($children as $child) {
+                        $resource->addChildResource($child);
+                    }
+                }
+            }
+        }
+
+        //Return the resource array
+        return $return;
     }
 
 
