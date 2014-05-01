@@ -1,0 +1,42 @@
+MESD\Jasper\ReportBundle\Entity\ReportHistory:
+    type: entity
+    table: jasperreport_report_history
+    repositoryClass: MESD\Jasper\ReportBundle\Repository\ReportHistoryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName: jasperreport_report_history_id_seq
+        date:
+            column: date
+            type: datetime
+            nullable: false
+            unique: false
+        parameters:
+            column: parameters
+            type: text
+            nullable: true
+            unique: false
+        requestId:
+            column: requestId
+            type: text
+            nullable: false
+            unique: true
+        reportUri:
+            column: report_uri
+            type: text
+            nullable: false
+            unique: false
+        username:
+            column: username
+            type: text
+            nullable: false
+            unique: false
+        status:
+            column: status
+            type: text
+            nullable: false
+            unique: false

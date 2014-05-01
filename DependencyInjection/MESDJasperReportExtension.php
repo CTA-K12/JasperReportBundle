@@ -40,7 +40,7 @@ class MESDJasperReportExtension extends Extension
         $reportClientDefinition->addMethodCall('setDefaultFolder', array($config['default_folder']));
 
         //Connect to the server
-        $reportClientDefinition->addMethodCall('connect');
+        $reportClientDefinition->addMethodCall('init');
 
         //Setup the report loader service
         $reportLoaderDefinition = $container->getDefinition('mesd.jasperreport.loader');

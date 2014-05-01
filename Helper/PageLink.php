@@ -73,7 +73,7 @@ class PageLink
         if ($this->disabled) {
             return $this->text;
         } else {
-            $return = '<a class="';
+            $return = '<a class="mesd-jasperreport-page-link ';
             foreach($this->classes as $class) {
                 $return = $return . $class . ' ';
             }

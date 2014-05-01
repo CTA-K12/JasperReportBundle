@@ -63,7 +63,7 @@ class PageLinkManager
         }
 
         //implode with the delimiter and return the result
-        return implode($this->delimiter, $pieces);
+        return '<div class="mesd-jasperreport-pages">' . implode($this->delimiter, $pieces) . '</div>';
     }
 
 

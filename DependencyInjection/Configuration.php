@@ -53,6 +53,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('default_asset_route')->defaultValue('mesd_jasperreport_render_cached_asset')->end()
                     ->end()
                 ->end()
+                ->arrayNode('report_history')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('entity_manager')->defaultValue('default')->end()
+                    ->end()
+                ->end()
                 ->scalarNode('options_handler')->isRequired()->end()
             ->end()
         ;

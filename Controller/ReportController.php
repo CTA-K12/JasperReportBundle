@@ -67,18 +67,4 @@ class ReportController extends ContainerAware
         //Return the final response
         return $response;
     }
-
-
-    /**
-     * Displays a page in html format from a cached report
-     *
-     * @param  string $requestId The request id of the cached report to display
-     * @param  string $page      The page number to display
-     *
-     * @return Symfony\Component\HttpFoundation\RenderedResponse The rendered response
-     */
-    // public function displayCachedReportPageAction($requestId, $page = 1) {
-
-    // }
-
 }

@@ -1,3 +1,5 @@
-{% for format, exportLink in exportLinks %}
-    <a href="{{ exportLink }}">{{ format }}</a>
-{% endfor %}
+<div class="mesd-jasperreport-exports">
+    {% for format, exportLink in exportLinks %}
+        <a class="mesd-jasperreport-export-link" href="{{ exportLink }}">{{ format }}</a>
+    {% endfor %}
+</div>

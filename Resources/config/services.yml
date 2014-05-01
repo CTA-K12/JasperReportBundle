@@ -13,22 +13,8 @@ services:
         class: MESD\Jasper\ReportBundle\Helper\DisplayHelper
         arguments: [ @service_container ]
 
-    mesd.jasperreport.twig.extenstion.report:
+    mesd.jasperreport.twig.extension.report:
         class: MESD\Jasper\ReportBundle\Twig\Extension\ReportExtension
         arguments: [ @mesd.jasperreport.display_helper ]
         tags:
             - { name: twig.extension }
-
-    mesd.jasperreport.listener.report_folder:
-        class: MESD\Jasper\ReportBundle\Listener\ReportFolderListener
-        arguments: [  ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-            - { name: mesd.jasperreport.event_listener, event: mesd.jasperreport.report_folder_open, method: onReportFolderOpen }
-
-    mesd.jasperreport.listener.report_viewer:
-        class: MESD\Jasper\ReportBundle\Listener\ReportViewerListener
-        arguments: [  ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-            - { name: mesd.jasperreport.event_listener, event: mesd.jasperreport.report_viewer_request, method: onReportViewerRequest }

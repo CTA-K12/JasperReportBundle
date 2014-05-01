@@ -13,6 +13,9 @@ use MESD\Jasper\ReportBundle\Event\ReportViewerRequestEvent;
 use MESD\Jasper\ReportBundle\Exception\JasperNotConnectedException;
 use MESD\Jasper\ReportBundle\Factories\InputControlFactory;
 
+use MESD\Jasper\ReportBundle\Callbacks\PostReportCache;
+use MESD\Jasper\ReportBundle\Callbacks\PostReportExecution;
+
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -125,6 +128,12 @@ class ClientService
      */
     private $defaultFolder;
 
+    /**
+     * Which entity manager should be used for the database transactions
+     * @var string
+     */
+    private $entityManager;
+
     private $eventDispatcher;
     private $router;
     private $routeHelper;
@@ -164,6 +173,21 @@ class ClientService
 
 
     /**
+     * Initializes the client service once the configuration parameters have been passed in
+     *
+     * @return boolean Whether the client was able to connect to the jasper server
+     */
+    public function init() {
+        //Connect
+        $return = $this->connect();
+        //Set callbacks
+        $this->setCallbacks();
+        //Return the connection flag
+        return $return;
+    }
+
+
+    /**
      * Connect to the Jasper Report Server with the current set of parameters
      * (This is function is called automatically during the dependency injection container setup)
      * 
@@ -187,6 +211,19 @@ class ClientService
 
         //Return the connection flag
         return $this->connected;
+    }
+
+
+    /**
+     * Creates the callback objects and gives them to the client
+     */
+    public function setCallbacks() {
+        if ($this->jasperClient) {
+            //Get the entity manager
+            $em = $this->container->get('doctrine')->getManager($this->entityManager);
+            $this->jasperClient->addPostReportExecutionCallback(new PostReportExecution($em, $this->container->get('security.context')));
+            $this->jasperClient->addPostReportCacheCallback(new PostReportCache($em));
+        }
     }
 
 
@@ -840,6 +877,30 @@ class ClientService
     public function setDefaultFolder($defaultFolder)
     {
         $this->defaultFolder = $defaultFolder;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Which entity manager should be used for the database transactions.
+     *
+     * @return string
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
+
+    /**
+     * Sets the Which entity manager should be used for the database transactions.
+     *
+     * @param string $entityManager the entity manager
+     *
+     * @return self
+     */
+    public function setEntityManager($entityManager)
+    {
+        $this->entityManager = $entityManager;
 
         return $this;
     }
