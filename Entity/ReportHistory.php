@@ -40,6 +40,11 @@ class ReportHistory
     private $status;
 
     /**
+     * @var string
+     */
+    private $formats;
+
+    /**
      * Gets the value of id.
      *
      * @return int
@@ -189,6 +194,30 @@ class ReportHistory
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of formats.
+     *
+     * @return string
+     */
+    public function getFormats()
+    {
+        return $this->formats;
+    }
+
+    /**
+     * Sets the value of formats.
+     *
+     * @param string $formats the formats
+     *
+     * @return self
+     */
+    public function setFormats($formats)
+    {
+        $this->formats = $formats;
 
         return $this;
     }

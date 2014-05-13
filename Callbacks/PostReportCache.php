@@ -66,6 +66,10 @@ class PostReportCache implements PostReportCacheCallback
         }
 
         if ($rh) {
+            //Set the formats
+            if (isset($options['formats'])) {
+                $rh->setFormats(json_encode($options['formats']));
+            }
             $rh->setStatus($status);
             $this->em->persist($rh);
             $this->em->flush($rh);

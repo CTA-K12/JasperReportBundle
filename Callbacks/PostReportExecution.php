@@ -69,6 +69,9 @@ class PostReportExecution implements PostReportExecutionCallback
             $rh->setParameters('{}');
         }
 
+        //Set formats to empty until post cache
+        $rh->setFormats('{}');
+
         //Get the request id from the response
         $rh->setRequestId(JasperHelper::getRequestIdFromDetails($response));
 

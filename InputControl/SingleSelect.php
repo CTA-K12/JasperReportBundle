@@ -71,7 +71,7 @@ class SingleSelect extends AbstractReportBundleInputControl
                 'choices'   => $choices,
                 'multiple'  => false,
                 'data'      => $selected,
-                'required'  => $this->mandatory,
+                'required'  => true,
                 'read_only' => !$this->readOnly
             )
         );

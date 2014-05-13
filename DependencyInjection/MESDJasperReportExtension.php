@@ -39,6 +39,9 @@ class MESDJasperReportExtension extends Extension
         //Set the default folder
         $reportClientDefinition->addMethodCall('setDefaultFolder', array($config['default_folder']));
 
+        //Set the entity manager that will handle report history records
+        $reportClientDefinition->addMethodCall('setEntityManager', array($config['report_history']['entity_manager']));
+
         //Connect to the server
         $reportClientDefinition->addMethodCall('init');
 
@@ -56,6 +59,12 @@ class MESDJasperReportExtension extends Extension
 
         //Set the defaults
         $displayHelperDefinition->addMethodCall('setDefaultExportRoute', array($config['display']['default_export_route']));
+
+        //Setup the report history service
+        $reportHistoryDefinition = $container->getDefinition('mesd.jasperreport.history');
+
+        //Set the entity manager name to the same as the client 
+        $reportHistoryDefinition->addMethodCall('setEntityManager', array($config['report_history']['entity_manager']));
     }
 
     public function getAlias() {

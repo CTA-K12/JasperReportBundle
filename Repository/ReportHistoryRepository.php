@@ -18,6 +18,9 @@ class ReportHistoryRepository extends EntityRepository
      *                                'status'   => string|array: Which statuses to retrieve by
      *                                'startDate'=> \DateTime: The earliest date to get reports by
      *                                'endDate' => \DateTime: The latest date to get reports by
+     *                                'limit' => number of results to limit by
+     *                                'offset' => the first result to get when limiting
+     *                                'page' => the page to get when limiting (0 is the first page)
      *                                'order'   => string|array: Which order to return the results in
      *
      * @return array|Query|int      The result of the query
@@ -32,6 +35,9 @@ class ReportHistoryRepository extends EntityRepository
             'status' => null,
             'startDate' => null,
             'endDate' => null,
+            'limit' => null,
+            'offset' => null,
+            'page' => 0,
             'order' => array('reportHistory.date DESC')
             ), $options);
 
@@ -69,9 +75,17 @@ class ReportHistoryRepository extends EntityRepository
         }
         if (null !== $options['endDate']) {
         }
+        if (null !== $options['limit']) {
+            if (null !== $options['offset']) {
+                $qb->setFirstResult($options['offset']);
+            } else {
+                $qb->setFirstResult($options['page'] * $options['limit']);
+            }
+            $qb->setMaxResults($options['limit']);
+        }
 
         //Set the order
-        if (null !== $options['order'] && is_array($options['order'])) {
+        if (null !== $options['order'] && is_array($options['order']) && false == $options['count']) {
             foreach($options['order'] as $order) {
                 $bits = explode(' ', $order);
                 $qb->addOrderBy($bits[0], $bits[1]);

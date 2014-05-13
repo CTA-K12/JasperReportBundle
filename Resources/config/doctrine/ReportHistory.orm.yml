@@ -40,3 +40,8 @@ MESD\Jasper\ReportBundle\Entity\ReportHistory:
             type: text
             nullable: false
             unique: false
+        formats:
+            column: formats
+            type: text
+            nullable: false
+            unique: false
