@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class MESDJasperReportExtension extends Extension
 {
     public function load( array $configs, ContainerBuilder $container ) {
-        $configuration = new Configuration();
+        $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration( $configuration, $configs );
 
         $loader = new YamlFileLoader( $container, new FileLocator( __DIR__.'/../Resources/config' ) );
@@ -32,6 +32,9 @@ class MESDJasperReportExtension extends Extension
         $reportClientDefinition->addMethodCall('setUseFolderCache', array($config['folder_cache']['use_cache']));
         $reportClientDefinition->addMethodCall('setFolderCacheDir', array($config['folder_cache']['cache_dir']));
         $reportClientDefinition->addMethodCall('setFolderCacheTimeout', array($config['folder_cache']['cache_timeout']));
+
+        //Set security settings
+        $reportClientDefinition->addMethodCall('setUseSecurity', array($config['report_security']['use_security']));
 
         //Set the input control settings
         $reportClientDefinition->addMethodCall('setOptionHandlerServiceName', array($config['options_handler']));
@@ -65,6 +68,23 @@ class MESDJasperReportExtension extends Extension
 
         //Set the entity manager name to the same as the client 
         $reportHistoryDefinition->addMethodCall('setEntityManager', array($config['report_history']['entity_manager']));
+
+        //Get the security service definition
+        $reportSecurityDefinition = $container->getDefinition('mesd.jasperreport.security');
+
+        //Append the project root dir to the security file
+        $securityFile = $container->getParameter('kernel.root_dir') . $config['report_security']['security_file'];
+
+        //Setup the report security service
+        $reportSecurityDefinition->addMethodCall('setSecurityFile', array($securityFile));
+        $reportSecurityDefinition->addMethodCall('setDefaultRoles',  array($config['report_security']['default_roles']));
+        $reportSecurityDefinition->addMethodCall('setMaxLevelSetAtDefault', array($config['report_security']['max_level_set_at_default']));
+        $reportSecurityDefinition->addMethodCall('setDefaultFolder', array($config['default_folder']));
+    }
+
+    public function getConfiguration(array $config, ContainerBuilder $container) {
+        //Create the configruation for the report bundle
+        return new Configuration();
     }
 
     public function getAlias() {

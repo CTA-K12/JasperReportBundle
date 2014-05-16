@@ -144,6 +144,12 @@ class ClientService
      */
     private $connected;
 
+    /**
+     * Whether to use the security service when loading resources and reports
+     * @var boolean
+     */
+    private $useSecurity;
+
 
     //////////////////
     // BASE METHODS //
@@ -289,8 +295,14 @@ class ClientService
      * @return FormBuilder         The form builder
      */
     public function createReportBuilder($resourceUri, $getICFrom = 'Fallback') {
+        //Get the options handler from the dependency container
+        $optionsHandler = $this->container->get($this->optionHandlerServiceName);
+
+        //Create a new input control factory
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'MESD\Jasper\ReportBundle\InputControl\\');
+
         //Get the report builder started from the client
-        $reportBuilder = $this->jasperClient->createReportBuilder($resourceUri, $getICFrom);
+        $reportBuilder = $this->jasperClient->createReportBuilder($resourceUri, $getICFrom, $icFactory);
 
         //Set the stuff from the bundle configuration
         $reportBuilder->setReportCache($this->reportCacheDir);
@@ -316,6 +328,17 @@ class ClientService
         //Get the resources in the requested folder
         $return = $this->jasperClient->getFolder($folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
 
+        //If security is active, filter out the reports the current user cannot see
+        if ($this->useSecurity) {
+            $newReturn = array();
+            foreach($return as $resource) {
+                if ($this->container->get('mesd.jasperreport.security')->canView($resource->getUriString())) {
+                    $newReturn[] = $resource;
+                }
+            }
+            $return = $newReturn;
+        }
+
         //if the recursive flag is set get the contents of each folder
         if ($recursive) {
             foreach($return as $resource) {
@@ -332,68 +355,6 @@ class ClientService
         return $return;
     }
 
-
-    //Get a folder resource (leavng the argument null returns the default folder)
-    public function getFolder($folderUri = null) {
-        //If the connection is valid, then try and get the resourceCollection with the given or default folderUri
-        if ($this->isConnected()) {
-            if ($folderUri) {
-                return $this->jasperClient->getFolder($folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
-            } else {
-                return $this->jasperClient->getFolder($this->reportDefaultFolder, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
-            }
-        } else {
-            return false;
-        }
-    }
-
-    //Get a folder view, works like getFolder, but will also look for query parameters in the url and open the subfolder as necessary
-    //when used with the twig function, it will automatically handle opening folders
-    //Note, getFolderView returns the folder collection wrapped in an array keyed by parent folder uri (to generate links back to the parent)
-    public function getFolderView($folderUri = null) {
-        if ($this->isConnected()) {
-            //If the folder is not specified, set to default
-            if (!$folderUri) {
-                $folderUri = $this->reportDefaultFolder;
-            }
-
-            //Send out the event to the listener
-            $folderEvent = new ReportFolderOpenEvent($folderUri);
-            $this->eventDispatcher->dispatch('mesd.jasperreport.report_folder_open', $folderEvent);
-            if ($folderEvent->isPropagationStopped()) {
-                $folderUri = $folderEvent->getFolderUri();
-            }
-
-            //Open the folder uri in the jasper client and return it
-            $contents = $this->jasperClient->getFolder($folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
-
-            //Get the parent uri
-            $strippedUri = rtrim($folderUri, '/');
-            $uriChunks = explode('/', $strippedUri);
-            $parentUri = '';
-            for($i = 0; $i < count($uriChunks) - 1; $i++) {
-                if (!empty($uriChunks[$i])) {
-                    $parentUri = $parentUri . '/' . $uriChunks[$i];
-                }
-            }
-
-            return array($parentUri => $contents);
-        }
-    }
-
-    //Get a report
-    public function getReport($reportUri, $format = 'html') {
-        if ($this->isConnected()) {
-            $report = null;
-            if ($report) {
-                return $report;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
 
     /**
      *  buildReport
@@ -901,6 +862,30 @@ class ClientService
     public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Whether to use the security service when loading resources and reports.
+     *
+     * @return boolean
+     */
+    public function getUseSecurity()
+    {
+        return $this->useSecurity;
+    }
+
+    /**
+     * Sets the Whether to use the security service when loading resources and reports.
+     *
+     * @param boolean $useSecurity the use security
+     *
+     * @return self
+     */
+    public function setUseSecurity($useSecurity)
+    {
+        $this->useSecurity = $useSecurity;
 
         return $this;
     }

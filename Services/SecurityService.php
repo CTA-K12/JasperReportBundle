@@ -24,7 +24,7 @@ class SecurityService
      * File path to the report security yaml file
      * @var string
      */
-    private $path;
+    private $securityFile;
 
     /**
      * Reference to the symfony security context
@@ -37,6 +37,30 @@ class SecurityService
      * @var boolean
      */
     private $ready;
+
+    /**
+     * Whether folders and reports that are above the default directory in the report server file system are restricted
+     * @var boolean
+     */
+    private $maxLevelSetAtDefault;
+
+    /**
+     * The default folder (used here to check if the asked for folder is not above this when the max level flag is set)
+     * @var string
+     */
+    private $defaultFolder;
+
+    /**
+     * The array of roles to use when a generating a new node and no other roles are given
+     * @var array
+     */
+    private $defaultRoles;
+
+    /**
+     * If during the init process, a file was successfully loaded, then this will be true, false elsewise
+     * @var boolean
+     */
+    private $fileFound;
 
 
     //////////////////
@@ -55,6 +79,7 @@ class SecurityService
 
         //Set ready to false until the init function is called
         $this->ready = false;
+        $this->fileFound = false;
     }
 
 
@@ -68,8 +93,8 @@ class SecurityService
      */
     public function init() {
         //If available load the config from the security file, else create a new array
-        if ($this->path) {
-            if ($this->loadSecurityConfiguration()) {
+        if ($this->securityFile) {
+            if (!$this->loadSecurityConfiguration()) {
                 $this->config = array();
             }
         } else {
@@ -91,7 +116,7 @@ class SecurityService
      */
     public function loadSecurityConfiguration($pathOverride = null, $debug = false) {
         //Set the path to attempt to read from
-        $path = $pathOverride ?: $this->path;
+        $path = $pathOverride ?: $this->securityFile;
 
         //Load the file and set stuff
         if (file_exists($path)) {
@@ -109,6 +134,9 @@ class SecurityService
             return false;
         }
 
+        //Set ready to true
+        $this->ready = true;
+        $this->fileFound = true;
         return true;
     }
 
@@ -122,12 +150,16 @@ class SecurityService
      * @return boolean               Whether the write was successful or not
      */
     public function saveSecurityConfiguration($pathOverride = null, $debug = false) {
+        if (!$this->ready) {
+            //If the security file has not be loaded or started yet, return false
+            return false;
+        }
         //Set the path to attempt to write to
-        $path = $pathOverride ?: $this->path;
+        $path = $pathOverride ?: $this->securityFile;
 
         //convert stuff and write out the file
         $dumper = new Dumper();
-        $output = $dumper->dump($this->config);
+        $output = $dumper->dump($this->config, $this->determineMaxDepthOfConfig());
 
         try {
             file_put_contents($path, $output);
@@ -156,6 +188,14 @@ class SecurityService
             $this->init();
         }
 
+        //Check that this node is not beyond the default folder if the max level flag is set
+        if ($this->maxLevelSetAtDefault) {
+            //Check by seeing that the default folder is within the resource uri
+            if (false === strpos($resourceUri, $this->defaultFolder)) {
+                return false;
+            }
+        }
+
         //Call the check node method
         return $this->checkNode($resourceUri, $this->securityContext->getToken()->getRoles());
     }
@@ -169,20 +209,90 @@ class SecurityService
      *
      * @return boolean              Whether the node was set or not (false if the node does not exist)
      */
-    public function setRoles($resourceUri, $roles) {
+    public function setRoles($resourceUri, $roles = null) {
         //Check if the data has been loaded yet, and load it if not
         if (!$this->ready) {
             $this->init();
         }
+
+        //If no roles were passed in, use the default
+        $roles = $roles ?: $this->defaultRoles;
 
         //Call the create node method
         return $this->createNode($resourceUri, $roles);
     }
 
 
+    /**
+     * Checks whether a requested node currently exists in the security configuration
+     *
+     * @param  string  $resourceUri The resource uri to check
+     *
+     * @return boolean              Whether the resource uri currently has a node in the configuration
+     */
+    public function checkIfExists($resourceUri) {
+        //Break up the uri on the slashes
+        $nodes = preg_split('/(\\\|\\/)/', $resourceUri, -1, PREG_SPLIT_NO_EMPTY);
+
+        //foreach node
+        $ptr = &$this->config;
+        foreach($nodes as $node) {
+            if (!isset($ptr[$node])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Determines the max depth of the config multidimensional array
+     *
+     * @return int The maximum depth
+     */
+    public function determineMaxDepthOfConfig() {
+        return $this->arrayDepth($this->config, 1);
+    }
+
+
+    /**
+     * Returns true if the configuration was successfully loaded from the report security file
+     *
+     * @return boolean Whether the config was loaded from the report security file
+     */
+    public function isLoadedFromFile() {
+        return $this->fileFound;
+    }
+
+
     //////////////////////
     // INTERNAL METHODS //
     //////////////////////
+
+
+    /**
+     * Recursively called function to determine the depth of an array 
+     *
+     * @param  mixed $element Element to calculate depth on
+     * @param  int   $depth   Depth level
+     *
+     * @return int            Depth at this point
+     */
+    protected function arrayDepth($element, $depth = 1) {
+        if (is_array($element)) {
+            $maxDepth = $depth;
+            foreach($element as $el) {
+                $d = $this->arrayDepth($el, $depth + 1);
+                if ($d > $maxDepth) {
+                    $maxDepth = $d;
+                }
+            }
+            return $maxDepth;
+        } else {
+            return $depth;
+        }
+    }
 
 
     /**
@@ -193,7 +303,7 @@ class SecurityService
      */
     protected function createNode($resourceUri, $roles) {
         //Break up the uri on the slashes
-        $nodes = preg_split('/[\\\/]/', $resourceUri);
+        $nodes = preg_split('/(\\\|\\/)/', $resourceUri, -1, PREG_SPLIT_NO_EMPTY);
 
         //foreach node, check if it currently exits, else create it
         $ptr = &$this->config;
@@ -216,7 +326,7 @@ class SecurityService
      */
     protected function checkNode($resourceUri, $roles) {
         //Break up the uri on the slashes
-        $nodes = preg_split('/[\\\/]/', $resourceUri);
+        $nodes = preg_split('/(\\\|\\/)/', $resourceUri, -1, PREG_SPLIT_NO_EMPTY);
 
         //Setup the valid flag
         $valid = false;
@@ -251,49 +361,145 @@ class SecurityService
     /////////////////////////
 
     /**
-     * Gets the Array that holds the report security settings.
-     *
-     * @return array
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * Sets the Array that holds the report security settings.
-     *
-     * @param array $config the security
-     *
-     * @return self
-     */
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
-
-    /**
      * Gets the File path to the report security yaml file.
      *
      * @return string
      */
-    public function getPath()
+    public function getSecurityFile()
     {
-        return $this->path;
+        return $this->securityFile;
     }
 
     /**
      * Sets the File path to the report security yaml file.
      *
-     * @param string $path the path
+     * @param string $securityFile the security file
      *
      * @return self
      */
-    public function setPath($path)
+    public function setSecurityFile($securityFile)
     {
-        $this->path = $path;
+        $this->securityFile = $securityFile;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Reference to the symfony security context.
+     *
+     * @return SecurityContext
+     */
+    public function getSecurityContext()
+    {
+        return $this->securityContext;
+    }
+
+    /**
+     * Sets the Reference to the symfony security context.
+     *
+     * @param SecurityContext $securityContext the security context
+     *
+     * @return self
+     */
+    public function setSecurityContext(SecurityContext $securityContext)
+    {
+        $this->securityContext = $securityContext;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Whether the class has been initialized or not.
+     *
+     * @return boolean
+     */
+    public function getReady()
+    {
+        return $this->ready;
+    }
+
+    /**
+     * Sets the Whether the class has been initialized or not.
+     *
+     * @param boolean $ready the ready
+     *
+     * @return self
+     */
+    public function setReady($ready)
+    {
+        $this->ready = $ready;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Whether folders and reports that are above the default directory in the report server file system are restricted.
+     *
+     * @return boolean
+     */
+    public function getMaxLevelSetAtDefault()
+    {
+        return $this->maxLevelSetAtDefault;
+    }
+
+    /**
+     * Sets the Whether folders and reports that are above the default directory in the report server file system are restricted.
+     *
+     * @param boolean $maxLevelSetAtDefault the max level set at default
+     *
+     * @return self
+     */
+    public function setMaxLevelSetAtDefault($maxLevelSetAtDefault)
+    {
+        $this->maxLevelSetAtDefault = $maxLevelSetAtDefault;
+
+        return $this;
+    }
+
+    /**
+     * Gets the The default folder (used here to check if the asked for folder is not above this when the max level flag is set).
+     *
+     * @return string
+     */
+    public function getDefaultFolder()
+    {
+        return $this->defaultFolder;
+    }
+
+    /**
+     * Sets the The default folder (used here to check if the asked for folder is not above this when the max level flag is set).
+     *
+     * @param string $defaultFolder the default folder
+     *
+     * @return self
+     */
+    public function setDefaultFolder($defaultFolder)
+    {
+        $this->defaultFolder = $defaultFolder;
+
+        return $this;
+    }
+
+    /**
+     * Gets the The array of roles to use when a generating a new node and no other roles are given.
+     *
+     * @return array
+     */
+    public function getDefaultRoles()
+    {
+        return $this->defaultRoles;
+    }
+
+    /**
+     * Sets the The array of roles to use when a generating a new node and no other roles are given.
+     *
+     * @param array $defaultRoles the default roles
+     *
+     * @return self
+     */
+    public function setDefaultRoles(array $defaultRoles)
+    {
+        $this->defaultRoles = $defaultRoles;
 
         return $this;
     }
