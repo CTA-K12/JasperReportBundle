@@ -80,6 +80,18 @@ class HistoryService
     }
 
 
+
+    public function loadRecentHistory($limitByCurrentUser = true, $options = []) {
+        //Resitrict by the user if requested
+        if ($limitByCurrentUser) {
+            $options['username'] = $this->securityContext->getToken()->getUsername();
+        }
+
+        //Call the repo class and the return the record entries
+        return $this->getReportHistoryRepository()->filter($options);
+    }
+
+
     /**
      * Return the entity manager assigned to handle report history records
      *
