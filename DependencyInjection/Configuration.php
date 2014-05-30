@@ -60,6 +60,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('options_handler')->isRequired()->end()
+                ->scalarNode('default_input_options_source')->defaultValue('Fallback')->end()
                 ->arrayNode('report_security')
                     ->addDefaultsIfNotSet()
                     ->children()

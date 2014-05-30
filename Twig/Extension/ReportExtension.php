@@ -13,7 +13,7 @@ class ReportExtension extends \Twig_Extension {
 
     /**
      * The Jasper Reports Bundle display helper
-     * @var MESD\Jasper\ReportBundle\Helper\DisplayHelper
+     * @var DisplayHelper
      */
     private $displayHelper;
 

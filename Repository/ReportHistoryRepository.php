@@ -74,6 +74,7 @@ class ReportHistoryRepository extends EntityRepository
 
         }
         if (null !== $options['endDate']) {
+
         }
         if (null !== $options['limit']) {
             if (null !== $options['offset']) {

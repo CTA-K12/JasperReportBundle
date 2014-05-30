@@ -11,7 +11,7 @@ services:
 
     mesd.jasperreport.history:
         class: MESD\Jasper\ReportBundle\Services\HistoryService
-        arguments: [ @doctrine, @security.context ]
+        arguments: [ @doctrine, @security.context, @mesd.jasperreport.client ]
 
     mesd.jasperreport.security:
         class: MESD\Jasper\ReportBundle\Services\SecurityService

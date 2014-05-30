@@ -1,0 +1,69 @@
+<?php
+
+namespace MESD\Jasper\ReportBundle\Interfaces;
+
+use MESD\Jasper\ReportBundle\InputControl\AbstractReportBundleInputControl;
+
+/**
+ * Interface that defines the methods required by an options manager
+ */
+abstract class AbstractOptionsHandler
+{
+    ///////////////
+    // VARIABLES //
+    ///////////////
+
+    /**
+     * The map of ids to functions that return their option lists
+     * @var array
+     */
+    private $functionMap;
+
+
+    //////////////////
+    // BASE METHODS //
+    //////////////////
+
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        //Register the functions
+        $this->registerFunctions();
+    }
+
+
+    //////////////////////////////
+    // METHODS TO BE OVERRIDDEN //
+    //////////////////////////////
+
+
+    /**
+     * Register the fucntions (meant to overriden by inheriting class)
+     */
+    protected function registerFunctions() {
+        $this->functionMap = array();
+    }
+
+
+    ///////////////////
+    // CLASS METHODS //
+    ///////////////////
+
+
+    /**
+     * Returns the list of options for a given input control id, or returns null if the option is not supported
+     *
+     * @param  string     $inputControlId The id of the input control to get a list of options for
+     *
+     * @return array|null                 The array of options or null if the input control is not supported (and will use jasper if fallback mode is in place) 
+     */
+    public function getList($inputControlId) {
+        if (array_key_exists($inpucControlId, $this->functionMap)) {
+            return call_user_func(array($this, $this->functionMap[$inputControlId]));
+        } else {
+            return null;
+        }
+    }
+}

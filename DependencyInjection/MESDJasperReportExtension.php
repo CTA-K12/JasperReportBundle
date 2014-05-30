@@ -38,6 +38,7 @@ class MESDJasperReportExtension extends Extension
 
         //Set the input control settings
         $reportClientDefinition->addMethodCall('setOptionHandlerServiceName', array($config['options_handler']));
+        $reportClientDefinition->addMethodCall('setDefaultInputOptionsSource', array($config['default_input_options_source']));
 
         //Set the default folder
         $reportClientDefinition->addMethodCall('setDefaultFolder', array($config['default_folder']));

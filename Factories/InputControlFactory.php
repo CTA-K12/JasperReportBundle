@@ -4,7 +4,7 @@ namespace MESD\Jasper\ReportBundle\Factories;
 
 use JasperClient\Interfaces\InputControlAbstractFactory;
 
-use MESD\Jasper\ReportBundle\Interfaces\OptionsHandlerInterface;
+use MESD\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler;
 
 class InputControlFactory implements InputControlAbstractFactory
 {
@@ -49,12 +49,12 @@ class InputControlFactory implements InputControlAbstractFactory
     /**
      * Constructor
      *
-     * @param OptionsHandlerInterface $optionsHandler            The options handler
+     * @param AbstractOptionsHandler  $optionsHandler            The options handler
      * @param string                  $getICFrom                 String flag on where to get options from
      * @param string                  $inputControlTypeNamespace The namespace to get the input control classes from
      */
     public function __construct(
-            OptionsHandlerInterface $optionsHandler,
+            AbstractOptionsHandler $optionsHandler,
             $getICFrom = null, 
             $inputControlTypeNamespace = null
         ) {

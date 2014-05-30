@@ -134,10 +134,6 @@ class ClientService
      */
     private $entityManager;
 
-    private $eventDispatcher;
-    private $router;
-    private $routeHelper;
-
     /**
      * Whether the client is connected to the jasper server or not
      * @var boolean
@@ -149,6 +145,12 @@ class ClientService
      * @var boolean
      */
     private $useSecurity;
+
+    /**
+     * How to handle input options by default
+     * @var string
+     */
+    private $defaultInputOptionsSource;
 
 
     //////////////////
@@ -239,7 +241,7 @@ class ClientService
      * @param  string $reportUri   The uri of the report whose input controls to construct the form from
      * @param  string $targetRoute The route to serve as the action for the form
      * @param  array  $options     Options array:  
-     *                               'getICFrom' => Where to get the control options from
+     *                               'getICFrom' => Where to get the control options from, else the default will be used
      *                               'routeParameters' => additional parameters to generate the action url with
      *                               'data' => data parameter for the form builder
      *                               'options' => array of options to send to the form builder
@@ -248,19 +250,13 @@ class ClientService
      */
     public function buildReportInputForm($reportUri, $targetRoute = null, $options = []) {
         //Handle the options array
-        //$getICFrom = 'Fallback', $data = null, $options = []
         $routeParameters = (isset($options['routeParameters']) && null != $options['routeParameters']) ? $options['routeParameters'] : array();
-        $getICFrom = (isset($options['getICFrom']) && null != $options['getICFrom']) ? $options['getICFrom'] : 'Fallback';
+        $getICFrom = (isset($options['getICFrom']) && null != $options['getICFrom']) ? $options['getICFrom'] : $this->defaultInputOptionsSource;
         $data = (isset($options['data']) && null != $options['data']) ? $options['data'] : null;
         $formOptions = (isset($options['options']) && null != $options['options']) ? $options['options'] : array();
 
-        //Get the options handler from the dependency container
-        $optionsHandler = $this->container->get($this->optionHandlerServiceName);
-
-        //Check that the options handler implements the option handler interface
-        if (!in_array('MESD\Jasper\ReportBundle\Interfaces\OptionsHandlerInterface', class_implements($optionsHandler))) {
-            throw new \Exception(self::EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE);
-        }
+        //Get the options handler service
+        $optionsHandler = $this->getOptionsHandler();
 
         //Create a new input control factory
         $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'MESD\Jasper\ReportBundle\InputControl\\');
@@ -287,14 +283,62 @@ class ClientService
 
 
     /**
+     * Get the options handler service
+     * 
+     * @return AbstractOptionsHandler The options handler
+     */
+    public function getOptionsHandler() {
+        //Get the options handler from the dependency container
+        $optionsHandler = $this->container->get($this->optionHandlerServiceName);
+
+        //Check that the options handler implements the option handler interface
+        if (!in_array('MESD\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler', class_parents($optionsHandler))) {
+            throw new \Exception(self::EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE);
+        }
+
+        //return the handler
+        return $optionsHandler;
+    }
+
+
+    /**
+     * Gets the array of input controls for a requested report
+     *
+     * @param  string $reportUri The uri of the report to get input controls for
+     * @param  string $getICFrom The source of the options, else the default will be used
+     *
+     * @return array             The array of input controls for the given report
+     */
+    public function getReportInputControls($reportUri, $getICFrom = null) {
+        //Determine the source of the input options
+        $getICFrom = $getICFrom ?: $this->defaultInputOptionsSource;
+
+        //Get the options handler
+        $optionsHandler = $this->getOptionsHandler();
+
+        //Create a new input control factory
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'MESD\Jasper\ReportBundle\InputControl\\');
+
+        //Load the input controls from the client using the factory and the options handler
+        $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
+
+        //return the input controls
+        return $inputControls;
+    }
+
+
+    /**
      * Creates a new report builder object with some of the bundle configuration passed in
      *
      * @param  string $resourceUri Uri of the report on the jasper server
-     * @param  string $getICFrom   Where to get the input control options from
+     * @param  string $getICFrom   Where to get the input control options from, else the default will be used
      *
      * @return FormBuilder         The form builder
      */
-    public function createReportBuilder($resourceUri, $getICFrom = 'Fallback') {
+    public function createReportBuilder($resourceUri, $getICFrom = null) {
+        //Set the input options source
+        $getICFrom = $getICFrom ?: $this->defaultInputOptionsSource;
+
         //Get the options handler from the dependency container
         $optionsHandler = $this->container->get($this->optionHandlerServiceName);
 
@@ -419,25 +463,18 @@ class ClientService
         }
     }
 
-    //Returns specified asset from a report with the specified jsessionid
+    /**
+     * Returns the asset associated with the asset uri and jsessionid combo
+     *
+     * @param  string $assetUri   The assets uri on the jasper server
+     * @param  string $jSessionId The session id for which the asset is associated with
+     *
+     * @return string             The raw asset
+     */
     public function getReportAsset($assetUri, $jSessionId) {
         //Create a connection with the given jSessionId
         $assetClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUser, $this->reportPass, $jSessionId);
         return $assetClient->getReportAsset($assetUri);
-    }
-
-    //Get input control
-    public function getReportInputControl($resource, $getICFrom) {
-        if ($this->isConnected()) {
-            $inputControl = $this->jasperClient->getReportInputControl($resource, $getICFrom);
-            if ($inputControl) {
-                return $inputControl;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
 
 
@@ -886,6 +923,30 @@ class ClientService
     public function setUseSecurity($useSecurity)
     {
         $this->useSecurity = $useSecurity;
+
+        return $this;
+    }
+
+    /**
+     * Gets the How to handle input options by default.
+     *
+     * @return string
+     */
+    public function getDefaultInputOptionsSource()
+    {
+        return $this->defaultInputOptionsSource;
+    }
+
+    /**
+     * Sets the How to handle input options by default.
+     *
+     * @param string $defaultInputOptionsSource the default input options source
+     *
+     * @return self
+     */
+    public function setDefaultInputOptionsSource($defaultInputOptionsSource)
+    {
+        $this->defaultInputOptionsSource = $defaultInputOptionsSource;
 
         return $this;
     }

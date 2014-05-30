@@ -93,7 +93,7 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
             $optionList = $this->optionHandler->getList($this);
         } elseif (self::GET_IC_FROM_FALLBACK == $this->getICFrom) {
             //If fallback, check if the options handler returns null (doesnt handle) and then make use of the jasper method
-            $optionList = $this->optionHandler->getList($this);
+            $optionList = $this->optionHandler->getList($this->getId());
             if (null === $optionList) {
                 $optionList = $this->getOptionListFromJasper();
             }
