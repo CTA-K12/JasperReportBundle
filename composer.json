@@ -4,9 +4,9 @@
     ,"type": "symfony-bundle"
     ,"description": "Jasper Reports bundle"
     ,"autoload": {
-        "psr-0": { "MESD\\Jasper\\ReportBundle": "" }
+        "psr-0": { "Mesd\\Jasper\\ReportBundle": "" }
     }
-    ,"target-dir": "MESD/Jasper/ReportBundle"
+    ,"target-dir": "Mesd/Jasper/ReportBundle"
     ,"repositories": [
     {
         "type" : "vcs"
