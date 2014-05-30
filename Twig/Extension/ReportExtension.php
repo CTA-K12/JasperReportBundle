@@ -1,8 +1,8 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Twig\Extension;
+namespace Mesd\Jasper\ReportBundle\Twig\Extension;
 
-use MESD\Jasper\ReportBundle\Helper\DisplayHelper;
+use Mesd\Jasper\ReportBundle\Helper\DisplayHelper;
 
 class ReportExtension extends \Twig_Extension {
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Helper;
+namespace Mesd\Jasper\ReportBundle\Helper;
 
-use MESD\Jasper\ReportBundle\Helper\PageLinkManager;
+use Mesd\Jasper\ReportBundle\Helper\PageLinkManager;
 
 /**
  * Manages the page links
@@ -63,7 +63,7 @@ class PageLinkManager
         }
 
         //implode with the delimiter and return the result
-        return '<div class="mesd-jasperreport-pages">' . implode($this->delimiter, $pieces) . '</div>';
+        return '<div class="Mesd-jasperreport-pages">' . implode($this->delimiter, $pieces) . '</div>';
     }
 
 

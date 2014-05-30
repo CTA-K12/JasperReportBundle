@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Exception;
+namespace Mesd\Jasper\ReportBundle\Exception;
 
 class JasperNotConnectedException extends \Exception
 {

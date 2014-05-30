@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Repository;
+namespace Mesd\Jasper\ReportBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;

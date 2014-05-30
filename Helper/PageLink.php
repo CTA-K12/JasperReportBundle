@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Helper;
+namespace Mesd\Jasper\ReportBundle\Helper;
 
 /**
  * Simple little helper class to help with displaying the page links for a report viewer
@@ -73,7 +73,7 @@ class PageLink
         if ($this->disabled) {
             return $this->text;
         } else {
-            $return = '<a class="mesd-jasperreport-page-link ';
+            $return = '<a class="Mesd-jasperreport-page-link ';
             foreach($this->classes as $class) {
                 $return = $return . $class . ' ';
             }

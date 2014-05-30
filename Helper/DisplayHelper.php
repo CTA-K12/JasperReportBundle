@@ -1,11 +1,11 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Helper;
+namespace Mesd\Jasper\ReportBundle\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-use MESD\Jasper\ReportBundle\Helper\PageLinkManager;
+use Mesd\Jasper\ReportBundle\Helper\PageLinkManager;
 
 class DisplayHelper 
 {
@@ -105,7 +105,7 @@ class DisplayHelper
 
         //Render the report viewer twig
         return $this->container->get('templating')->render(
-            'MESDJasperReportBundle:Report:report.html.twig', array(
+            'MesdJasperReportBundle:Report:report.html.twig', array(
                     'report' => $report
                 )
             );
@@ -136,7 +136,7 @@ class DisplayHelper
 
         //Render the partial twig
         return $this->container->get('templating')->render(
-            'MESDJasperReportBundle:Report:exportLinks.html.twig', array(
+            'MesdJasperReportBundle:Report:exportLinks.html.twig', array(
                     'exportLinks' => $exportLinks
                 )
             );

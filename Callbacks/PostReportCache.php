@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Callbacks;
+namespace Mesd\Jasper\ReportBundle\Callbacks;
 
 use JasperClient\Interfaces\PostReportCacheCallback;
 
@@ -49,7 +49,7 @@ class PostReportCache implements PostReportCacheCallback
      */
     public function postReportCache($requestId, $options, $executionDetails) {
         //Find the report history entry with the given request id and update its status to cached
-        $rh = $this->em->getRepository('MESDJasperReportBundle:ReportHistory')->findOneByRequestId($requestId);
+        $rh = $this->em->getRepository('MesdJasperReportBundle:ReportHistory')->findOneByRequestId($requestId);
 
         //Check that the report is not empty
         $totalPagess = $executionDetails->xpath('//reportExecution/totalPages');  

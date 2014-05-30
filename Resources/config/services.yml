@@ -1,28 +1,28 @@
 parameters:
 
 services:
-    mesd.jasperreport.client:
-        class: MESD\Jasper\ReportBundle\Services\ClientService
+    mesd.jasper.report.client:
+        class: Mesd\Jasper\ReportBundle\Services\ClientService
         arguments: [ @service_container ]
 
-    mesd.jasperreport.loader:
-        class: MESD\Jasper\ReportBundle\Services\LoaderService
+    mesd.jasper.report.loader:
+        class: Mesd\Jasper\ReportBundle\Services\LoaderService
         arguments: [ @router ]
 
-    mesd.jasperreport.history:
-        class: MESD\Jasper\ReportBundle\Services\HistoryService
-        arguments: [ @doctrine, @security.context, @mesd.jasperreport.client ]
+    mesd.jasper.report.history:
+        class: Mesd\Jasper\ReportBundle\Services\HistoryService
+        arguments: [ @doctrine, @security.context, @mesd.jasper.report.client ]
 
-    mesd.jasperreport.security:
-        class: MESD\Jasper\ReportBundle\Services\SecurityService
+    mesd.jasper.report.security:
+        class: Mesd\Jasper\ReportBundle\Services\SecurityService
         arguments: [ @security.context ]
 
-    mesd.jasperreport.display_helper:
-        class: MESD\Jasper\ReportBundle\Helper\DisplayHelper
+    mesd.jasper.report.display_helper:
+        class: Mesd\Jasper\ReportBundle\Helper\DisplayHelper
         arguments: [ @service_container ]
 
-    mesd.jasperreport.twig.extension.report:
-        class: MESD\Jasper\ReportBundle\Twig\Extension\ReportExtension
-        arguments: [ @mesd.jasperreport.display_helper ]
+    mesd.jasper.report.twig.extension.report:
+        class: Mesd\Jasper\ReportBundle\Twig\Extension\ReportExtension
+        arguments: [ @mesd.jasper.report.display_helper ]
         tags:
             - { name: twig.extension }

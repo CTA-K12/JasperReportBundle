@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Entity;
+namespace Mesd\Jasper\ReportBundle\Entity;
 
 class ReportHistory
 {

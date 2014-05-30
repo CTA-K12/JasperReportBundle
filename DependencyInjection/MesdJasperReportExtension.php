@@ -1,13 +1,13 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\DependencyInjection;
+namespace Mesd\Jasper\ReportBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class MESDJasperReportExtension extends Extension
+class MesdJasperReportExtension extends Extension
 {
     public function load( array $configs, ContainerBuilder $container ) {
         $configuration = $this->getConfiguration($configs, $container);
@@ -17,7 +17,7 @@ class MESDJasperReportExtension extends Extension
         $loader->load( 'services.yml' );
 
         //Setup the client service interface
-        $reportClientDefinition = $container->getDefinition('mesd.jasperreport.client');
+        $reportClientDefinition = $container->getDefinition('mesd.jasper.report.client');
 
         //Set the connection settings from the config file
         $reportClientDefinition->addMethodCall('setReportUsername', array($config['connection']['username']));
@@ -50,7 +50,7 @@ class MESDJasperReportExtension extends Extension
         $reportClientDefinition->addMethodCall('init');
 
         //Setup the report loader service
-        $reportLoaderDefinition = $container->getDefinition('mesd.jasperreport.loader');
+        $reportLoaderDefinition = $container->getDefinition('mesd.jasper.report.loader');
 
         //Set the defaults
         $reportLoaderDefinition->addMethodCall('setReportCacheDir', array($config['report_cache']['cache_dir']));
@@ -59,19 +59,19 @@ class MESDJasperReportExtension extends Extension
         $reportLoaderDefinition->addMethodCall('setDefaultPage', array($config['report_loader']['default_page']));
 
         //Setup the display helper
-        $displayHelperDefinition = $container->getDefinition('mesd.jasperreport.display_helper');
+        $displayHelperDefinition = $container->getDefinition('mesd.jasper.report.display_helper');
 
         //Set the defaults
         $displayHelperDefinition->addMethodCall('setDefaultExportRoute', array($config['display']['default_export_route']));
 
         //Setup the report history service
-        $reportHistoryDefinition = $container->getDefinition('mesd.jasperreport.history');
+        $reportHistoryDefinition = $container->getDefinition('mesd.jasper.report.history');
 
         //Set the entity manager name to the same as the client 
         $reportHistoryDefinition->addMethodCall('setEntityManager', array($config['report_history']['entity_manager']));
 
         //Get the security service definition
-        $reportSecurityDefinition = $container->getDefinition('mesd.jasperreport.security');
+        $reportSecurityDefinition = $container->getDefinition('mesd.jasper.report.security');
 
         //Append the project root dir to the security file
         $securityFile = $container->getParameter('kernel.root_dir') . $config['report_security']['security_file'];

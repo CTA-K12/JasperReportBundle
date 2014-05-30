@@ -1,12 +1,12 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Services;
+namespace Mesd\Jasper\ReportBundle\Services;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Routing\Router;
 
-use MESD\Jasper\ReportBundle\Services\ClientService;
+use Mesd\Jasper\ReportBundle\Services\ClientService;
 
 class HistoryService
 {
@@ -294,10 +294,10 @@ class HistoryService
     /**
      * Returns the report history repository using this services entity manager
      *
-     * @return MESD\Jasper\ReportBundle\Repository\ReportHistoryRepository The report history repo
+     * @return Mesd\Jasper\ReportBundle\Repository\ReportHistoryRepository The report history repo
      */
     public function getReportHistoryRepository() {
-        return $this->getEM()->getRepository('MESDJasperReportBundle:ReportHistory');
+        return $this->getEM()->getRepository('MesdJasperReportBundle:ReportHistory');
     }
 
 

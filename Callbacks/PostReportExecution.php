@@ -1,12 +1,12 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Callbacks;
+namespace Mesd\Jasper\ReportBundle\Callbacks;
 
 use JasperClient\Interfaces\PostReportExecutionCallback;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
-use MESD\Jasper\ReportBundle\Entity\ReportHistory;
+use Mesd\Jasper\ReportBundle\Entity\ReportHistory;
 use JasperClient\Client\JasperHelper;
 
 class PostReportExecution implements PostReportExecutionCallback

@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Command;
+namespace Mesd\Jasper\ReportBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,7 +15,7 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
      */
     protected function configure() {
         $this
-            ->setName('mesd_jasper_report:security:generate-yaml')
+            ->setName('Mesd_jasper_report:security:generate-yaml')
             ->setDescription('Generates/Updates the report security yaml file from the jasper server contents')
             ->addOption('roles', 'r', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'The roles that are set by default will use the roles defined in the configuration if none given')
             ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'The path where the report security yml file will be placed at')
@@ -32,7 +32,7 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         //Start by getting the security service reference
-        $security = $this->getContainer()->get('mesd.jasperreport.security');
+        $security = $this->getContainer()->get('mesd.jasper.report.security');
 
         //Process the input options
         $roles  = $input->getOption('roles')  ?: $security->getDefaultRoles();
@@ -52,7 +52,7 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
         }
 
         //Turn off security for the client for the time being
-        $this->getContainer()->get('mesd.jasperreport.client')->setUseSecurity(false);
+        $this->getContainer()->get('mesd.jasper.report.client')->setUseSecurity(false);
 
         //Convert the file structure to an array with the roles set
         $this->setResource($security, $security->getDefaultFolder(), $roles, $depth);
@@ -75,7 +75,7 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
         }
 
         //Get the children 
-        $children = $this->getContainer()->get('mesd.jasperreport.client')->getResourceList($resource);
+        $children = $this->getContainer()->get('mesd.jasper.report.client')->getResourceList($resource);
         
         //Call recursively
         foreach($children as $child) {

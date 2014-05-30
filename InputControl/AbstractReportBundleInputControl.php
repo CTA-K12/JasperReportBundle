@@ -1,11 +1,11 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\InputControl;
+namespace Mesd\Jasper\ReportBundle\InputControl;
 
 use JasperClient\Client\AbstractInputControl;
 use JasperClient\Client\JasperHelper;
 
-use MESD\Jasper\ReportBundle\Interfaces\OptionHandlerInterface;
+use Mesd\Jasper\ReportBundle\Interfaces\OptionHandlerInterface;
 
 use Symfony\Component\Form\FormBuilder;
 
@@ -32,7 +32,7 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
 
     /**
      * The options manager to get the options list from
-     * @var MESD\Jasper\ReportBundle\Interfaces\OptionHandlerInterface
+     * @var Mesd\Jasper\ReportBundle\Interfaces\OptionHandlerInterface
      */
     protected $optionHandler;
 

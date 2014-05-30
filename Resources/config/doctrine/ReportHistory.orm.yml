@@ -1,7 +1,7 @@
-MESD\Jasper\ReportBundle\Entity\ReportHistory:
+Mesd\Jasper\ReportBundle\Entity\ReportHistory:
     type: entity
     table: jasperreport_report_history
-    repositoryClass: MESD\Jasper\ReportBundle\Repository\ReportHistoryRepository
+    repositoryClass: Mesd\Jasper\ReportBundle\Repository\ReportHistoryRepository
     fields:
         id:
             type: integer

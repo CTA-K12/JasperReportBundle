@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Services;
+namespace Mesd\Jasper\ReportBundle\Services;
 
 use JasperClient\Client\ReportLoader;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Factories;
+namespace Mesd\Jasper\ReportBundle\Factories;
 
 use JasperClient\Interfaces\InputControlAbstractFactory;
 
-use MESD\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler;
+use Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler;
 
 class InputControlFactory implements InputControlAbstractFactory
 {
@@ -14,7 +14,7 @@ class InputControlFactory implements InputControlAbstractFactory
 
 
     const DEFAULT_GET_IC_FROM = 'Fallback';
-    const DEFAULT_INPUT_CONTROL_TYPE_NAMESPACE = 'MESD\Jasper\ReportBundle\InputControl\\';
+    const DEFAULT_INPUT_CONTROL_TYPE_NAMESPACE = 'Mesd\Jasper\ReportBundle\InputControl\\';
 
 
     ///////////////
@@ -30,7 +30,7 @@ class InputControlFactory implements InputControlAbstractFactory
 
     /**
      * The options handler
-     * @var MESD\Jasper\ReportBundle\Interfaces\OptionsHandlerInterface
+     * @var Mesd\Jasper\ReportBundle\Interfaces\OptionsHandlerInterface
      */
     private $optionsHandler;
 

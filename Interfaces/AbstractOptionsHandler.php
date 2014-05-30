@@ -1,8 +1,8 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Interfaces;
+namespace Mesd\Jasper\ReportBundle\Interfaces;
 
-use MESD\Jasper\ReportBundle\InputControl\AbstractReportBundleInputControl;
+use Mesd\Jasper\ReportBundle\InputControl\AbstractReportBundleInputControl;
 
 /**
  * Interface that defines the methods required by an options manager

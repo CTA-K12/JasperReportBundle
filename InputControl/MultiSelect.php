@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\InputControl;
+namespace Mesd\Jasper\ReportBundle\InputControl;
 
 use Symfony\Component\Form\FormBuilder;
 

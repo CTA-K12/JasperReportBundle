@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Controller;
+namespace Mesd\Jasper\ReportBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,7 +32,7 @@ class ReportController extends ContainerAware
      * @return Response          The raw asset
      */
     public function displayCachedAssetAction($asset, $requestId) {
-        $asset = $this->container->get('mesd.jasperreport.loader')->getReportLoader()->getCachedAsset($asset, $requestId);
+        $asset = $this->container->get('mesd.jasper.report.loader')->getReportLoader()->getCachedAsset($asset, $requestId);
         return new Response($asset, 200, array());
     }
 
@@ -47,7 +47,7 @@ class ReportController extends ContainerAware
      */
     public function exportCachedReportAction($requestId, $format) {
         //Get the export data
-        $export = $this->container->get('mesd.jasperreport.loader')->getReportLoader()->getCachedReport($requestId, $format);
+        $export = $this->container->get('mesd.jasper.report.loader')->getReportLoader()->getCachedReport($requestId, $format);
 
         //Create the response
         $response = new Response();

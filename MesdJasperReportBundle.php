@@ -1,12 +1,12 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle;
+namespace Mesd\Jasper\ReportBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Console\Application;
 
-class MESDJasperReportBundle extends Bundle
+class MesdJasperReportBundle extends Bundle
 {
     public function registerCommands(Application $application){
         parent::registerCommands($application);

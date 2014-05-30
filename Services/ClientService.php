@@ -1,20 +1,20 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\Services;
+namespace Mesd\Jasper\ReportBundle\Services;
 
 use JasperClient\Client\Client;
 use JasperClient\Client\Report;
 use JasperClient\Client\ReportBuilder;
 use JasperClient\Client\ReportLoader;
 
-use MESD\Jasper\ReportBundle\Event\ReportFolderOpenEvent;
-use MESD\Jasper\ReportBundle\Event\ReportViewerRequestEvent;
+use Mesd\Jasper\ReportBundle\Event\ReportFolderOpenEvent;
+use Mesd\Jasper\ReportBundle\Event\ReportViewerRequestEvent;
 
-use MESD\Jasper\ReportBundle\Exception\JasperNotConnectedException;
-use MESD\Jasper\ReportBundle\Factories\InputControlFactory;
+use Mesd\Jasper\ReportBundle\Exception\JasperNotConnectedException;
+use Mesd\Jasper\ReportBundle\Factories\InputControlFactory;
 
-use MESD\Jasper\ReportBundle\Callbacks\PostReportCache;
-use MESD\Jasper\ReportBundle\Callbacks\PostReportExecution;
+use Mesd\Jasper\ReportBundle\Callbacks\PostReportCache;
+use Mesd\Jasper\ReportBundle\Callbacks\PostReportExecution;
 
 use Symfony\Component\DependencyInjection\Container;
 
@@ -259,7 +259,7 @@ class ClientService
         $optionsHandler = $this->getOptionsHandler();
 
         //Create a new input control factory
-        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'MESD\Jasper\ReportBundle\InputControl\\');
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\');
 
         //Load the input controls from the client using the factory and the options handler
         $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
@@ -292,7 +292,7 @@ class ClientService
         $optionsHandler = $this->container->get($this->optionHandlerServiceName);
 
         //Check that the options handler implements the option handler interface
-        if (!in_array('MESD\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler', class_parents($optionsHandler))) {
+        if (!in_array('Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler', class_parents($optionsHandler))) {
             throw new \Exception(self::EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE);
         }
 
@@ -317,7 +317,7 @@ class ClientService
         $optionsHandler = $this->getOptionsHandler();
 
         //Create a new input control factory
-        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'MESD\Jasper\ReportBundle\InputControl\\');
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\');
 
         //Load the input controls from the client using the factory and the options handler
         $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
@@ -343,7 +343,7 @@ class ClientService
         $optionsHandler = $this->container->get($this->optionHandlerServiceName);
 
         //Create a new input control factory
-        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'MESD\Jasper\ReportBundle\InputControl\\');
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\');
 
         //Get the report builder started from the client
         $reportBuilder = $this->jasperClient->createReportBuilder($resourceUri, $getICFrom, $icFactory);
@@ -376,7 +376,7 @@ class ClientService
         if ($this->useSecurity) {
             $newReturn = array();
             foreach($return as $resource) {
-                if ($this->container->get('mesd.jasperreport.security')->canView($resource->getUriString())) {
+                if ($this->container->get('mesd.jasper.report.security')->canView($resource->getUriString())) {
                     $newReturn[] = $resource;
                 }
             }
@@ -428,12 +428,12 @@ class ClientService
     }
 
     //Get a report view, like get report, but will handle query parameters and render the correct page
-    //can be passed to the mesd_jasperreport_report_view twig function to automatically render the controls and report
+    //can be passed to the MesdJasperReportBundle_report_view twig function to automatically render the controls and report
     public function getReportView($reportUri, $format = 'html') {
         if ($this->isConnected()) {
             //Create an event with default params and pass it to the event listener to process
             $reportViewerEvent = new ReportViewerRequestEvent($format, 1);
-            $this->eventDispatcher->dispatch('mesd.jasperreport.report_viewer_request', $reportViewerEvent);
+            $this->eventDispatcher->dispatch('Mesd.jasperreport.report_viewer_request', $reportViewerEvent);
             if ($reportViewerEvent->isPropagationStopped()) {
                 if ($reportViewerEvent->isAsset()) {
                     return $this->getReportAsset($reportViewerEvent->getAssetUri(), $reportViewerEvent->getJSessionId());

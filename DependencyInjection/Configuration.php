@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\Jasper\ReportBundle\DependencyInjection;
+namespace Mesd\Jasper\ReportBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
     {
         $builder = new TreeBuilder();
 
-        $builder->root('mesd_jasper_report')
+        $builder->root('Mesd_jasper_report')
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('default_folder')->defaultValue('/reports')->end()
@@ -42,7 +42,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('display')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('default_export_route')->defaultValue('mesd_jasperreport_export_cached_report')->end()
+                        ->scalarNode('default_export_route')->defaultValue('MesdJasperReportBundle_export_cached_report')->end()
                     ->end()
                 ->end()
                 ->arrayNode('report_loader')
@@ -50,7 +50,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('default_page')->defaultValue(1)->end()
                         ->scalarNode('default_attach_asset_url')->defaultTrue()->end()
-                        ->scalarNode('default_asset_route')->defaultValue('mesd_jasperreport_render_cached_asset')->end()
+                        ->scalarNode('default_asset_route')->defaultValue('MesdJasperReportBundle_render_cached_asset')->end()
                     ->end()
                 ->end()
                 ->arrayNode('report_history')
