@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Mesd.html">\Mesd</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">77</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2088338802"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-2088338802" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1390845623"></a>
+                                <a href="../namespaces/Mesd.html" style="margin-left: 30px; padding-left: 0">Mesd</a>
+            </div>
+            <div id="namespace-1390845623" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-517378394"></a>
+                                <a href="../namespaces/Mesd.Jasper.html" style="margin-left: 30px; padding-left: 0">Jasper</a>
+            </div>
+            <div id="namespace-517378394" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1713410341"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.html" style="margin-left: 30px; padding-left: 0">ReportBundle</a>
+            </div>
+            <div id="namespace-1713410341" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1520284684"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Callbacks.html" style="margin-left: 30px; padding-left: 0">Callbacks</a>
+            </div>
+            <div id="namespace-1520284684" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportCache.html">PostReportCache</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportExecution.html">PostReportExecution</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1223176566"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Command.html" style="margin-left: 30px; padding-left: 0">Command</a>
+            </div>
+            <div id="namespace-1223176566" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Command.GenerateSecurityYamlCommand.html">GenerateSecurityYamlCommand</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-157916431"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-157916431" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Controller.ReportController.html">ReportController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2008433684"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.DependencyInjection.html" style="margin-left: 30px; padding-left: 0">DependencyInjection</a>
+            </div>
+            <div id="namespace-2008433684" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.DependencyInjection.Configuration.html">Configuration</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.DependencyInjection.MesdJasperReportExtension.html">MesdJasperReportExtension</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1722903008"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-1722903008" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Entity.ReportHistory.html">ReportHistory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1106581321"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Exception.html" style="margin-left: 30px; padding-left: 0">Exception</a>
+            </div>
+            <div id="namespace-1106581321" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Exception.JasperNotConnectedException.html">JasperNotConnectedException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-11614807"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Factories.html" style="margin-left: 30px; padding-left: 0">Factories</a>
+            </div>
+            <div id="namespace-11614807" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Factories.InputControlFactory.html">InputControlFactory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1017771025"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Helper.html" style="margin-left: 30px; padding-left: 0">Helper</a>
+            </div>
+            <div id="namespace-1017771025" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.DisplayHelper.html">DisplayHelper</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.PageLink.html">PageLink</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.PageLinkManager.html">PageLinkManager</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1504032668"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.InputControl.html" style="margin-left: 30px; padding-left: 0">InputControl</a>
+            </div>
+            <div id="namespace-1504032668" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.AbstractReportBundleInputControl.html">AbstractReportBundleInputControl</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.MultiSelect.html">MultiSelect</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.MultiSelectCheckbox.html">MultiSelectCheckbox</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.Option.html">Option</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleSelect.html">SingleSelect</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueDate.html">SingleValueDate</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueNumber.html">SingleValueNumber</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueText.html">SingleValueText</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1094994055"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-1094994055" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html">AbstractOptionsHandler</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-46437178"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
+            </div>
+            <div id="namespace-46437178" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Repository.ReportHistoryRepository.html">ReportHistoryRepository</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1694859001"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
+            </div>
+            <div id="namespace-1694859001" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html">ClientService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html">HistoryService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.LoaderService.html">LoaderService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html">SecurityService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1651844147"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.html" style="margin-left: 30px; padding-left: 0">Twig</a>
+            </div>
+            <div id="namespace-1651844147" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1893100170"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.Extension.html" style="margin-left: 30px; padding-left: 0">Extension</a>
+            </div>
+            <div id="namespace-1893100170" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Twig.Extension.ReportExtension.html">ReportExtension</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.MesdJasperReportBundle.html">MesdJasperReportBundle</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Services.html">\Mesd\Jasper\ReportBundle\Services</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Mesd\Jasper\ReportBundle\Services</small>HistoryService</h1>
+                    <p><em></em></p>
+                    
+
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_loadHistoryForReport" class="">loadHistoryForReport()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_getReportHistoryDisplay" class="">getReportHistoryDisplay()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_prettifyParameters" class="">prettifyParameters()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_loadRecentHistory" class="">loadRecentHistory()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_getEM" class="">getEM()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_getReportHistoryRepository" class="">getReportHistoryRepository()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_getEntityManager" class="">getEntityManager()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_setEntityManager" class="">setEntityManager()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#method_getReportInputControls" class="">getReportInputControls()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#property_entityManager" class="">$entityManager</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#property_doctrine" class="">$doctrine</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#property_securityContext" class="">$securityContext</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#property_clientService" class="">$clientService</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html#property_inputControlStash" class="">$inputControlStash</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Services.HistoryService.html"><div class="path-wrapper">Services/HistoryService.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper"></div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Mesd\Jasper\ReportBundle\Services\HistoryService</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_entityManager" name="property_entityManager" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$entityManager</h3>
+                <pre class="signature">$entityManager : string</pre>
+                <p><em>String name of the entity manager that is handling the report history records</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_doctrine" name="property_doctrine" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$doctrine</h3>
+                <pre class="signature">$doctrine : \Doctrine\Bundle\DoctrineBundle\Registry</pre>
+                <p><em>Doctrine Registry Interface</em></p>
+                
+
+                                <h4>Type</h4>
+                \Doctrine\Bundle\DoctrineBundle\Registry
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_securityContext" name="property_securityContext" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$securityContext</h3>
+                <pre class="signature">$securityContext : \Symfony\Component\Security\Core\SecurityContext</pre>
+                <p><em>Symfony Security Context</em></p>
+                
+
+                                <h4>Type</h4>
+                \Symfony\Component\Security\Core\SecurityContext
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_clientService" name="property_clientService" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$clientService</h3>
+                <pre class="signature">$clientService : \Mesd\Jasper\ReportBundle\Services\ClientService</pre>
+                <p><em>The Client Service</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html">\Mesd\Jasper\ReportBundle\Services\ClientService</a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_inputControlStash" name="property_inputControlStash" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$inputControlStash</h3>
+                <pre class="signature">$inputControlStash : array</pre>
+                <p><em>An array of report input controls that used when displaying history records to speed up the process</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Doctrine\Bundle\DoctrineBundle\Registry <span class="argument">$doctrine</span>, \Symfony\Component\Security\Core\SecurityContext <span class="argument">$securityContext</span>, \Mesd\Jasper\ReportBundle\Services\ClientService <span class="argument">$clientService</span>)</pre>
+                <p><em>Constructor</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Doctrine\Bundle\DoctrineBundle\Registry</td>
+                                <td>$doctrine </td>
+                                <td><p>The doctrine registry interface</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Symfony\Component\Security\Core\SecurityContext</td>
+                                <td>$securityContext </td>
+                                <td><p>The security context of the current active user</p></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html">\Mesd\Jasper\ReportBundle\Services\ClientService</a></td>
+                                <td>$clientService </td>
+                                <td><p>The client service</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_loadHistoryForReport" name="method_loadHistoryForReport" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">loadHistoryForReport()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">loadHistoryForReport(string <span class="argument">$reportUri</span>, boolean <span class="argument">$limitByCurrentUser</span>, \Mesd\Jasper\ReportBundle\Services\options <span class="argument">$options</span>) : array</pre>
+                <p><em>Gets history records for a particular report</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportUri </td>
+                                <td><p>The uri of the report to get records for</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$limitByCurrentUser </td>
+                                <td><p>Whether to limit the return by only records associated with the current user</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Mesd\Jasper\ReportBundle\Services\options</td>
+                                <td>$options </td>
+                                <td><p>Additional options for the report history repository filter call</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>The array of report history records</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportHistoryDisplay" name="method_getReportHistoryDisplay" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportHistoryDisplay()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportHistoryDisplay(string <span class="argument">$reportUri</span>, boolean <span class="argument">$limitByCurrentUser</span>, \Mesd\Jasper\ReportBundle\Services\options <span class="argument">$options</span>) : array</pre>
+                <p><em>Gets history records for a particular report or all reports and places them in more display friendly fashion</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportUri </td>
+                                <td><p>The uri of the report to get records for, if null, all reports will be grabbed</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$limitByCurrentUser </td>
+                                <td><p>Whether to limit the return by only records associated with the current user</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Mesd\Jasper\ReportBundle\Services\options</td>
+                                <td>$options </td>
+                                <td><p>Additional options for the report history repository filter call</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>The array of report history records</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_prettifyParameters" name="method_prettifyParameters" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">prettifyParameters()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">prettifyParameters(string <span class="argument">$reportUri</span>, array <span class="argument">$parameters</span>) : string</pre>
+                <p><em>Converts the JSON parameters column into something human readable</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportUri </td>
+                                <td><p>The uri of the report the parameters are associated with</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$parameters </td>
+                                <td><p>The array of parameters from the history record</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>The string output of the prettified parameters</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_loadRecentHistory" name="method_loadRecentHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">loadRecentHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">loadRecentHistory(boolean <span class="argument">$limitByCurrentUser</span>, array <span class="argument">$options</span>) : array</pre>
+                <p><em>Load all the recently executed reports</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$limitByCurrentUser </td>
+                                <td><p>Whether to limit by just the current user or to get all reports</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$options </td>
+                                <td><p>Options to pass to the history repository's filter method</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getEM" name="method_getEM" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getEM()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getEM() : \Mesd\Jasper\ReportBundle\Services\Doctrine\ORM\EntityManager</pre>
+                <p><em>Return the entity manager assigned to handle report history records</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Mesd\Jasper\ReportBundle\Services\Doctrine\ORM\EntityManager
+                                            &mdash; <p>The entity manager used by this service</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportHistoryRepository" name="method_getReportHistoryRepository" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportHistoryRepository()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportHistoryRepository() : \Mesd\Jasper\ReportBundle\Services\Mesd\Jasper\ReportBundle\Repository\ReportHistoryRepository</pre>
+                <p><em>Returns the report history repository using this services entity manager</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Mesd\Jasper\ReportBundle\Services\Mesd\Jasper\ReportBundle\Repository\ReportHistoryRepository
+                                            &mdash; <p>The report history repo</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getEntityManager" name="method_getEntityManager" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getEntityManager()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getEntityManager() : string</pre>
+                <p><em>Gets the String name of the entity manager that is handling the report history records.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setEntityManager" name="method_setEntityManager" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setEntityManager()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setEntityManager(string <span class="argument">$entityManager</span>) : self</pre>
+                <p><em>Sets the String name of the entity manager that is handling the report history records.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$entityManager </td>
+                                <td><p>the entity manager</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportInputControls" name="method_getReportInputControls" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getReportInputControls()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportInputControls(string <span class="argument">$reportUri</span>, boolean <span class="argument">$reindex</span>) : array</pre>
+                <p><em>Gets the input controls for the given report
+  Will stash the return from a call to retrieve from if called again in the history classes lifespan</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportUri </td>
+                                <td><p>The uri of the report to get the input controls for</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$reindex </td>
+                                <td><p>If true, the input controls will be reindexed to be keyed with their id</p>
+<pre><code>                         only at the stashing stage</code></pre></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>The input controls</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">HistoryService.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Services/HistoryService.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Mesd.html">\Mesd</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 2nd, 2014 at 15:06.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

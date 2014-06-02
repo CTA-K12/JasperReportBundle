@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Mesd.html">\Mesd</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">77</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2068738920"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-2068738920" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-300891993"></a>
+                                <a href="../namespaces/Mesd.html" style="margin-left: 30px; padding-left: 0">Mesd</a>
+            </div>
+            <div id="namespace-300891993" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-546389966"></a>
+                                <a href="../namespaces/Mesd.Jasper.html" style="margin-left: 30px; padding-left: 0">Jasper</a>
+            </div>
+            <div id="namespace-546389966" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1851295082"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.html" style="margin-left: 30px; padding-left: 0">ReportBundle</a>
+            </div>
+            <div id="namespace-1851295082" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-57084569"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Callbacks.html" style="margin-left: 30px; padding-left: 0">Callbacks</a>
+            </div>
+            <div id="namespace-57084569" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportCache.html">PostReportCache</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportExecution.html">PostReportExecution</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-664710849"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Command.html" style="margin-left: 30px; padding-left: 0">Command</a>
+            </div>
+            <div id="namespace-664710849" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Command.GenerateSecurityYamlCommand.html">GenerateSecurityYamlCommand</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1024767673"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-1024767673" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Controller.ReportController.html">ReportController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1598278709"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.DependencyInjection.html" style="margin-left: 30px; padding-left: 0">DependencyInjection</a>
+            </div>
+            <div id="namespace-1598278709" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.DependencyInjection.Configuration.html">Configuration</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.DependencyInjection.MesdJasperReportExtension.html">MesdJasperReportExtension</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1226251938"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-1226251938" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Entity.ReportHistory.html">ReportHistory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-27376020"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Exception.html" style="margin-left: 30px; padding-left: 0">Exception</a>
+            </div>
+            <div id="namespace-27376020" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Exception.JasperNotConnectedException.html">JasperNotConnectedException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2044811673"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Factories.html" style="margin-left: 30px; padding-left: 0">Factories</a>
+            </div>
+            <div id="namespace-2044811673" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Factories.InputControlFactory.html">InputControlFactory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-137990013"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Helper.html" style="margin-left: 30px; padding-left: 0">Helper</a>
+            </div>
+            <div id="namespace-137990013" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.DisplayHelper.html">DisplayHelper</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.PageLink.html">PageLink</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.PageLinkManager.html">PageLinkManager</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1921059430"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.InputControl.html" style="margin-left: 30px; padding-left: 0">InputControl</a>
+            </div>
+            <div id="namespace-1921059430" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.AbstractReportBundleInputControl.html">AbstractReportBundleInputControl</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.MultiSelect.html">MultiSelect</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.MultiSelectCheckbox.html">MultiSelectCheckbox</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.Option.html">Option</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleSelect.html">SingleSelect</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueDate.html">SingleValueDate</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueNumber.html">SingleValueNumber</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueText.html">SingleValueText</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2046647685"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-2046647685" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html">AbstractOptionsHandler</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1244223987"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
+            </div>
+            <div id="namespace-1244223987" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Repository.ReportHistoryRepository.html">ReportHistoryRepository</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-650440349"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
+            </div>
+            <div id="namespace-650440349" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html">ClientService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html">HistoryService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.LoaderService.html">LoaderService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html">SecurityService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1922076911"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.html" style="margin-left: 30px; padding-left: 0">Twig</a>
+            </div>
+            <div id="namespace-1922076911" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-813100343"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.Extension.html" style="margin-left: 30px; padding-left: 0">Extension</a>
+            </div>
+            <div id="namespace-813100343" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Twig.Extension.ReportExtension.html">ReportExtension</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.MesdJasperReportBundle.html">MesdJasperReportBundle</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Services.html">\Mesd\Jasper\ReportBundle\Services</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Mesd\Jasper\ReportBundle\Services</small>SecurityService</h1>
+                    <p><em></em></p>
+                    
+
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_init" class="">init()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_loadSecurityConfiguration" class="">loadSecurityConfiguration()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_saveSecurityConfiguration" class="">saveSecurityConfiguration()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_canView" class="">canView()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_setRoles" class="">setRoles()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_checkIfExists" class="">checkIfExists()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_determineMaxDepthOfConfig" class="">determineMaxDepthOfConfig()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_isLoadedFromFile" class="">isLoadedFromFile()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_getSecurityFile" class="">getSecurityFile()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_setSecurityFile" class="">setSecurityFile()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_getSecurityContext" class="">getSecurityContext()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_setSecurityContext" class="">setSecurityContext()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_getReady" class="">getReady()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_setReady" class="">setReady()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_getMaxLevelSetAtDefault" class="">getMaxLevelSetAtDefault()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_setMaxLevelSetAtDefault" class="">setMaxLevelSetAtDefault()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_getDefaultFolder" class="">getDefaultFolder()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_setDefaultFolder" class="">setDefaultFolder()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_getDefaultRoles" class="">getDefaultRoles()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_setDefaultRoles" class="">setDefaultRoles()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_arrayDepth" class="">arrayDepth()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_createNode" class="">createNode()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#method_checkNode" class="">checkNode()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_config" class="">$config</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_securityFile" class="">$securityFile</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_securityContext" class="">$securityContext</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_ready" class="">$ready</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_maxLevelSetAtDefault" class="">$maxLevelSetAtDefault</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_defaultFolder" class="">$defaultFolder</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_defaultRoles" class="">$defaultRoles</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html#property_fileFound" class="">$fileFound</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Services.SecurityService.html"><div class="path-wrapper">Services/SecurityService.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper"></div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Mesd\Jasper\ReportBundle\Services\SecurityService</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_config" name="property_config" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$config</h3>
+                <pre class="signature">$config : array</pre>
+                <p><em>Array that holds the report security settings</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_securityFile" name="property_securityFile" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$securityFile</h3>
+                <pre class="signature">$securityFile : string</pre>
+                <p><em>File path to the report security yaml file</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_securityContext" name="property_securityContext" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$securityContext</h3>
+                <pre class="signature">$securityContext : \Symfony\Component\Security\Core\SecurityContext</pre>
+                <p><em>Reference to the symfony security context</em></p>
+                
+
+                                <h4>Type</h4>
+                \Symfony\Component\Security\Core\SecurityContext
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_ready" name="property_ready" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$ready</h3>
+                <pre class="signature">$ready : boolean</pre>
+                <p><em>Whether the class has been initialized or not</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_maxLevelSetAtDefault" name="property_maxLevelSetAtDefault" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$maxLevelSetAtDefault</h3>
+                <pre class="signature">$maxLevelSetAtDefault : boolean</pre>
+                <p><em>Whether folders and reports that are above the default directory in the report server file system are restricted</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_defaultFolder" name="property_defaultFolder" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$defaultFolder</h3>
+                <pre class="signature">$defaultFolder : string</pre>
+                <p><em>The default folder (used here to check if the asked for folder is not above this when the max level flag is set)</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_defaultRoles" name="property_defaultRoles" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$defaultRoles</h3>
+                <pre class="signature">$defaultRoles : array</pre>
+                <p><em>The array of roles to use when a generating a new node and no other roles are given</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_fileFound" name="property_fileFound" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$fileFound</h3>
+                <pre class="signature">$fileFound : boolean</pre>
+                <p><em>If during the init process, a file was successfully loaded, then this will be true, false elsewise</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Symfony\Component\Security\Core\SecurityContext <span class="argument">$securityContext</span>)</pre>
+                <p><em>Constructor</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Symfony\Component\Security\Core\SecurityContext</td>
+                                <td>$securityContext </td>
+                                <td><p>Reference to symfony's security context</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_init" name="method_init" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">init()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">init()</pre>
+                <p><em>Loads the data and prepares this class</em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_loadSecurityConfiguration" name="method_loadSecurityConfiguration" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">loadSecurityConfiguration()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">loadSecurityConfiguration(string <span class="argument">$pathOverride</span>, boolean <span class="argument">$debug</span>) : boolean</pre>
+                <p><em>Loads the configuration from the
+Note: if the file does not exist, a new array will be initialized in its place</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$pathOverride </td>
+                                <td><p>Optional file path to attempt to read from instead of the default injected one</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$debug </td>
+                                <td><p>Whether to throw an error or to just return false on file operations</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the read was successful or not</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_saveSecurityConfiguration" name="method_saveSecurityConfiguration" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">saveSecurityConfiguration()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">saveSecurityConfiguration(string <span class="argument">$pathOverride</span>, boolean <span class="argument">$debug</span>) : boolean</pre>
+                <p><em>Saves the security configuration settings to a file</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$pathOverride </td>
+                                <td><p>Optional file path to attempt to read from instead of the default injected one</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$debug </td>
+                                <td><p>Whether to throw an error or to just return false on file operations</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the write was successful or not</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_canView" name="method_canView" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">canView()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">canView(string <span class="argument">$resourceUri</span>) : boolean</pre>
+                <p><em>Determines whether the current user can view the resource with the given uri</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$resourceUri </td>
+                                <td><p>The uri of the resource on the report server to check if viewable or not</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the current user can view this resource or not</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setRoles" name="method_setRoles" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setRoles()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setRoles(string <span class="argument">$resourceUri</span>, array <span class="argument">$roles</span>) : boolean</pre>
+                <p><em>Sets the roles that can view a resource</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$resourceUri </td>
+                                <td><p>The uri of the resource on the server to view</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$roles </td>
+                                <td><p>The array of roles (string names) that can view this resource</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the node was set or not (false if the node does not exist)</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_checkIfExists" name="method_checkIfExists" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">checkIfExists()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">checkIfExists(string <span class="argument">$resourceUri</span>) : boolean</pre>
+                <p><em>Checks whether a requested node currently exists in the security configuration</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$resourceUri </td>
+                                <td><p>The resource uri to check</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the resource uri currently has a node in the configuration</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_determineMaxDepthOfConfig" name="method_determineMaxDepthOfConfig" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">determineMaxDepthOfConfig()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">determineMaxDepthOfConfig() : int</pre>
+                <p><em>Determines the max depth of the config multidimensional array</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    int
+                                            &mdash; <p>The maximum depth</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isLoadedFromFile" name="method_isLoadedFromFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isLoadedFromFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isLoadedFromFile() : boolean</pre>
+                <p><em>Returns true if the configuration was successfully loaded from the report security file</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the config was loaded from the report security file</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSecurityFile" name="method_getSecurityFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSecurityFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSecurityFile() : string</pre>
+                <p><em>Gets the File path to the report security yaml file.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setSecurityFile" name="method_setSecurityFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setSecurityFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setSecurityFile(string <span class="argument">$securityFile</span>) : self</pre>
+                <p><em>Sets the File path to the report security yaml file.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$securityFile </td>
+                                <td><p>the security file</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSecurityContext" name="method_getSecurityContext" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSecurityContext()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSecurityContext() : \Symfony\Component\Security\Core\SecurityContext</pre>
+                <p><em>Gets the Reference to the symfony security context.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Symfony\Component\Security\Core\SecurityContext
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setSecurityContext" name="method_setSecurityContext" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setSecurityContext()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setSecurityContext(\Symfony\Component\Security\Core\SecurityContext <span class="argument">$securityContext</span>) : self</pre>
+                <p><em>Sets the Reference to the symfony security context.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Symfony\Component\Security\Core\SecurityContext</td>
+                                <td>$securityContext </td>
+                                <td><p>the security context</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReady" name="method_getReady" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReady()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReady() : boolean</pre>
+                <p><em>Gets the Whether the class has been initialized or not.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setReady" name="method_setReady" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setReady()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setReady(boolean <span class="argument">$ready</span>) : self</pre>
+                <p><em>Sets the Whether the class has been initialized or not.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$ready </td>
+                                <td><p>the ready</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getMaxLevelSetAtDefault" name="method_getMaxLevelSetAtDefault" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getMaxLevelSetAtDefault()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getMaxLevelSetAtDefault() : boolean</pre>
+                <p><em>Gets the Whether folders and reports that are above the default directory in the report server file system are restricted.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setMaxLevelSetAtDefault" name="method_setMaxLevelSetAtDefault" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setMaxLevelSetAtDefault()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setMaxLevelSetAtDefault(boolean <span class="argument">$maxLevelSetAtDefault</span>) : self</pre>
+                <p><em>Sets the Whether folders and reports that are above the default directory in the report server file system are restricted.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$maxLevelSetAtDefault </td>
+                                <td><p>the max level set at default</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDefaultFolder" name="method_getDefaultFolder" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDefaultFolder()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDefaultFolder() : string</pre>
+                <p><em>Gets the The default folder (used here to check if the asked for folder is not above this when the max level flag is set).</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDefaultFolder" name="method_setDefaultFolder" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDefaultFolder()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDefaultFolder(string <span class="argument">$defaultFolder</span>) : self</pre>
+                <p><em>Sets the The default folder (used here to check if the asked for folder is not above this when the max level flag is set).</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$defaultFolder </td>
+                                <td><p>the default folder</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDefaultRoles" name="method_getDefaultRoles" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDefaultRoles()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDefaultRoles() : array</pre>
+                <p><em>Gets the The array of roles to use when a generating a new node and no other roles are given.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDefaultRoles" name="method_setDefaultRoles" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDefaultRoles()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDefaultRoles(array <span class="argument">$defaultRoles</span>) : self</pre>
+                <p><em>Sets the The array of roles to use when a generating a new node and no other roles are given.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$defaultRoles </td>
+                                <td><p>the default roles</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_arrayDepth" name="method_arrayDepth" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">arrayDepth()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">arrayDepth(mixed <span class="argument">$element</span>, int <span class="argument">$depth</span>) : int</pre>
+                <p><em>Recursively called function to determine the depth of an array</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$element </td>
+                                <td><p>Element to calculate depth on</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>int</td>
+                                <td>$depth </td>
+                                <td><p>Depth level</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    int
+                                            &mdash; <p>Depth at this point</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_createNode" name="method_createNode" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">createNode()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">createNode(string <span class="argument">$resourceUri</span>, array <span class="argument">$roles</span>)</pre>
+                <p><em>Creates a node in the configuration</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$resourceUri </td>
+                                <td><p>The uri of the resource on the report server to create a security configuration setting for</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$roles </td>
+                                <td><p>The array of roles that will be allowed to view this resource</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_checkNode" name="method_checkNode" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">checkNode()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">checkNode(string <span class="argument">$resourceUri</span>, array <span class="argument">$roles</span>) : boolean</pre>
+                <p><em>Checks whether a resource can be viewed with the given roles</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$resourceUri </td>
+                                <td><p>The uri of the resource on the report server to check security configurations for</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$roles </td>
+                                <td><p>The array of roles that will be allowed to view this resource</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether this resource is viewable by the given roles</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">SecurityService.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Services/SecurityService.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Mesd.html">\Mesd</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 2nd, 2014 at 15:06.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

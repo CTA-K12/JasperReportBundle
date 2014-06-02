@@ -1,0 +1,119 @@
+<?php
+
+namespace Mesd\Jasper\ReportBundle\Repository;
+
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+
+class ReportHistoryRepository extends EntityRepository
+{
+    /**
+     * Returns report history references that are marked as being cached with the match the given options
+     *
+     * @param  array       $options The options array
+     *                                'query' => boolean: Whether to return just the query and not the results
+     *                                'count' => boolean: Whether to return the number of would be results
+     *                                'resource' => string|array: Which resources to retrieve by
+     *                                'username' => string|array: Which usernames to retrieve by
+     *                                'status'   => string|array: Which statuses to retrieve by
+     *                                'startDate'=> \DateTime: The earliest date to get reports by
+     *                                'endDate' => \DateTime: The latest date to get reports by
+     *                                'limit' => number of results to limit by
+     *                                'offset' => the first result to get when limiting
+     *                                'page' => the page to get when limiting (0 is the first page)
+     *                                'order'   => string|array: Which order to return the results in
+     *
+     * @return array|Query|int      The result of the query
+     */
+    public function filter($options = []) {
+        //Handle the options array
+        $options = array_merge(array(
+            'query' => false,
+            'count' => false,
+            'resource' => null,
+            'username' => null,
+            'status' => null,
+            'startDate' => null,
+            'endDate' => null,
+            'limit' => null,
+            'offset' => null,
+            'page' => 0,
+            'order' => array('reportHistory.date DESC')
+            ), $options);
+
+        //Create a new querybuilder
+        $qb = $this->createQueryBuilder('reportHistory');
+        $qb->select('reportHistory');
+
+        //Add in the where clauses
+        if (null !== $options['resource']) {
+            if (is_array($options['resource'])) {
+                $qb->andWhere($qb->expr()->in('reportHistory.reportUri', ':resource'));
+            } else {
+                $qb->andWhere($qb->expr()->eq('reportHistory.reportUri', ':resource'));
+            }
+            $qb->setParameter('resource', $options['resource']);
+        }
+        if (null !== $options['username']) {
+            if (is_array($options['username'])) {
+                $qb->andWhere($qb->expr()->in('reportHistory.username', ':username'));
+            } else {
+                $qb->andWhere($qb->expr()->eq('reportHistory.username', ':username'));
+            }
+            $qb->setParameter('username', $options['username']);
+        }
+        if (null !== $options['status']) {
+            if (is_array($options['status'])) {
+                $qb->andWhere($qb->expr()->in('reportHistory.status', ':status'));
+            } else {
+                $qb->andWhere($qb->expr()->eq('reportHistory.status', ':status'));
+            }
+            $qb->setParameter('status', $options['status']);
+        }
+        if (null !== $options['startDate']) {
+
+        }
+        if (null !== $options['endDate']) {
+
+        }
+        if (null !== $options['limit']) {
+            if (null !== $options['offset']) {
+                $qb->setFirstResult($options['offset']);
+            } else {
+                $qb->setFirstResult($options['page'] * $options['limit']);
+            }
+            $qb->setMaxResults($options['limit']);
+        }
+
+        //Set the order
+        if (null !== $options['order'] && is_array($options['order']) && false == $options['count']) {
+            foreach($options['order'] as $order) {
+                $bits = explode(' ', $order);
+                $qb->addOrderBy($bits[0], $bits[1]);
+            }
+        }
+
+        //Return the results or if the query flag is set the query object or if the count flag is set, the number of would be results
+        if ($options['query']) {
+            return $qb->getQuery();
+        } elseif ($options['count']) {
+            $qb->select($qb->expr()->count('DISTINCT reportHistory.id'));
+            return $qb->getQuery()->getSingleScalarResult();
+        } else {
+            return $qb->getQuery()->getResult();
+        }
+    }
+
+
+    /**
+     * Alias for filter(array('status' => 'cached' ... ))
+     *
+     * @param  array       $options The options array accepted by filter except without the status option
+     *
+     * @return array|Query          The return from the filter function
+     */
+    public function getCachedReports($options = []) {
+        $options['status'] = 'cached';
+        return $this->filter($options);
+    }
+}

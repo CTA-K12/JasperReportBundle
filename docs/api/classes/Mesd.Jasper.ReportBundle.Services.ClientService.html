@@ -1,0 +1,2991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Mesd.html">\Mesd</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">77</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1230543472"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1230543472" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1620764699"></a>
+                                <a href="../namespaces/Mesd.html" style="margin-left: 30px; padding-left: 0">Mesd</a>
+            </div>
+            <div id="namespace-1620764699" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-376269228"></a>
+                                <a href="../namespaces/Mesd.Jasper.html" style="margin-left: 30px; padding-left: 0">Jasper</a>
+            </div>
+            <div id="namespace-376269228" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1496763880"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.html" style="margin-left: 30px; padding-left: 0">ReportBundle</a>
+            </div>
+            <div id="namespace-1496763880" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-369546842"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Callbacks.html" style="margin-left: 30px; padding-left: 0">Callbacks</a>
+            </div>
+            <div id="namespace-369546842" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportCache.html">PostReportCache</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportExecution.html">PostReportExecution</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2020087615"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Command.html" style="margin-left: 30px; padding-left: 0">Command</a>
+            </div>
+            <div id="namespace-2020087615" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Command.GenerateSecurityYamlCommand.html">GenerateSecurityYamlCommand</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2069909436"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-2069909436" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Controller.ReportController.html">ReportController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-178273502"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.DependencyInjection.html" style="margin-left: 30px; padding-left: 0">DependencyInjection</a>
+            </div>
+            <div id="namespace-178273502" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.DependencyInjection.Configuration.html">Configuration</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.DependencyInjection.MesdJasperReportExtension.html">MesdJasperReportExtension</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-190327450"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-190327450" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Entity.ReportHistory.html">ReportHistory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-972113947"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Exception.html" style="margin-left: 30px; padding-left: 0">Exception</a>
+            </div>
+            <div id="namespace-972113947" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Exception.JasperNotConnectedException.html">JasperNotConnectedException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-246796248"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Factories.html" style="margin-left: 30px; padding-left: 0">Factories</a>
+            </div>
+            <div id="namespace-246796248" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Factories.InputControlFactory.html">InputControlFactory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-820867287"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Helper.html" style="margin-left: 30px; padding-left: 0">Helper</a>
+            </div>
+            <div id="namespace-820867287" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.DisplayHelper.html">DisplayHelper</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.PageLink.html">PageLink</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Helper.PageLinkManager.html">PageLinkManager</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-971142134"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.InputControl.html" style="margin-left: 30px; padding-left: 0">InputControl</a>
+            </div>
+            <div id="namespace-971142134" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.AbstractReportBundleInputControl.html">AbstractReportBundleInputControl</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.MultiSelect.html">MultiSelect</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.MultiSelectCheckbox.html">MultiSelectCheckbox</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.Option.html">Option</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleSelect.html">SingleSelect</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueDate.html">SingleValueDate</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueNumber.html">SingleValueNumber</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.InputControl.SingleValueText.html">SingleValueText</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1166933571"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-1166933571" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html">AbstractOptionsHandler</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-664124228"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
+            </div>
+            <div id="namespace-664124228" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Repository.ReportHistoryRepository.html">ReportHistoryRepository</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-871990756"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
+            </div>
+            <div id="namespace-871990756" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html">ClientService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.HistoryService.html">HistoryService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.LoaderService.html">LoaderService</a></li>
+                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Services.SecurityService.html">SecurityService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1905157236"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.html" style="margin-left: 30px; padding-left: 0">Twig</a>
+            </div>
+            <div id="namespace-1905157236" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-863655002"></a>
+                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.Extension.html" style="margin-left: 30px; padding-left: 0">Extension</a>
+            </div>
+            <div id="namespace-863655002" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.Twig.Extension.ReportExtension.html">ReportExtension</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Mesd.Jasper.ReportBundle.MesdJasperReportBundle.html">MesdJasperReportBundle</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Services.html">\Mesd\Jasper\ReportBundle\Services</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Mesd\Jasper\ReportBundle\Services</small>ClientService</h1>
+                    <p><em>Service class that acts as a wrapper around the jasper client class in the jasper client library</em></p>
+                    
+
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_init" class="">init()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_connect" class="">connect()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setCallbacks" class="">setCallbacks()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_buildReportInputForm" class="">buildReportInputForm()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getOptionsHandler" class="">getOptionsHandler()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportInputControls" class="">getReportInputControls()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_createReportBuilder" class="">createReportBuilder()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getResourceList" class="">getResourceList()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_buildReport" class="">buildReport()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportView" class="">getReportView()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportAsset" class="">getReportAsset()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_isConnected" class="">isConnected()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getJasperClient" class="">getJasperClient()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setJasperClient" class="">setJasperClient()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getDefaultAssetRoute" class="">getDefaultAssetRoute()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setDefaultAssetRoute" class="">setDefaultAssetRoute()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getContainer" class="">getContainer()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setContainer" class="">setContainer()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportHost" class="">getReportHost()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setReportHost" class="">setReportHost()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportPort" class="">getReportPort()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setReportPort" class="">setReportPort()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportUsername" class="">getReportUsername()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setReportUsername" class="">setReportUsername()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportPassword" class="">getReportPassword()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setReportPassword" class="">setReportPassword()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getUseFolderCache" class="">getUseFolderCache()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setUseFolderCache" class="">setUseFolderCache()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getFolderCacheDir" class="">getFolderCacheDir()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setFolderCacheDir" class="">setFolderCacheDir()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getFolderCacheTimeout" class="">getFolderCacheTimeout()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setFolderCacheTimeout" class="">setFolderCacheTimeout()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getReportCacheDir" class="">getReportCacheDir()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setReportCacheDir" class="">setReportCacheDir()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getOptionHandlerServiceName" class="">getOptionHandlerServiceName()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setOptionHandlerServiceName" class="">setOptionHandlerServiceName()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getEventDispatcher" class="">getEventDispatcher()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setEventDispatcher" class="">setEventDispatcher()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getRouter" class="">getRouter()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setRouter" class="">setRouter()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getRouteHelper" class="">getRouteHelper()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setRouteHelper" class="">setRouteHelper()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getDefaultFolder" class="">getDefaultFolder()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setDefaultFolder" class="">setDefaultFolder()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getEntityManager" class="">getEntityManager()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setEntityManager" class="">setEntityManager()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getUseSecurity" class="">getUseSecurity()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setUseSecurity" class="">setUseSecurity()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_getDefaultInputOptionsSource" class="">getDefaultInputOptionsSource()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#method_setDefaultInputOptionsSource" class="">setDefaultInputOptionsSource()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_DEFAULT_REPORT_FORMAT" class="">DEFAULT_REPORT_FORMAT</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_DEFAULT_REPORT_PAGE_NUMBER" class="">DEFAULT_REPORT_PAGE_NUMBER</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_FALLBACK_ASSET_URL" class="">FALLBACK_ASSET_URL</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER" class="">ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER" class="">ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER" class="">ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR" class="">ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR" class="">ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR" class="">ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#constant_EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE" class="">EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_jasperClient" class="">$jasperClient</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_defaultAssetRoute" class="">$defaultAssetRoute</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_container" class="">$container</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_reportHost" class="">$reportHost</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_reportPort" class="">$reportPort</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_reportUsername" class="">$reportUsername</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_reportPassword" class="">$reportPassword</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_useFolderCache" class="">$useFolderCache</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_folderCacheDir" class="">$folderCacheDir</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_folderCacheTimeout" class="">$folderCacheTimeout</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_reportCacheDir" class="">$reportCacheDir</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_optionHandlerServiceName" class="">$optionHandlerServiceName</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_defaultFolder" class="">$defaultFolder</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_entityManager" class="">$entityManager</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_connected" class="">$connected</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_useSecurity" class="">$useSecurity</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Services.ClientService.html#property_defaultInputOptionsSource" class="">$defaultInputOptionsSource</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Services.ClientService.html"><div class="path-wrapper">Services/ClientService.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper"></div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Mesd\Jasper\ReportBundle\Services\ClientService</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_DEFAULT_REPORT_FORMAT" name="constant_DEFAULT_REPORT_FORMAT" class="anchor"></a>
+            <article id="constant_DEFAULT_REPORT_FORMAT" class="constant">
+                <h3 class="">DEFAULT_REPORT_FORMAT</h3>
+                <pre class="signature">DEFAULT_REPORT_FORMAT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_DEFAULT_REPORT_PAGE_NUMBER" name="constant_DEFAULT_REPORT_PAGE_NUMBER" class="anchor"></a>
+            <article id="constant_DEFAULT_REPORT_PAGE_NUMBER" class="constant">
+                <h3 class="">DEFAULT_REPORT_PAGE_NUMBER</h3>
+                <pre class="signature">DEFAULT_REPORT_PAGE_NUMBER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_FALLBACK_ASSET_URL" name="constant_FALLBACK_ASSET_URL" class="anchor"></a>
+            <article id="constant_FALLBACK_ASSET_URL" class="constant">
+                <h3 class="">FALLBACK_ASSET_URL</h3>
+                <pre class="signature">FALLBACK_ASSET_URL</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER" name="constant_ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER" class="anchor"></a>
+            <article id="constant_ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER" class="constant">
+                <h3 class="">ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER</h3>
+                <pre class="signature">ASSET_ROUTE_CONTEXT_PATH_PLACEHOLDER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER" name="constant_ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER" class="anchor"></a>
+            <article id="constant_ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER" class="constant">
+                <h3 class="">ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER</h3>
+                <pre class="signature">ASSET_ROUTE_REPORT_EXECUTION_ID_PLACEHOLDER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER" name="constant_ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER" class="anchor"></a>
+            <article id="constant_ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER" class="constant">
+                <h3 class="">ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER</h3>
+                <pre class="signature">ASSET_ROUTE_EXPORT_OPTIONS_PLACEHOLDER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR" name="constant_ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR" class="anchor"></a>
+            <article id="constant_ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR" class="constant">
+                <h3 class="">ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR</h3>
+                <pre class="signature">ASSET_ROUTE_CONTEXT_PATH_JASPER_VAR</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR" name="constant_ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR" class="anchor"></a>
+            <article id="constant_ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR" class="constant">
+                <h3 class="">ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR</h3>
+                <pre class="signature">ASSET_ROUTE_REPORT_EXECUTION_ID_JASPER_VAR</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR" name="constant_ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR" class="anchor"></a>
+            <article id="constant_ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR" class="constant">
+                <h3 class="">ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR</h3>
+                <pre class="signature">ASSET_ROUTE_EXPORT_OPTIONS_JASPER_VAR</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE" name="constant_EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE" class="anchor"></a>
+            <article id="constant_EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE" class="constant">
+                <h3 class="">EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE</h3>
+                <pre class="signature">EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_jasperClient" name="property_jasperClient" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$jasperClient</h3>
+                <pre class="signature">$jasperClient : \Mesd\Jasper\ReportBundle\Services\JasperClient\Client\Client</pre>
+                <p><em>Reference to the jasper client that is initialized by the connect method
+with the parameters passed via dependency injection</em></p>
+                
+
+                                <h4>Type</h4>
+                \Mesd\Jasper\ReportBundle\Services\JasperClient\Client\Client
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_defaultAssetRoute" name="property_defaultAssetRoute" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$defaultAssetRoute</h3>
+                <pre class="signature">$defaultAssetRoute : string</pre>
+                <p><em>Default symfony route to send asset requests to</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_container" name="property_container" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$container</h3>
+                <pre class="signature">$container : \Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container</pre>
+                <p><em>The Symfony Service Container</em></p>
+                
+
+                                <h4>Type</h4>
+                \Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_reportHost" name="property_reportHost" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$reportHost</h3>
+                <pre class="signature">$reportHost : string</pre>
+                <p><em>The Host Name of the report server</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_reportPort" name="property_reportPort" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$reportPort</h3>
+                <pre class="signature">$reportPort : string</pre>
+                <p><em>Jasper Servers port</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_reportUsername" name="property_reportUsername" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$reportUsername</h3>
+                <pre class="signature">$reportUsername : string</pre>
+                <p><em>Username for the jasper server account</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_reportPassword" name="property_reportPassword" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$reportPassword</h3>
+                <pre class="signature">$reportPassword : string</pre>
+                <p><em>Password for the jasper server account</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_useFolderCache" name="property_useFolderCache" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$useFolderCache</h3>
+                <pre class="signature">$useFolderCache : boolean</pre>
+                <p><em>Whether to cache resource lists or not</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_folderCacheDir" name="property_folderCacheDir" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$folderCacheDir</h3>
+                <pre class="signature">$folderCacheDir : string</pre>
+                <p><em>Directory of the resource list cache</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_folderCacheTimeout" name="property_folderCacheTimeout" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$folderCacheTimeout</h3>
+                <pre class="signature">$folderCacheTimeout : int</pre>
+                <p><em>How long a resource list cache is considered fresh</em></p>
+                
+
+                                <h4>Type</h4>
+                int
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_reportCacheDir" name="property_reportCacheDir" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$reportCacheDir</h3>
+                <pre class="signature">$reportCacheDir : string</pre>
+                <p><em>Where to cache reports</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_optionHandlerServiceName" name="property_optionHandlerServiceName" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$optionHandlerServiceName</h3>
+                <pre class="signature">$optionHandlerServiceName : string</pre>
+                <p><em>The service name of the application specific input control option handler</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_defaultFolder" name="property_defaultFolder" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$defaultFolder</h3>
+                <pre class="signature">$defaultFolder : string</pre>
+                <p><em>Default Folder to go to when getting the resource list if no other folder is specified</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_entityManager" name="property_entityManager" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$entityManager</h3>
+                <pre class="signature">$entityManager : string</pre>
+                <p><em>Which entity manager should be used for the database transactions</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_connected" name="property_connected" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$connected</h3>
+                <pre class="signature">$connected : boolean</pre>
+                <p><em>Whether the client is connected to the jasper server or not</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_useSecurity" name="property_useSecurity" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$useSecurity</h3>
+                <pre class="signature">$useSecurity : boolean</pre>
+                <p><em>Whether to use the security service when loading resources and reports</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_defaultInputOptionsSource" name="property_defaultInputOptionsSource" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$defaultInputOptionsSource</h3>
+                <pre class="signature">$defaultInputOptionsSource : string</pre>
+                <p><em>How to handle input options by default</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container <span class="argument">$container</span>)</pre>
+                <p><em>Constructor used via Symfony&#039;s dependency injection container to intialize the needed dependencies</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container</td>
+                                <td>$container </td>
+                                <td><p>The Symfony Service Container</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_init" name="method_init" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">init()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">init() : boolean</pre>
+                <p><em>Initializes the client service once the configuration parameters have been passed in</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the client was able to connect to the jasper server</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_connect" name="method_connect" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">connect()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">connect() : boolean</pre>
+                <p><em>Connect to the Jasper Report Server with the current set of parameters
+(This is function is called automatically during the dependency injection container setup)</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Indicator of whether the connection was successful</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setCallbacks" name="method_setCallbacks" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setCallbacks()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setCallbacks()</pre>
+                <p><em>Creates the callback objects and gives them to the client</em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_buildReportInputForm" name="method_buildReportInputForm" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">buildReportInputForm()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">buildReportInputForm(string <span class="argument">$reportUri</span>, string <span class="argument">$targetRoute</span>, array <span class="argument">$options</span>) : \Mesd\Jasper\ReportBundle\Services\Symfony\Component\Form\Form</pre>
+                <p><em>Builds a symfony form from the inputs from the requested report uri</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportUri </td>
+                                <td><p>The uri of the report whose input controls to construct the form from</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$targetRoute </td>
+                                <td><p>The route to serve as the action for the form</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$options </td>
+                                <td><p>Options array:</p>
+<pre><code>                          'getICFrom' =&gt; Where to get the control options from, else the default will be used
+                          'routeParameters' =&gt; additional parameters to generate the action url with
+                          'data' =&gt; data parameter for the form builder
+                          'options' =&gt; array of options to send to the form builder</code></pre></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Mesd\Jasper\ReportBundle\Services\Symfony\Component\Form\Form
+                                            &mdash; <p>The input controls form</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getOptionsHandler" name="method_getOptionsHandler" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getOptionsHandler()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getOptionsHandler() : \Mesd\Jasper\ReportBundle\Services\AbstractOptionsHandler</pre>
+                <p><em>Get the options handler service</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Mesd\Jasper\ReportBundle\Services\AbstractOptionsHandler
+                                            &mdash; <p>The options handler</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportInputControls" name="method_getReportInputControls" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportInputControls()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportInputControls(string <span class="argument">$reportUri</span>, string <span class="argument">$getICFrom</span>) : array</pre>
+                <p><em>Gets the array of input controls for a requested report</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportUri </td>
+                                <td><p>The uri of the report to get input controls for</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$getICFrom </td>
+                                <td><p>The source of the options, else the default will be used</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>The array of input controls for the given report</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_createReportBuilder" name="method_createReportBuilder" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">createReportBuilder()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">createReportBuilder(string <span class="argument">$resourceUri</span>, string <span class="argument">$getICFrom</span>) : \Mesd\Jasper\ReportBundle\Services\FormBuilder</pre>
+                <p><em>Creates a new report builder object with some of the bundle configuration passed in</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$resourceUri </td>
+                                <td><p>Uri of the report on the jasper server</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$getICFrom </td>
+                                <td><p>Where to get the input control options from, else the default will be used</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Mesd\Jasper\ReportBundle\Services\FormBuilder
+                                            &mdash; <p>The form builder</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getResourceList" name="method_getResourceList" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getResourceList()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getResourceList(string <span class="argument">$folderUri</span>, boolean <span class="argument">$recursive</span>) : array</pre>
+                <p><em>Gets a list of resources under the given or default folder</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$folderUri </td>
+                                <td><p>The uri of the folder on the jasper server to use as the root (default if not given)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$recursive </td>
+                                <td><p>Whether to get all the contents of the folders or just the reports in the given folder</p>
+<pre><code>                         NOTE: this can be S-L-O-W</code></pre></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Array of ResourceDescriptors</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_buildReport" name="method_buildReport" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">buildReport()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">buildReport( <span class="argument">$reportUri</span>,  <span class="argument">$format</span>,  <span class="argument">$assetUrl</span>) : \JasperClient\Client\ReportBuilder</pre>
+                <p><em>buildReport</em></p>
+                <p>takes in a reportUri and creates a ReportBuilder object and builds it</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$reportUri </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$format </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$assetUrl </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \JasperClient\Client\ReportBuilder
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportView" name="method_getReportView" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportView()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportView( <span class="argument">$reportUri</span>,  <span class="argument">$format</span>)</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$reportUri </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$format </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportAsset" name="method_getReportAsset" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportAsset()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportAsset(string <span class="argument">$assetUri</span>, string <span class="argument">$jSessionId</span>) : string</pre>
+                <p><em>Returns the asset associated with the asset uri and jsessionid combo</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$assetUri </td>
+                                <td><p>The assets uri on the jasper server</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$jSessionId </td>
+                                <td><p>The session id for which the asset is associated with</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>The raw asset</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isConnected" name="method_isConnected" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isConnected()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isConnected() : boolean</pre>
+                <p><em>Returns a boolean indicating whether the client is connected to the jasper server or not</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the client is connected with the server or not</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getJasperClient" name="method_getJasperClient" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getJasperClient()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getJasperClient() : \Mesd\Jasper\ReportBundle\Services\JasperClient\Client\Client</pre>
+                <p><em>Gets the Reference to the jasper client that is initialized by the connect method
+  with the parameters passed via dependency injection.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Mesd\Jasper\ReportBundle\Services\JasperClient\Client\Client
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setJasperClient" name="method_setJasperClient" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setJasperClient()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setJasperClient(\Mesd\Jasper\ReportBundle\Services\JasperClient\Client\Client <span class="argument">$jasperClient</span>) : self</pre>
+                <p><em>Sets the Reference to the jasper client that is initialized by the connect method
+  with the parameters passed via dependency injection.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Mesd\Jasper\ReportBundle\Services\JasperClient\Client\Client</td>
+                                <td>$jasperClient </td>
+                                <td><p>the jasper client</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDefaultAssetRoute" name="method_getDefaultAssetRoute" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDefaultAssetRoute()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDefaultAssetRoute() : string</pre>
+                <p><em>Gets the Default symfony route to send asset requests to.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDefaultAssetRoute" name="method_setDefaultAssetRoute" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDefaultAssetRoute()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDefaultAssetRoute(string <span class="argument">$defaultAssetRoute</span>) : self</pre>
+                <p><em>Sets the Default symfony route to send asset requests to.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$defaultAssetRoute </td>
+                                <td><p>the default asset route</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getContainer" name="method_getContainer" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getContainer()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getContainer() : \Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container</pre>
+                <p><em>Gets the The Symfony Service Container.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setContainer" name="method_setContainer" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setContainer()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setContainer(\Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container <span class="argument">$container</span>) : self</pre>
+                <p><em>Sets the The Symfony Service Container.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Mesd\Jasper\ReportBundle\Services\Symfony\Component\DependencyInjection\Container</td>
+                                <td>$container </td>
+                                <td><p>the container</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportHost" name="method_getReportHost" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportHost()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportHost() : string</pre>
+                <p><em>Gets the The Host Name of the report server.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setReportHost" name="method_setReportHost" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setReportHost()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setReportHost(string <span class="argument">$reportHost</span>) : self</pre>
+                <p><em>Sets the The Host Name of the report server.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportHost </td>
+                                <td><p>the report host</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportPort" name="method_getReportPort" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportPort()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportPort() : string</pre>
+                <p><em>Gets the Jasper Servers port.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setReportPort" name="method_setReportPort" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setReportPort()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setReportPort(string <span class="argument">$reportPort</span>) : self</pre>
+                <p><em>Sets the Jasper Servers port.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportPort </td>
+                                <td><p>the report port</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportUsername" name="method_getReportUsername" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportUsername()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportUsername() : string</pre>
+                <p><em>Gets the Username for the jasper server account.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setReportUsername" name="method_setReportUsername" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setReportUsername()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setReportUsername( <span class="argument">$reportUsername</span>) : self</pre>
+                <p><em>Sets the Username for the jasper server account.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$reportUsername </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportPassword" name="method_getReportPassword" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportPassword()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportPassword() : string</pre>
+                <p><em>Gets the Password for the jasper server account.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setReportPassword" name="method_setReportPassword" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setReportPassword()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setReportPassword( <span class="argument">$reportPassword</span>) : self</pre>
+                <p><em>Sets the Password for the jasper server account.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$reportPassword </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getUseFolderCache" name="method_getUseFolderCache" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getUseFolderCache()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getUseFolderCache() : boolean</pre>
+                <p><em>Gets the Whether to cache resource lists or not.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setUseFolderCache" name="method_setUseFolderCache" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setUseFolderCache()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setUseFolderCache(boolean <span class="argument">$useFolderCache</span>) : self</pre>
+                <p><em>Sets the Whether to cache resource lists or not.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$useFolderCache </td>
+                                <td><p>the use folder cache</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getFolderCacheDir" name="method_getFolderCacheDir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getFolderCacheDir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getFolderCacheDir() : string</pre>
+                <p><em>Gets the Directory of the resource list cache.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setFolderCacheDir" name="method_setFolderCacheDir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setFolderCacheDir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setFolderCacheDir(string <span class="argument">$folderCacheDir</span>) : self</pre>
+                <p><em>Sets the Directory of the resource list cache.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$folderCacheDir </td>
+                                <td><p>the folder cache dir</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getFolderCacheTimeout" name="method_getFolderCacheTimeout" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getFolderCacheTimeout()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getFolderCacheTimeout() : int</pre>
+                <p><em>Gets the How long a resource list cache is considered fresh.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    int
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setFolderCacheTimeout" name="method_setFolderCacheTimeout" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setFolderCacheTimeout()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setFolderCacheTimeout(int <span class="argument">$folderCacheTimeout</span>) : self</pre>
+                <p><em>Sets the How long a resource list cache is considered fresh.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>int</td>
+                                <td>$folderCacheTimeout </td>
+                                <td><p>the folder cache timeout</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getReportCacheDir" name="method_getReportCacheDir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getReportCacheDir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getReportCacheDir() : string</pre>
+                <p><em>Gets the Where to cache reports.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setReportCacheDir" name="method_setReportCacheDir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setReportCacheDir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setReportCacheDir(string <span class="argument">$reportCacheDir</span>) : self</pre>
+                <p><em>Sets the Where to cache reports.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$reportCacheDir </td>
+                                <td><p>the report cache dir</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getOptionHandlerServiceName" name="method_getOptionHandlerServiceName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getOptionHandlerServiceName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getOptionHandlerServiceName() : string</pre>
+                <p><em>Gets the The service name of the application specific input control option handler.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setOptionHandlerServiceName" name="method_setOptionHandlerServiceName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setOptionHandlerServiceName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setOptionHandlerServiceName(string <span class="argument">$optionHandlerServiceName</span>) : self</pre>
+                <p><em>Sets the The service name of the application specific input control option handler.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$optionHandlerServiceName </td>
+                                <td><p>the option handler service name</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getEventDispatcher" name="method_getEventDispatcher" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getEventDispatcher()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getEventDispatcher() : mixed</pre>
+                <p><em>Gets the value of eventDispatcher.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setEventDispatcher" name="method_setEventDispatcher" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setEventDispatcher()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setEventDispatcher(mixed <span class="argument">$eventDispatcher</span>) : self</pre>
+                <p><em>Sets the value of eventDispatcher.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$eventDispatcher </td>
+                                <td><p>the event dispatcher</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRouter" name="method_getRouter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getRouter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRouter() : mixed</pre>
+                <p><em>Gets the value of router.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setRouter" name="method_setRouter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setRouter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setRouter(mixed <span class="argument">$router</span>) : self</pre>
+                <p><em>Sets the value of router.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$router </td>
+                                <td><p>the router</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRouteHelper" name="method_getRouteHelper" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getRouteHelper()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRouteHelper() : mixed</pre>
+                <p><em>Gets the value of routeHelper.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setRouteHelper" name="method_setRouteHelper" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setRouteHelper()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setRouteHelper(mixed <span class="argument">$routeHelper</span>) : self</pre>
+                <p><em>Sets the value of routeHelper.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$routeHelper </td>
+                                <td><p>the route helper</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDefaultFolder" name="method_getDefaultFolder" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDefaultFolder()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDefaultFolder() : string</pre>
+                <p><em>Gets the Default Folder to go to when getting the resource list if no other folder is specified.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDefaultFolder" name="method_setDefaultFolder" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDefaultFolder()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDefaultFolder(string <span class="argument">$defaultFolder</span>) : self</pre>
+                <p><em>Sets the Default Folder to go to when getting the resource list if no other folder is specified.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$defaultFolder </td>
+                                <td><p>the default folder</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getEntityManager" name="method_getEntityManager" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getEntityManager()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getEntityManager() : string</pre>
+                <p><em>Gets the Which entity manager should be used for the database transactions.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setEntityManager" name="method_setEntityManager" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setEntityManager()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setEntityManager(string <span class="argument">$entityManager</span>) : self</pre>
+                <p><em>Sets the Which entity manager should be used for the database transactions.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$entityManager </td>
+                                <td><p>the entity manager</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getUseSecurity" name="method_getUseSecurity" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getUseSecurity()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getUseSecurity() : boolean</pre>
+                <p><em>Gets the Whether to use the security service when loading resources and reports.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setUseSecurity" name="method_setUseSecurity" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setUseSecurity()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setUseSecurity(boolean <span class="argument">$useSecurity</span>) : self</pre>
+                <p><em>Sets the Whether to use the security service when loading resources and reports.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$useSecurity </td>
+                                <td><p>the use security</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDefaultInputOptionsSource" name="method_getDefaultInputOptionsSource" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDefaultInputOptionsSource()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDefaultInputOptionsSource() : string</pre>
+                <p><em>Gets the How to handle input options by default.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDefaultInputOptionsSource" name="method_setDefaultInputOptionsSource" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDefaultInputOptionsSource()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDefaultInputOptionsSource(string <span class="argument">$defaultInputOptionsSource</span>) : self</pre>
+                <p><em>Sets the How to handle input options by default.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$defaultInputOptionsSource </td>
+                                <td><p>the default input options source</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    self
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">ClientService.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Services/ClientService.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Mesd.html">\Mesd</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 2nd, 2014 at 15:06.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
