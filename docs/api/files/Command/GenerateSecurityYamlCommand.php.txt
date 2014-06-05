@@ -15,7 +15,7 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
      */
     protected function configure() {
         $this
-            ->setName('Mesd_jasper_report:security:generate-yaml')
+            ->setName('mesd_jasper_report:security:generate-yaml')
             ->setDescription('Generates/Updates the report security yaml file from the jasper server contents')
             ->addOption('roles', 'r', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'The roles that are set by default will use the roles defined in the configuration if none given')
             ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'The path where the report security yml file will be placed at')

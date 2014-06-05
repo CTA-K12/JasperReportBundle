@@ -21,54 +21,54 @@
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
     <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-        <script type="text/javascript">
-        function loadExternalCodeSnippets() {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-                var src = pre.getAttribute('data-src');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
 
-                pre.textContent = '';
+            pre.textContent = '';
 
-                code.textContent = 'Loading…';
+            code.textContent = 'Loading…';
 
-                pre.appendChild(code);
+            pre.appendChild(code);
 
-                var xhr = new XMLHttpRequest();
+            var xhr = new XMLHttpRequest();
 
-                xhr.open('GET', src, true);
+            xhr.open('GET', src, true);
 
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
 
-                        if (xhr.status < 400 && xhr.responseText) {
-                            code.textContent = xhr.responseText;
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
 
-                            Prism.highlightElement(code);
-                        }
-                        else if (xhr.status >= 400) {
-                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                        }
-                        else {
-                            code.textContent = '✖ Error: File does not exist or is empty';
-                        }
+                        Prism.highlightElement(code);
                     }
-                };
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
 
-                xhr.send(null);
-            });
-        }
-
-        $(document).ready(function(){
-            loadExternalCodeSnippets();
+            xhr.send(null);
         });
-        $('#source-view').on('shown', function () {
-            loadExternalCodeSnippets();
-        })
-    </script>
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
 
     <link rel="shortcut icon" href="../images/favicon.ico"/>
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
@@ -144,46 +144,46 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1422105369"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1660724809"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1422105369" class="accordion-body collapse in">
+            <div id="namespace-1660724809" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-125044319"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-518316753"></a>
                                 <a href="../namespaces/Mesd.html" style="margin-left: 30px; padding-left: 0">Mesd</a>
             </div>
-            <div id="namespace-125044319" class="accordion-body collapse ">
+            <div id="namespace-518316753" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1180464803"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-615195420"></a>
                                 <a href="../namespaces/Mesd.Jasper.html" style="margin-left: 30px; padding-left: 0">Jasper</a>
             </div>
-            <div id="namespace-1180464803" class="accordion-body collapse ">
+            <div id="namespace-615195420" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1820532206"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-649137566"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.html" style="margin-left: 30px; padding-left: 0">ReportBundle</a>
             </div>
-            <div id="namespace-1820532206" class="accordion-body collapse ">
+            <div id="namespace-649137566" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1574645537"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2144296997"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Callbacks.html" style="margin-left: 30px; padding-left: 0">Callbacks</a>
             </div>
-            <div id="namespace-1574645537" class="accordion-body collapse ">
+            <div id="namespace-2144296997" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -199,10 +199,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-248477243"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-517061816"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Command.html" style="margin-left: 30px; padding-left: 0">Command</a>
             </div>
-            <div id="namespace-248477243" class="accordion-body collapse ">
+            <div id="namespace-517061816" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -218,10 +218,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-170840095"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1014452653"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
             </div>
-            <div id="namespace-170840095" class="accordion-body collapse ">
+            <div id="namespace-1014452653" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -236,10 +236,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1615774663"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1334556577"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.DependencyInjection.html" style="margin-left: 30px; padding-left: 0">DependencyInjection</a>
             </div>
-            <div id="namespace-1615774663" class="accordion-body collapse ">
+            <div id="namespace-1334556577" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -255,10 +255,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1346362681"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1321330995"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
             </div>
-            <div id="namespace-1346362681" class="accordion-body collapse ">
+            <div id="namespace-1321330995" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -273,10 +273,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1019014297"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-767565760"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Exception.html" style="margin-left: 30px; padding-left: 0">Exception</a>
             </div>
-            <div id="namespace-1019014297" class="accordion-body collapse ">
+            <div id="namespace-767565760" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -291,10 +291,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-119936947"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2056722801"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Factories.html" style="margin-left: 30px; padding-left: 0">Factories</a>
             </div>
-            <div id="namespace-119936947" class="accordion-body collapse ">
+            <div id="namespace-2056722801" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -309,10 +309,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1848722925"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-675429157"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Helper.html" style="margin-left: 30px; padding-left: 0">Helper</a>
             </div>
-            <div id="namespace-1848722925" class="accordion-body collapse ">
+            <div id="namespace-675429157" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -330,10 +330,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-177261715"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-135204349"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.InputControl.html" style="margin-left: 30px; padding-left: 0">InputControl</a>
             </div>
-            <div id="namespace-177261715" class="accordion-body collapse ">
+            <div id="namespace-135204349" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -355,10 +355,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1199452307"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1257438834"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
             </div>
-            <div id="namespace-1199452307" class="accordion-body collapse ">
+            <div id="namespace-1257438834" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -373,10 +373,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-312567095"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-607220968"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
             </div>
-            <div id="namespace-312567095" class="accordion-body collapse ">
+            <div id="namespace-607220968" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -391,10 +391,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1913178059"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1556685860"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
             </div>
-            <div id="namespace-1913178059" class="accordion-body collapse ">
+            <div id="namespace-1556685860" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -412,19 +412,19 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1552820964"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2124080084"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.html" style="margin-left: 30px; padding-left: 0">Twig</a>
             </div>
-            <div id="namespace-1552820964" class="accordion-body collapse ">
+            <div id="namespace-2124080084" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1688062352"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1211325934"></a>
                                 <a href="../namespaces/Mesd.Jasper.ReportBundle.Twig.Extension.html" style="margin-left: 30px; padding-left: 0">Extension</a>
             </div>
-            <div id="namespace-1688062352" class="accordion-body collapse ">
+            <div id="namespace-1211325934" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -482,53 +482,237 @@
     <section class="row-fluid">
         <div class="span10 offset2">
             <div class="row-fluid">
-                <div class="span8 content file">
+                <div class="span8 content class">
                     <nav>
-                                                                    </nav>
-
+                                                <a href="../namespaces/Mesd.Jasper.ReportBundle.Helper.html">\Mesd\Jasper\ReportBundle\Helper</a> <i class="icon-level-up"></i>
+                                            </nav>
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
-                    <h1><small>Twig/Extension</small>ReportExtension.php</h1>
-                    <p><em></em></p>
+
+                    <h1><small>\Mesd\Jasper\ReportBundle\Helper</small>DefaultOptionsHandler</h1>
+                    <p><em>Interface that defines the methods required by an options manager</em></p>
                     
 
-                    
-                    
-                                        <h2>Classes</h2>
-                    <table class="table table-hover">
-                                            <tr>
-                            <td><a href="../classes/Mesd.Jasper.ReportBundle.Twig.Extension.ReportExtension.html">ReportExtension</a></td>
-                            <td><em></em></td>
-                        </tr>
-                                        </table>
-                                    </div>
-
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html#method_getList" class="">getList()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Helper.DefaultOptionsHandler.html#method_registerFunctions" class="">registerFunctions()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html#property_functionMap" class="">$functionMap</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
                 <aside class="span4 detailsbar">
+                                        
+                    
                     <dl>
-                                                    <dt>Package</dt>
+                        <dt>File</dt>
+                            <dd><a href="../files/Helper.DefaultOptionsHandler.html"><div class="path-wrapper">Helper/DefaultOptionsHandler.php</div></a></dd>
+                                                <dt>Package</dt>
                             <dd><div class="namespace-wrapper"></div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html">\Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler</a></div>
+                                                                                                    <div class="namespace-wrapper">\Mesd\Jasper\ReportBundle\Helper\DefaultOptionsHandler</div>
+                            </dd>
+
                         
                         
-                    </dl>
+                        
+                        
+                                                                        </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                                            </table>
-
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
                 </aside>
             </div>
 
-            
-            
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_functionMap" name="property_functionMap" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$functionMap</h3>
+                <pre class="signature">$functionMap : array</pre>
+                <p><em>The map of ids to functions that return their option lists</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
         </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html"><div class="path-wrapper">\Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct()</pre>
+                <p><em>Constructor</em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html"><div class="path-wrapper">\Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getList" name="method_getList" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getList()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getList(string <span class="argument">$inputControlId</span>) : array|null</pre>
+                <p><em>Returns the list of options for a given input control id, or returns null if the option is not supported</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inputControlId </td>
+                                <td><p>The id of the input control to get a list of options for</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array|null
+                                            &mdash; <p>The array of options or null if the input control is not supported (and will use jasper if fallback mode is in place)</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Mesd.Jasper.ReportBundle.Interfaces.AbstractOptionsHandler.html"><div class="path-wrapper">\Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_registerFunctions" name="method_registerFunctions" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">registerFunctions()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">registerFunctions() : array</pre>
+                <p><em>Registers the functions, or in this case, returns an empty array</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>An empty array</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
     </section>
 
     <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label"></h3>
+            <h3 id="source-view-label">DefaultOptionsHandler.php</h3>
         </div>
         <div class="modal-body">
-            <pre data-src="../files/Twig/Extension/ReportExtension.php.txt" class="language-php line-numbers"></pre>
+            <pre data-src="../files/Helper/DefaultOptionsHandler.php.txt" class="language-php line-numbers"></pre>
         </div>
     </div>
 

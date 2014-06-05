@@ -62,7 +62,7 @@ abstract class AbstractOptionsHandler
      * @return array|null                 The array of options or null if the input control is not supported (and will use jasper if fallback mode is in place) 
      */
     public function getList($inputControlId) {
-        if (array_key_exists($inpucControlId, $this->functionMap)) {
+        if (array_key_exists($inputControlId, $this->functionMap)) {
             return call_user_func(array($this, $this->functionMap[$inputControlId]));
         } else {
             return null;
