@@ -26,3 +26,7 @@ services:
         arguments: [ @mesd.jasper.report.display_helper ]
         tags:
             - { name: twig.extension }
+
+    mesd.jasper.report.default_options_handler:
+        class: Mesd\Jasper\ReportBundle\Helper\DefaultOptionsHandler
+        arguments: [  ]
