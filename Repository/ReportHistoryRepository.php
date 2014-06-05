@@ -5,6 +5,8 @@ namespace Mesd\Jasper\ReportBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
+use Mesd\Jasper\ReportBundle\Entity\ReportHistory;
+
 class ReportHistoryRepository extends EntityRepository
 {
     /**
@@ -102,6 +104,16 @@ class ReportHistoryRepository extends EntityRepository
         } else {
             return $qb->getQuery()->getResult();
         }
+    }
+
+
+    /**
+     * Return the total number of history records in the database
+     *
+     * @return int Total number of history records
+     */
+    public function getTotalCount() {
+        return $this->filter(array('count' => true));
     }
 
 
