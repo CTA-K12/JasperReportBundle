@@ -1,27 +1,3 @@
-Content
-Content
-Overview
-Features
-Todo List
-Installation
-Add Packages to Project via Composer
-Register the Bundle in the App Kernel
-Connecting to the Jasper Report Server
-Link to the Bundle's Routing File
-Setting the Configuration Options
-Creating an Options Handler
-Getting a List of Resources from the Report Server
-Running a Report
-Getting the Input Controls
-Running a Report
-Getting a Report from the Report Store
-Role Based Report Security
-The Report Security Yaml File
-Configuration Settings
-Displaying Input Options Based on User
-Using the Remove Broken Report History Records Command
-API Documentation
-
 Overview
 ========
 The Jasper Report Bundle serves as a layer on top of the vanilla PHP MESD Jasper Client library to make it easier to integrate with Symfony applications.  The bundle also contains extra features on top of the client library that make use of some of Symfon'y features and to provide extra tools when adding Jasper Report support to an application.  Also, the report bundle is built to be compatible with an optional report viewer bundle that provides the views and controller to handle most of the common report bundle.
@@ -302,3 +278,7 @@ It's possible over time that the report history records in the database will poi
 API Documentation
 =================
 Generated documentation exists in the bundle under the docs directory.
+
+License
+=======
+This project is licensed under the MIT license. See the [LICENSE.md](LICENSE.md) file for more information.
