@@ -82,7 +82,7 @@ namespace My\Bundle\Somewhere;
 use Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler;
 use Mesd\Jasper\ReportBundle\InputControl\Option;
  
-class MyOptionsHandler extends AbstractOptionsHander
+class MyOptionsHandler extends AbstractOptionsHandler
 {
     public function registerFunctions() {
         return array(
