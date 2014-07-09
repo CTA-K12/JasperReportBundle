@@ -95,7 +95,7 @@ class MyOptionsHandler extends AbstractOptionsHander
             new Option('1', 'I want door number 1'),
             new Option('2', 'I really want door number 2'),
             new Option('3', 'Just give me what ever is behind door number 3')
-        )
+        );
     }
  
 }
