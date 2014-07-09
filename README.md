@@ -80,13 +80,13 @@ To allow application specific control of the options for select parameters, an o
 namespace My\Bundle\Somewhere;
  
 use Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler;
-use MESD\Jasper\ReportBundle\InputControl\Option;
+use Mesd\Jasper\ReportBundle\InputControl\Option;
  
 class MyOptionsHandler extends AbstractOptionsHander
 {
     public function registerFunctions() {
         return array(
-            'someInputControlId' = 'foo'
+            'someInputControlId' => 'foo'
         );
     }
  
