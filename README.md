@@ -4,15 +4,15 @@ The Jasper Report Bundle serves as a layer on top of the vanilla PHP MESD Jasper
 
 ###Features
 The report bundle and the client currently offer the following features:
-- * Ability to get a list of reports from the Jasper Server
-- * Report execution, with report output being saved to a local directory for later retrieval
-- * Input control option management that makes it easy to lock down options for particular input controls based on the user
-- * Converts report input to Symfony forms
-- * Save and retrieve past reports
+- Ability to get a list of reports from the Jasper Server
+- Report execution, with report output being saved to a local directory for later retrieval
+- Input control option management that makes it easy to lock down options for particular input controls based on the user
+- Converts report input to Symfony forms
+- Save and retrieve past reports
 
 ###Todo List
-- [ ] Add support for Jasper Server Pro, currently only the community version is supported
-- [ ] Add more tools to help with managing the report store
+- Add support for Jasper Server Pro, currently only the community version is supported
+- Add more tools to help with managing the report store
 
 Installation
 ============
