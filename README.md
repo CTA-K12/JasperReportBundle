@@ -48,14 +48,16 @@ public function registerBundles()
 
 ###Connecting to the Jasper Report Server
 The next step is to add in the connection details to the config file so that the bundle can establish a connection with the report server
-config.yml
+```yaml
+#config.yml
 mesd_jasper_report:
     connection:
         username: %jasper_username%
         password: %jasper_password%
         host: %jasper_host%
         port: %jasper_port%
- 
+```
+
 Link to the Bundle's Routing File
 The report bundle uses some internal routes to handle the processing of report assets (images, charts, and graphs) and for exporting reports saved in the report store.  Since Symfony's autoloader does not handle routing automatically, you must import the bundle's routing.yml file for it to function.  To do so, add the following to your routing.yml in the app/config directory.
 ```yaml
