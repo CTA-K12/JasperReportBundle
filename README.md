@@ -253,7 +253,7 @@ class MyOptionsHandler extends AbstractOptionsHandler
         $this->securityContext = $securityContext;
          
         //Call the parent constructor (this is important)
-        parent::__construct()
+        parent::__construct();
     }
      
     //Register the functions
