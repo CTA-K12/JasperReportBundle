@@ -225,7 +225,7 @@ mesd_jasper_report:
     report_security:
         use_security: [true] #Whether to use the security service or not
         max_level_set_at_default: [true] #Prevent any folder higher than the default from being viewed
-        security_file: [/config/report_security.yml] #The location of the report security yml file
+        security_file: [/config/report_security.yml] #The location of the report security yml file relative to app
         default_roles: #Default roles to attach to the security yml when using the generator
             [ -ROLE_USER
               -ROLE_ADMIN
