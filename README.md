@@ -246,7 +246,7 @@ use Mesd\Jasper\ReportBundle\InputControl\Option;
 class MyOptionsHandler extends AbstractOptionsHandler
 {
     //The Symfony SecurityContext object
-    $securityContext;
+    private $securityContext;
  
     //Override the constructor to allow the injection of the security context
     public function __construct($securityContext) {
