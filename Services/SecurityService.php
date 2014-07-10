@@ -197,7 +197,13 @@ class SecurityService
         }
 
         //Call the check node method
-        return $this->checkNode($resourceUri, $this->securityContext->getToken()->getRoles());
+        try {
+            $roles = array_map(function ($role) {return $role."";},$this->securityContext->getToken()->getRoles());
+        } catch (\Exception $e) {
+             throw new \Exception("Jasper Report Bundle security service requires roles to be returned as an array of strings or an array of objects with a __toString() method that returns the name of the role in the format specified by the security file. ", 0, $e);
+        }
+
+        return $this->checkNode($resourceUri, $roles);
     }
 
 
@@ -272,7 +278,7 @@ class SecurityService
 
 
     /**
-     * Recursively called function to determine the depth of an array 
+     * Recursively called function to determine the depth of an array
      *
      * @param  mixed $element Element to calculate depth on
      * @param  int   $depth   Depth level
