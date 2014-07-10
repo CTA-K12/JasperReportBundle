@@ -55,6 +55,7 @@ app/console doctrine:schema:update --env = [whereever] --force
 ```
 to add the history table to your schema.  You may need to add a mapping to your doctrine orm configuration if you have multiple entity managers.
 
+Also, add /report-store (or other parent specified in the cache_dir field of configuration) to .gitignore to avoid adding myriad reports to the repo.
 
 ###Connecting to the Jasper Report Server
 The next step is to add in the connection details to the config file so that the bundle can establish a connection with the report server
