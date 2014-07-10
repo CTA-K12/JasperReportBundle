@@ -196,13 +196,14 @@ class SecurityService
             }
         }
 
-        //Call the check node method
+        // the exception message should pretty much explain the purpose of this block
         try {
             $roles = array_map(function ($role) {return $role."";},$this->securityContext->getToken()->getRoles());
         } catch (\Exception $e) {
              throw new \Exception("Jasper Report Bundle security service requires roles to be returned as an array of strings or an array of objects with a __toString() method that returns the name of the role in the format specified by the security file. ", 0, $e);
         }
 
+        //Call the check node method
         return $this->checkNode($resourceUri, $roles);
     }
 
