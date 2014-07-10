@@ -118,10 +118,10 @@ Resource List
 $resources = $this->container->get('mesd.jasper.report.client')->getResourceList();
  
 //Get a list of resources from a particular directory
-$resources = $this->container->get('mesd.jasper.report.client')->('reports/super-secret-reports/');
+$resources = $this->container->get('mesd.jasper.report.client')->getResourceList('reports/super-secret-reports/');
  
 //Get all the resources below a particular directory (note that this can be a slow process)
-$resources = $this->container->get('mesd.jasper.report.client')->('reports/', true);
+$resources = $this->container->get('mesd.jasper.report.client')->getResourceList('reports/', true);
 ```
 
 ###Getting the Input Controls
