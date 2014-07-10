@@ -45,6 +45,12 @@ public function registerBundles()
     )
 } 
 ```
+###Configuring Report History
+```bash
+app/console doctrine:schema:update --env = [whereever]
+```
+to add the history table to your schema.  You may need to add a mapping to your doctrine orm configuration if you have multiple entity managers.
+
 
 ###Connecting to the Jasper Report Server
 The next step is to add in the connection details to the config file so that the bundle can establish a connection with the report server
@@ -67,7 +73,7 @@ MESDJasperReportBundle:
 ```
 
 ###Setting the Configuration Options
-Finally, all that is left is to set the configuration options for the report bundle.  Most options have a default value, and for now there is only required option that needs to be set to get going, and that is just giving the bundle's configuration the name of the options handler service that was set up in the last step.  Visit the configuration section later to get a list of the configuration settings the report bundle has.
+Finally, all that is left is to set the configuration options for the report bundle.  Most options have a default value. There is only one required option that needs to be set: the bundle's configuration the name of the options handler service that was set up in the last step.  Visit the configuration section later to get a list of the configuration settings the report bundle has.
 
 Usage
 =====
@@ -130,7 +136,15 @@ To build a new report, we need to first get the input controls for a report and 
 //Display the report form
 public function formAction()
 {
-    $form = $this->container->get('mesd.jasper.report.client')->buildReportInputForm('report/sales/quarterly_report', 'route_to_next_action', array('routeParameters' => array('key' => 'value)));
+    $form = $this->container->get('mesd.jasper.report.client')
+        ->buildReportInputForm(
+            'report/sales/quarterly_report',
+            'route_to_next_action',
+            array('routeParameters' => array('key' => 'value')
+        )
+    );
+    
+    
  
     //Display and such
     ...
