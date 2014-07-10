@@ -47,8 +47,11 @@ public function registerBundles()
 ```
 ###Configuring Report History
 ```bash
-app/console doctrine:schema:update --env = [whereever]
+app/console doctrine:schema:update --env = [whereever] --dump-sql
 ```
+to review, and then
+```bash
+app/console doctrine:schema:update --env = [whereever] --force
 to add the history table to your schema.  You may need to add a mapping to your doctrine orm configuration if you have multiple entity managers.
 
 
