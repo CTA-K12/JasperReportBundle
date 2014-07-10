@@ -41,7 +41,7 @@ As with all other bundles, the report bundle will need to be registered in the a
 public function registerBundles()
 {
     $bundles = array(
-        new Mesd\Jasper\ReportBundle\MesdJasperReportBundle()
+        new Mesd\Jasper\ReportBundle\MesdJasperReportBundle(),
     )
 } 
 ```
