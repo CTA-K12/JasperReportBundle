@@ -14,6 +14,6 @@
     }
     ]
     ,"require": {
-        "mesd/jasper-client": "dev-report-bundle"
+        "mesd/jasper-client": "report-bundle"
     }
 }
