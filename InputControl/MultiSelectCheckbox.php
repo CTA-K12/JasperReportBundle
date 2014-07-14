@@ -70,13 +70,13 @@ class MultiSelectCheckbox extends AbstractReportBundleInputControl
             $this->id ,
             'choice'  ,
             array(
-                'label'     => $this->label,
-                'choices'   => $choices,
-                'multiple'  => true,
-                'data'      => $selected,
-                'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly,
-                'expanded'  => true,
+                'label'     => $this->label     ,
+                'choices'   => $choices         ,
+                'multiple'  => true             ,
+                'data'      => $selected        ,
+                'required'  => $this->mandatory ,
+                'read_only' => !$this->readOnly ,
+                'expanded'  => true             ,
             )
         );
     }
