@@ -60,6 +60,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('options_handler')->defaultValue('mesd.jasper.report.default_options_handler')->end()
+                ->scalarNode('forms_handler')->defaultValue('mesd.jasper.report.default_options_handler')->end()
                 ->scalarNode('default_input_options_source')->defaultValue('Fallback')->end()
                 ->arrayNode('report_security')
                     ->addDefaultsIfNotSet()
