@@ -69,8 +69,8 @@ class MultiSelect extends AbstractReportBundleInputControl
 
         //Add a new multi choice field to the builder
         $formBuilder->add(
-            $this->id,
-            'choice',
+            $this->id ,
+            'choice'  ,
             array(
                 'label'     => $this->label     ,
                 'choices'   => $choices         ,
