@@ -66,14 +66,17 @@ class MultiSelectCheckbox extends AbstractReportBundleInputControl
         }
 
         //Add a new multi choice field to the builder
-        $formBuilder->add($this->id, 'choice', array(
-                'label'     => $this->label,
-                'choices'   => $choices,
-                'multiple'  => true,
-                'data'      => $selected,
-                'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly,
-                'expanded'  => true
+        $formBuilder->add(
+            $this->id ,
+            'choice'  ,
+            array(
+                'label'     => $this->label     ,
+                'choices'   => $choices         ,
+                'multiple'  => true             ,
+                'data'      => $selected        ,
+                'required'  => $this->mandatory ,
+                'read_only' => !$this->readOnly ,
+                'expanded'  => true             ,
             )
         );
     }

@@ -66,13 +66,16 @@ class SingleSelect extends AbstractReportBundleInputControl
         }
 
         //Add a new multi choice field to the builder
-        $formBuilder->add($this->id, 'choice', array(
-                'label'     => $this->label,
-                'choices'   => $choices,
-                'multiple'  => false,
-                'data'      => $selected,
-                'required'  => true,
-                'read_only' => !$this->readOnly
+        $formBuilder->add(
+            $this->id ,
+            'choice'  ,
+            array(
+                'label'     => $this->label     ,
+                'choices'   => $choices         ,
+                'multiple'  => false            ,
+                'data'      => $selected        ,
+                'required'  => true             ,
+                'read_only' => !$this->readOnly ,
             )
         );
     }

@@ -56,11 +56,14 @@ class SingleValueNumber extends AbstractReportBundleInputControl
      */
     public function attachInputToFormBuilder(FormBuilder $formBuilder) {
         //Add a new number field
-        $formBuilder->add($this->id, 'number', array(
-                'label'     => $this->label,
-                'data'      => $this->defaultValue,
-                'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly
+        $formBuilder->add(
+            $this->id ,
+            'number',
+            array(
+                'label'     => $this->label        ,
+                'data'      => $this->defaultValue ,
+                'required'  => $this->mandatory    ,
+                'read_only' => !$this->readOnly    ,
             )
         );
     }

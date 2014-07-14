@@ -56,11 +56,14 @@ class SingleValueText extends AbstractReportBundleInputControl
      */
     public function attachInputToFormBuilder(FormBuilder $formBuilder) {
         //Add a new text field
-        $formBuilder->add($this->id, 'text', array(
-                'label'     => $this->label,
-                'data'      => $this->defaultValue,
-                'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly
+        $formBuilder->add(
+            $this->id ,
+            'text'    ,
+            array(
+                'label'     => $this->label        ,
+                'data'      => $this->defaultValue ,
+                'required'  => $this->mandatory    ,
+                'read_only' => !$this->readOnly    ,
             )
         );
     }

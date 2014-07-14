@@ -26,10 +26,10 @@ class ClientService
     ///////////////
     // CONSTANTS //
     ///////////////
-    
+
     const DEFAULT_REPORT_FORMAT = 'html';
     const DEFAULT_REPORT_PAGE_NUMBER = 1;
-    
+
     const FALLBACK_ASSET_URL = '';
 
     //These are the placeholders that are given to the routers generate function, which CANNOT have the '{}' characters Jasper looks for
@@ -57,7 +57,7 @@ class ClientService
     private $jasperClient;
 
     /**
-     * Default symfony route to send asset requests to 
+     * Default symfony route to send asset requests to
      * @var string
      */
     private $defaultAssetRoute;
@@ -160,7 +160,7 @@ class ClientService
 
     /**
      * Constructor used via Symfony's dependency injection container to intialize the needed dependencies
-     * 
+     *
      * @param Symfony\Component\DependencyInjection\Container $container The Symfony Service Container
      */
     public function __construct(Container $container) {
@@ -198,13 +198,13 @@ class ClientService
     /**
      * Connect to the Jasper Report Server with the current set of parameters
      * (This is function is called automatically during the dependency injection container setup)
-     * 
+     *
      * @return boolean Indicator of whether the connection was successful
      */
     public function connect() {
         //Attempt to initialize the client and login to the report server
         try {
-            //Give this object's stored parameters to initialize the jasper client 
+            //Give this object's stored parameters to initialize the jasper client
             $this->jasperClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUsername, $this->reportPassword);
 
             //Login and set the connection flag to the return of the login method
@@ -240,7 +240,7 @@ class ClientService
      *
      * @param  string $reportUri   The uri of the report whose input controls to construct the form from
      * @param  string $targetRoute The route to serve as the action for the form
-     * @param  array  $options     Options array:  
+     * @param  array  $options     Options array:
      *                               'getICFrom' => Where to get the control options from, else the default will be used
      *                               'routeParameters' => additional parameters to generate the action url with
      *                               'data' => data parameter for the form builder
@@ -263,14 +263,13 @@ class ClientService
 
         //Load the input controls from the client using the factory and the options handler
         $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
-
         //Build the form
         $form = $this->container->get('form.factory')->createBuilder('form', $data, $formOptions);
-        
+
         if ($targetRoute) {
             $form->setAction($this->container->get('router')->generate($targetRoute, $routeParameters));
         }
-        
+
         $form->setMethod('POST');
         foreach($inputControls as $inputControl) {
             $inputControl->attachInputToFormBuilder($form);
@@ -284,7 +283,7 @@ class ClientService
 
     /**
      * Get the options handler service
-     * 
+     *
      * @return AbstractOptionsHandler The options handler
      */
     public function getOptionsHandler() {
@@ -407,7 +406,7 @@ class ClientService
      *
      *  @return ReportBuilder
      */
-    public function buildReport($reportUri, $format = 'html', $assetUrl = '') 
+    public function buildReport($reportUri, $format = 'html', $assetUrl = '')
     {
         //Check connection
         if ($this->isConnected()) {

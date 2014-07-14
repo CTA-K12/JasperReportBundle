@@ -56,13 +56,16 @@ class SingleValueDate extends AbstractReportBundleInputControl
      */
     public function attachInputToFormBuilder(FormBuilder $formBuilder) {
         //Add a new date field
-        $formBuilder->add($this->id, 'date', array(
-                'label'     => $this->label,
-                'widget'    => 'single_text',
-                'input'     => 'string',
-                'data'      => (string)$this->defaultValue,
-                'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly
+        $formBuilder->add(
+            $this->id ,
+            'date'    ,
+            array(
+                'label'     => $this->label                ,
+                'widget'    => 'single_text'               ,
+                'input'     => 'string'                    ,
+                'data'      => (string)$this->defaultValue ,
+                'required'  => $this->mandatory            ,
+                'read_only' => !$this->readOnly            ,
             )
         );
     }
