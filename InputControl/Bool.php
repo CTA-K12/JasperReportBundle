@@ -60,10 +60,10 @@ class Bool extends AbstractReportBundleInputControl
             $this->id ,
             'checkbox'    ,
             array(
-                'label'     => $this->label        ,
+                'label'     => $this->label          ,
                 'data'      => !!$this->defaultValue ,
-                'required'  => $this->mandatory    ,
-                'read_only' => !$this->readOnly    ,
+                'required'  => false                 ,
+                'read_only' => !$this->readOnly      ,
             )
         );
     }
