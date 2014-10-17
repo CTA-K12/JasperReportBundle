@@ -186,7 +186,7 @@ class ClientService {
      *
      * @param Symfony\Component\DependencyInjection\Container $container The Symfony Service Container
      */
-    public function __construct( Container $container ) {
+    public function __construct(Container $container) {
         //Set stuff
         $this->container = $container;
 
@@ -228,11 +228,11 @@ class ClientService {
         //Attempt to initialize the client and login to the report server
         try {
             //Give this object's stored parameters to initialize the jasper client
-            $this->jasperClient = new Client( $this->reportHost . ':' . $this->reportPort, $this->reportUsername, $this->reportPassword );
+            $this->jasperClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUsername, $this->reportPassword);
 
             //Login and set the connection flag to the return of the login method
             $this->connected = $this->jasperClient->login();
-        } catch ( \Exception $e ) {
+        } catch (\Exception $e) {
             //Set the connection status to false
             $this->connected = false;
 
@@ -249,11 +249,11 @@ class ClientService {
      * Creates the callback objects and gives them to the client
      */
     public function setCallbacks() {
-        if ( $this->jasperClient ) {
+        if ($this->jasperClient) {
             //Get the entity manager
-            $em = $this->container->get( 'doctrine' )->getManager( $this->entityManager );
-            $this->jasperClient->addPostReportExecutionCallback( new PostReportExecution( $em, $this->container->get( 'security.context' ) ) );
-            $this->jasperClient->addPostReportCacheCallback( new PostReportCache( $em ) );
+            $em = $this->container->get('doctrine')->getManager($this->entityManager);
+            $this->jasperClient->addPostReportExecutionCallback(new PostReportExecution($em, $this->container->get('security.context')));
+            $this->jasperClient->addPostReportCacheCallback(new PostReportCache($em));
         }
     }
 
@@ -271,33 +271,47 @@ class ClientService {
      *
      * @return Symfony\Component\Form\Form The input controls form
      */
-    public function buildReportInputForm( $reportUri, $targetRoute = null, $options = [] ) {
+    public function buildReportInputForm($reportUri, $targetRoute = null, $options = []) {
         //Handle the options array
-        $routeParameters = ( isset( $options['routeParameters'] ) && null != $options['routeParameters'] ) ? $options['routeParameters'] : array();
-        $getICFrom = ( isset( $options['getICFrom'] ) && null != $options['getICFrom'] ) ? $options['getICFrom'] : $this->defaultInputOptionsSource;
-        $data = ( isset( $options['data'] ) && null != $options['data'] ) ? $options['data'] : null;
-        $formOptions = ( isset( $options['options'] ) && null != $options['options'] ) ? $options['options'] : array();
+        $routeParameters = (isset($options['routeParameters']) && null != $options['routeParameters']) ? $options['routeParameters'] : array();
+        $getICFrom = (isset($options['getICFrom']) && null != $options['getICFrom']) ? $options['getICFrom'] : $this->defaultInputOptionsSource;
+        $data = (isset($options['data']) && null != $options['data']) ? $options['data'] : null;
+        $formOptions = (isset($options['options']) && null != $options['options']) ? $options['options'] : array();
 
         //Get the options handler service
         $optionsHandler = $this->getOptionsHandler();
 
         //Create a new input control factory
-        $icFactory = new InputControlFactory( $optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\' );
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\');
 
         //Load the input controls from the client using the factory and the options handler
-        $inputControls = $this->jasperClient->getReportInputControl( $reportUri, $getICFrom, $icFactory );
+        $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
         //Build the form
-        $form = $this->container->get( 'form.factory' )->createBuilder( 'form', $data, $formOptions );
+        $form = $this->container->get('form.factory')->createBuilder('form', $data, $formOptions);
 
-        if ( $targetRoute ) {
-            $form->setAction( $this->container->get( 'router' )->generate( $targetRoute, $routeParameters ) );
+        if ($targetRoute) {
+            $form->setAction($this->container->get('router')->generate($targetRoute, $routeParameters));
         }
 
-        $form->setMethod( 'POST' );
-        foreach ( $inputControls as $inputControl ) {
-            $inputControl->attachInputToFormBuilder( $form );
+        //Set the method
+        $form->setMethod('POST');
+
+        //Add the input controls
+        foreach ($inputControls as $inputControl) {
+            $inputControl->attachInputToFormBuilder($form);
         }
-        $form->add( 'Run', 'submit' );
+
+        //If a data array was given, set the controls if they have data in the data array
+        if (null !== $data) {
+            foreach($form->all() as $child) {
+                if (array_key_exists($child->getName(), $data)) {
+                    $child->setData($data[$child->getName()]);
+                }
+            }
+        }
+
+        //Add the submit button
+        $form->add('Run', 'submit');
 
         //Return the completed form
         return $form->getForm();
@@ -311,11 +325,11 @@ class ClientService {
      */
     public function getOptionsHandler() {
         //Get the options handler from the dependency container
-        $optionsHandler = $this->container->get( $this->optionHandlerServiceName );
+        $optionsHandler = $this->container->get($this->optionHandlerServiceName);
 
         //Check that the options handler implements the option handler interface
-        if ( !in_array( 'Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler', class_parents( $optionsHandler ) ) ) {
-            throw new \Exception( self::EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE );
+        if (!in_array('Mesd\Jasper\ReportBundle\Interfaces\AbstractOptionsHandler', class_parents($optionsHandler))) {
+            throw new \Exception(self::EXCEPTION_OPTIONS_HANDLER_NOT_INTERFACE);
         }
 
         //return the handler
@@ -331,7 +345,7 @@ class ClientService {
      *
      * @return array             The array of input controls for the given report
      */
-    public function getReportInputControls( $reportUri, $getICFrom = null ) {
+    public function getReportInputControls($reportUri, $getICFrom = null) {
         //Determine the source of the input options
         $getICFrom = $getICFrom ?: $this->defaultInputOptionsSource;
 
@@ -339,10 +353,10 @@ class ClientService {
         $optionsHandler = $this->getOptionsHandler();
 
         //Create a new input control factory
-        $icFactory = new InputControlFactory( $optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\' );
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\');
 
         //Load the input controls from the client using the factory and the options handler
-        $inputControls = $this->jasperClient->getReportInputControl( $reportUri, $getICFrom, $icFactory );
+        $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
 
         //return the input controls
         return $inputControls;
@@ -357,21 +371,21 @@ class ClientService {
      *
      * @return FormBuilder         The form builder
      */
-    public function createReportBuilder( $resourceUri, $getICFrom = null ) {
+    public function createReportBuilder($resourceUri, $getICFrom = null) {
         //Set the input options source
         $getICFrom = $getICFrom ?: $this->defaultInputOptionsSource;
 
         //Get the options handler from the dependency container
-        $optionsHandler = $this->container->get( $this->optionHandlerServiceName );
+        $optionsHandler = $this->container->get($this->optionHandlerServiceName);
 
         //Create a new input control factory
-        $icFactory = new InputControlFactory( $optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\' );
+        $icFactory = new InputControlFactory($optionsHandler, $getICFrom, 'Mesd\Jasper\ReportBundle\InputControl\\');
 
         //Get the report builder started from the client
-        $reportBuilder = $this->jasperClient->createReportBuilder( $resourceUri, $getICFrom, $icFactory );
+        $reportBuilder = $this->jasperClient->createReportBuilder($resourceUri, $getICFrom, $icFactory);
 
         //Set the stuff from the bundle configuration
-        $reportBuilder->setReportCache( $this->reportCacheDir );
+        $reportBuilder->setReportCache($this->reportCacheDir);
 
         //return the report builder
         return $reportBuilder;
@@ -387,18 +401,18 @@ class ClientService {
      *
      * @return array              Array of ResourceDescriptors
      */
-    public function getResourceList( $folderUri = null, $recursive = false ) {
+    public function getResourceList($folderUri = null, $recursive = false) {
         //Set whether to use the given folderuri or the default
         $folderUri = $folderUri ?: $this->defaultFolder;
 
         //Get the resources in the requested folder
-        $return = $this->jasperClient->getFolder( $folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout );
+        $return = $this->jasperClient->getFolder($folderUri, $this->useFolderCache, $this->folderCacheDir, $this->folderCacheTimeout);
 
         //If security is active, filter out the reports the current user cannot see
-        if ( $this->useSecurity ) {
+        if ($this->useSecurity) {
             $newReturn = array();
-            foreach ( $return as $resource ) {
-                if ( $this->container->get( 'mesd.jasper.report.security' )->canView( $resource->getUriString() ) ) {
+            foreach ($return as $resource) {
+                if ($this->container->get('mesd.jasper.report.security')->canView($resource->getUriString())) {
                     $newReturn[] = $resource;
                 }
             }
@@ -406,12 +420,12 @@ class ClientService {
         }
 
         //if the recursive flag is set get the contents of each folder
-        if ( $recursive ) {
-            foreach ( $return as $resource ) {
-                if ( 'folder' === $resource->getWsType() ) {
-                    $children = $this->getResourceList( $resource->getUriString(), $recursive );
-                    foreach ( $children as $child ) {
-                        $resource->addChildResource( $child );
+        if ($recursive) {
+            foreach ($return as $resource) {
+                if ('folder' === $resource->getWsType()) {
+                    $children = $this->getResourceList($resource->getUriString(), $recursive);
+                    foreach ($children as $child) {
+                        $resource->addChildResource($child);
                     }
                 }
             }
@@ -429,11 +443,11 @@ class ClientService {
      *
      *  @return ReportBuilder
      */
-    public function buildReport( $reportUri, $format = 'html', $assetUrl = '' ) {
+    public function buildReport($reportUri, $format = 'html', $assetUrl = '') {
         //Check connection
-        if ( $this->isConnected() ) {
+        if ($this->isConnected()) {
             //Get the report
-            $report = new Report( $reportUri, $format );
+            $report = new Report($reportUri, $format);
 
             //Create an instance of the report builder
             $reportBuilder = new ReportBuilder(
@@ -442,7 +456,7 @@ class ClientService {
                 , '&page=1'
                 , $assetUrl
                 , 'Fallback'
-            );
+           );
         } else {
             return false;
         }
@@ -450,14 +464,14 @@ class ClientService {
 
     //Get a report view, like get report, but will handle query parameters and render the correct page
     //can be passed to the MesdJasperReportBundle_report_view twig function to automatically render the controls and report
-    public function getReportView( $reportUri, $format = 'html' ) {
-        if ( $this->isConnected() ) {
+    public function getReportView($reportUri, $format = 'html') {
+        if ($this->isConnected()) {
             //Create an event with default params and pass it to the event listener to process
-            $reportViewerEvent = new ReportViewerRequestEvent( $format, 1 );
-            $this->eventDispatcher->dispatch( 'Mesd.jasperreport.report_viewer_request', $reportViewerEvent );
-            if ( $reportViewerEvent->isPropagationStopped() ) {
-                if ( $reportViewerEvent->isAsset() ) {
-                    return $this->getReportAsset( $reportViewerEvent->getAssetUri(), $reportViewerEvent->getJSessionId() );
+            $reportViewerEvent = new ReportViewerRequestEvent($format, 1);
+            $this->eventDispatcher->dispatch('Mesd.jasperreport.report_viewer_request', $reportViewerEvent);
+            if ($reportViewerEvent->isPropagationStopped()) {
+                if ($reportViewerEvent->isAsset()) {
+                    return $this->getReportAsset($reportViewerEvent->getAssetUri(), $reportViewerEvent->getJSessionId());
                 } else {
                     $params = '&page=' . $reportViewerEvent->getReportPage();
                     $format = $reportViewerEvent->getReportFormat();
@@ -467,7 +481,7 @@ class ClientService {
             }
 
             //Create new report object
-            $report = new Report( $reportUri, $format );
+            $report = new Report($reportUri, $format);
 
             //Create the builder
             $reportBuilder = new ReportBuilder(
@@ -476,7 +490,7 @@ class ClientService {
                 , $params
                 , $this->router->getMatcher()->getContext()->getBaseUrl() . $this->router->getMatcher()->getContext()->getPathInfo() . '?asset=true'
                 , 'Fallback'
-            );
+           );
 
             return $reportBuilder;
         } else {
@@ -492,10 +506,10 @@ class ClientService {
      *
      * @return string             The raw asset
      */
-    public function getReportAsset( $assetUri, $jSessionId ) {
+    public function getReportAsset($assetUri, $jSessionId) {
         //Create a connection with the given jSessionId
-        $assetClient = new Client( $this->reportHost . ':' . $this->reportPort, $this->reportUser, $this->reportPass, $jSessionId );
-        return $assetClient->getReportAsset( $assetUri );
+        $assetClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUser, $this->reportPass, $jSessionId);
+        return $assetClient->getReportAsset($assetUri);
     }
 
 
@@ -532,7 +546,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setJasperClient( JasperClient\Client\Client $jasperClient ) {
+    public function setJasperClient(JasperClient\Client\Client $jasperClient) {
         $this->jasperClient = $jasperClient;
 
         return $this;
@@ -554,7 +568,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setDefaultAssetRoute( $defaultAssetRoute ) {
+    public function setDefaultAssetRoute($defaultAssetRoute) {
         $this->defaultAssetRoute = $defaultAssetRoute;
 
         return $this;
@@ -576,7 +590,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setContainer( Symfony\Component\DependencyInjection\Container $container ) {
+    public function setContainer(Symfony\Component\DependencyInjection\Container $container) {
         $this->container = $container;
 
         return $this;
@@ -598,7 +612,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setReportHost( $reportHost ) {
+    public function setReportHost($reportHost) {
         $this->reportHost = $reportHost;
 
         return $this;
@@ -620,7 +634,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setReportPort( $reportPort ) {
+    public function setReportPort($reportPort) {
         $this->reportPort = $reportPort;
 
         return $this;
@@ -642,7 +656,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setReportUsername( $reportUsername ) {
+    public function setReportUsername($reportUsername) {
         $this->reportUsername = $reportUsername;
 
         return $this;
@@ -664,7 +678,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setReportPassword( $reportPassword ) {
+    public function setReportPassword($reportPassword) {
         $this->reportPassword = $reportPassword;
 
         return $this;
@@ -686,7 +700,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setUseFolderCache( $useFolderCache ) {
+    public function setUseFolderCache($useFolderCache) {
         $this->useFolderCache = $useFolderCache;
 
         return $this;
@@ -708,7 +722,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setFolderCacheDir( $folderCacheDir ) {
+    public function setFolderCacheDir($folderCacheDir) {
         $this->folderCacheDir = $folderCacheDir;
 
         return $this;
@@ -730,7 +744,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setFolderCacheTimeout( $folderCacheTimeout ) {
+    public function setFolderCacheTimeout($folderCacheTimeout) {
         $this->folderCacheTimeout = $folderCacheTimeout;
 
         return $this;
@@ -752,7 +766,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setReportCacheDir( $reportCacheDir ) {
+    public function setReportCacheDir($reportCacheDir) {
         $this->reportCacheDir = $reportCacheDir;
 
         return $this;
@@ -778,7 +792,7 @@ class ClientService {
      * @return self
      */
 
-    public function setFormsHandlerServiceName( $formsHandlerService ) {
+    public function setFormsHandlerServiceName($formsHandlerService) {
         $this->formsHandlerService = $formsHandlerService;
         return $this;
     }
@@ -799,7 +813,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setOptionHandlerServiceName( $optionHandlerServiceName ) {
+    public function setOptionHandlerServiceName($optionHandlerServiceName) {
         $this->optionHandlerServiceName = $optionHandlerServiceName;
 
         return $this;
@@ -821,7 +835,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setEventDispatcher( $eventDispatcher ) {
+    public function setEventDispatcher($eventDispatcher) {
         $this->eventDispatcher = $eventDispatcher;
 
         return $this;
@@ -843,7 +857,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setRouter( $router ) {
+    public function setRouter($router) {
         $this->router = $router;
 
         return $this;
@@ -865,7 +879,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setRouteHelper( $routeHelper ) {
+    public function setRouteHelper($routeHelper) {
         $this->routeHelper = $routeHelper;
 
         return $this;
@@ -887,7 +901,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setDefaultFolder( $defaultFolder ) {
+    public function setDefaultFolder($defaultFolder) {
         $this->defaultFolder = $defaultFolder;
 
         return $this;
@@ -909,7 +923,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setEntityManager( $entityManager ) {
+    public function setEntityManager($entityManager) {
         $this->entityManager = $entityManager;
 
         return $this;
@@ -931,7 +945,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setUseSecurity( $useSecurity ) {
+    public function setUseSecurity($useSecurity) {
         $this->useSecurity = $useSecurity;
 
         return $this;
@@ -953,7 +967,7 @@ class ClientService {
      *
      * @return self
      */
-    public function setDefaultInputOptionsSource( $defaultInputOptionsSource ) {
+    public function setDefaultInputOptionsSource($defaultInputOptionsSource) {
         $this->defaultInputOptionsSource = $defaultInputOptionsSource;
 
         return $this;

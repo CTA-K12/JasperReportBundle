@@ -55,7 +55,8 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      * @param string                  $getICFrom How to handle getting the options
      * @param OptionHandlerInterface $optionHandler Symfony Security Context
      */
-    function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionHandler) {
+    function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionHandler)
+    {
         //Set up the super class
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom);
 
@@ -86,13 +87,14 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      *
      * @return array Array of input options
      */
-    public function createOptionList() {
+    public function createOptionList()
+    {
         //Get the options list
         if (self::GET_IC_FROM_CUSTOM == $this->getICFrom) {
             //If custom, assume that the options handler will full handle it
             $optionList = $this->optionHandler->getList($this->getId());
             if (null === $optionList) {
-              throw new \Exception("Input control ".$this->getId()." not defined with option default_input_options_source set to Custom");
+              throw new \Exception("Input control " . $this->getId() . " not defined with option default_input_options_source set to Custom");
             }
         } elseif (self::GET_IC_FROM_FALLBACK == $this->getICFrom) {
             //If fallback, check if the options handler returns null (doesnt handle) and then make use of the jasper method
@@ -117,7 +119,8 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      *
      * @return array The array of options
      */
-    protected function getOptionListFromJasper() {
+    protected function getOptionListFromJasper()
+    {
         $optionList = array();
 
         //Get the options from the jasper server

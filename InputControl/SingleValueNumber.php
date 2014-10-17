@@ -38,7 +38,8 @@ class SingleValueNumber extends AbstractReportBundleInputControl
      * @param string                  $getICFrom How to handle getting the options
      * @param OptionsHandlerInterface $optionsHandler Symfony Security Context
      */
-    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler) {
+    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler)
+    {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->defaultValue = ($state->value && null != $state->value ? $state->value : null);
     }
@@ -54,16 +55,18 @@ class SingleValueNumber extends AbstractReportBundleInputControl
      *
      * @param  FormBuilder $formBuilder The form builder object to attach this input control to
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder) {
+    public function attachInputToFormBuilder(FormBuilder $formBuilder)
+    {
         //Add a new number field
         $formBuilder->add(
-            $this->id ,
+            $this->id,
             'number',
             array(
-                'label'     => $this->label        ,
-                'data'      => $this->defaultValue ,
-                'required'  => $this->mandatory    ,
-                'read_only' => !$this->readOnly    ,
+                'label'     => $this->label,
+                'data'      => $this->defaultValue,
+                'required'  => $this->mandatory,
+                'read_only' => !$this->readOnly,
+                'data_class'=> null
             )
         );
     }
@@ -78,7 +81,8 @@ class SingleValueNumber extends AbstractReportBundleInputControl
      * Get the default value
      * @return array The default value
      */
-    public function getDefaultValue() {
+    public function getDefaultValue()
+    {
         return $this->defaultValue;
     }
 }

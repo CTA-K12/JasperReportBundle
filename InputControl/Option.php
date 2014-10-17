@@ -43,7 +43,8 @@ class Option
      * @param string  $label    The options label
      * @param boolean $selected Whether the option is selected or not
      */
-    function __construct($id, $label, $selected = false) {
+    function __construct($id, $label, $selected = false)
+    {
         //Set stuff
         $this->id        = $id;
         $this->label     = $label;
@@ -60,7 +61,8 @@ class Option
      * Get the id
      * @return string The options id
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -68,7 +70,8 @@ class Option
      * Get the label
      * @return string The options label
      */
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label;
     }
 
@@ -76,9 +79,8 @@ class Option
      * Get the selected boolean
      * @return boolean Whether the option is selected or not
      */
-    public function getSelected() {
+    public function getSelected()
+    {
         return $this->selected;
     }
-
-
 }
