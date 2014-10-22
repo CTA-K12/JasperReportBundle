@@ -199,7 +199,7 @@ class SecurityService
         //The exception message should pretty much explain the purpose of this block
         try {
             $roles = array_map(function ($role) {
-                if ($role instanceof Symfony\Component\Security\Core\Role\SwitchUserRole) {
+                if ($role instanceof \Symfony\Component\Security\Core\Role\SwitchUserRole) {
                     return $role->getRole();
                 } else {
                     return (string)$role;
