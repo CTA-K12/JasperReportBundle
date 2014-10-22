@@ -206,7 +206,7 @@ class SecurityService
                 }
             }, $this->securityContext->getToken()->getRoles());
         } catch (\Exception $e) {
-            throw new \Exception("Jasper Report Bundle security service requires roles to be returned as an array of strings or an array of objects with a __toString() method that returns the name of the role in the format specified by the security file. ", 0, $e);
+            throw new \Exception('The Report Bundle requires the roles to either be in string format or castable to a string');
         }
 
         //Call the check node method
