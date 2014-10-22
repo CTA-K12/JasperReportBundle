@@ -196,17 +196,17 @@ class SecurityService
             }
         }
 
-        // the exception message should pretty much explain the purpose of this block
+        //The exception message should pretty much explain the purpose of this block
         try {
             $roles = array_map(function ($role) {
-                if ( 'Symfony\Component\Security\Core\Role\SwitchUserRole' == get_class($role) ) {
+                if ($role instanceof Symfony\Component\Security\Core\Role\SwitchUserRole) {
                     return $role->getRole();
                 } else {
-                    return $role."";
+                    return (string)$role;
                 }
-            },$this->securityContext->getToken()->getRoles());
+            }, $this->securityContext->getToken()->getRoles());
         } catch (\Exception $e) {
-             throw new \Exception("Jasper Report Bundle security service requires roles to be returned as an array of strings or an array of objects with a __toString() method that returns the name of the role in the format specified by the security file. ", 0, $e);
+            throw new \Exception("Jasper Report Bundle security service requires roles to be returned as an array of strings or an array of objects with a __toString() method that returns the name of the role in the format specified by the security file. ", 0, $e);
         }
 
         //Call the check node method
