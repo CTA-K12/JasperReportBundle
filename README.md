@@ -19,7 +19,7 @@ Installation
 Add Packages to Project via Composer
 
 ```bash
-$ composer require mesd/jasper-report-bundle "1.0.0"
+$ composer require mesd/jasper-report-bundle "~1.0.0"
 ```
 
 After these have been added, perform a composer update to install the packages in your vendor directory.
