@@ -17,23 +17,11 @@ The report bundle and the client currently offer the following features:
 Installation
 ============
 Add Packages to Project via Composer
-For the first step, both the Jasper Client and the Jasper Report Bundle must be added to the project's composer.json file.  
-```javascript
-"repositories": [
-        {
-            "type" : "vcs",
-            "url" : "https://github.com/MESD/JasperClient.git"
-        },
-        {
-            "type" : "vcs",
-            "url" : "https://github.com/MESD/JasperReportBundle.git"
-        }
-    ],
-    "require": {
-        "mesd/jasper-client": "1.0.0-alpha+001",
-        "mesd/jasper-report-bundle": "1.0.0-alpha+001"
-    }
+
+```bash
+$ composer require mesd/jasper-report-bundle "dev-master"
 ```
+
 After these have been added, perform a composer update to install the packages in your vendor directory.
 Register the Bundle in the App Kernel
 As with all other bundles, the report bundle will need to be registered in the application's app kernel.  
@@ -41,7 +29,8 @@ As with all other bundles, the report bundle will need to be registered in the a
 public function registerBundles()
 {
     $bundles = array(
-        new Mesd\Jasper\ReportBundle\MesdJasperReportBundle(),
+        // ...
+        new Mesd\Jasper\ReportBundle\MesdJasperReportBundle()
     )
 } 
 ```
