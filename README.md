@@ -26,6 +26,8 @@ After these have been added, perform a composer update to install the packages i
 Register the Bundle in the App Kernel
 As with all other bundles, the report bundle will need to be registered in the application's app kernel.  
 ```php
+// app/AppKernel.php
+
 public function registerBundles()
 {
     $bundles = array(
