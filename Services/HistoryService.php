@@ -85,7 +85,7 @@ class HistoryService
      *
      * @return array                       The array of report history records
      */
-    public function loadHistoryForReport($reportUri, $limitByCurrentUser = true, $options = []) {
+    public function loadHistoryForReport($reportUri, $limitByCurrentUser = true, $options = array()) {
         //Setup the options array
         $options['resource'] = $reportUri;
 
@@ -108,7 +108,7 @@ class HistoryService
      *
      * @return array                       The array of report history records
      */
-    public function getReportHistoryDisplay($reportUri = null, $limitByCurrentUser = true, $options = []) {
+    public function getReportHistoryDisplay($reportUri = null, $limitByCurrentUser = true, $options = array()) {
         //Call the load method with the given parameters
         if ($reportUri) {
             $history = $this->loadHistoryForReport($reportUri, $limitByCurrentUser, $options);
@@ -279,7 +279,7 @@ class HistoryService
      *
      * @return array
      */
-    public function loadRecentHistory($limitByCurrentUser = true, $options = []) {
+    public function loadRecentHistory($limitByCurrentUser = true, $options = array()) {
         //Resitrict by the user if requested
         if ($limitByCurrentUser) {
             $options['username'] = $this->securityContext->getToken()->getUsername();

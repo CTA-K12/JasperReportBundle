@@ -86,7 +86,7 @@ class PageLinkManager
      *
      * @return self
      */
-    public function generatePageLinks($url, $currentPage, $lastPage, $options = []) {
+    public function generatePageLinks($url, $currentPage, $lastPage, $options = array()) {
         //Handle the options array
         $idTemplate = (isset($options['idTemplate']) && null != $options['idTemplate']) ? $options['idTemplate'] : null;
         $classes = (isset($options['classes']) && null != $options['classes']) ? $options['classes'] : array();
@@ -141,7 +141,7 @@ class PageLinkManager
      *
      * @return PageLink                 New page link object
      */
-    protected function createPageLink($url, $page, $currentPage, $idTemplate = null, $classes = [], $currentPageClass = '') {
+    protected function createPageLink($url, $page, $currentPage, $idTemplate = null, $classes = array(), $currentPageClass = '') {
         //If this is the current page add the current page class to the classes array
         if ($page == $currentPage) {
             $classes[] = $currentPageClass;

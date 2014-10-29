@@ -198,7 +198,7 @@ class LoaderService
      *
      * @return self
      */
-    public function setRouteParameters($routeParameters = [])
+    public function setRouteParameters($routeParameters = array())
     {
         $this->routeParameters = $routeParameters;
 

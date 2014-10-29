@@ -27,7 +27,7 @@ class ReportHistoryRepository extends EntityRepository
      *
      * @return array|Query|int      The result of the query
      */
-    public function filter($options = []) {
+    public function filter($options = array()) {
         //Handle the options array
         $options = array_merge(array(
             'query' => false,
@@ -124,7 +124,7 @@ class ReportHistoryRepository extends EntityRepository
      *
      * @return array|Query          The return from the filter function
      */
-    public function getCachedReports($options = []) {
+    public function getCachedReports($options = array()) {
         $options['status'] = 'cached';
         return $this->filter($options);
     }
