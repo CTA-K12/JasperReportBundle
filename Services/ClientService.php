@@ -271,7 +271,7 @@ class ClientService {
      *
      * @return Symfony\Component\Form\Form The input controls form
      */
-    public function buildReportInputForm($reportUri, $targetRoute = null, $options = []) {
+    public function buildReportInputForm($reportUri, $targetRoute = null, $options = array()) {
         //Handle the options array
         $routeParameters = (isset($options['routeParameters']) && null != $options['routeParameters']) ? $options['routeParameters'] : array();
         $getICFrom = (isset($options['getICFrom']) && null != $options['getICFrom']) ? $options['getICFrom'] : $this->defaultInputOptionsSource;

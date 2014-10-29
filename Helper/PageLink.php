@@ -54,7 +54,7 @@ class PageLink
      * @param string  $href The href
      * @param string  $id   The id
      */
-    public function __construct($text, $href = '#', $id = null, $classes = [], $disabled = false) {
+    public function __construct($text, $href = '#', $id = null, $classes = array(), $disabled = false) {
         //Set stuff
         $this->id = $id;
         $this->text = $text;
