@@ -64,7 +64,7 @@ class HistoryService
         $this->clientService = $clientService;
 
         //Set the entity manager to default
-        $entityManager = 'default';
+        $this->entityManager = 'default';
 
         //Prep the input control stash
         $this->inputControlStash = array();
