@@ -15,7 +15,7 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
      */
     protected function configure() {
         $this
-            ->setName('mesd_jasper_report:security:generate-yaml')
+            ->setName('mesd:jasper:generate-security-yaml')
             ->setDescription('Generates/Updates the report security yaml file from the jasper server contents')
             ->addOption('roles', 'r', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'The roles that are set by default will use the roles defined in the configuration if none given')
             ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'The path where the report security yml file will be placed at')
@@ -65,7 +65,7 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
     protected function setResource($security, $resource, $roles, $depth) {
         //Do not go beyond the max depth
         if (0 == $depth) {
-            return; 
+            return;
         }
 
         //Set the resource if it is not yet set
@@ -74,9 +74,9 @@ class GenerateSecurityYamlCommand extends ContainerAwareCommand
             $security->setRoles($resource, $roles);
         }
 
-        //Get the children 
+        //Get the children
         $children = $this->getContainer()->get('mesd.jasper.report.client')->getResourceList($resource);
-        
+
         //Call recursively
         foreach($children as $child) {
             $this->setResource($security, $child->getUriString(), $roles, $depth - 1);

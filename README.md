@@ -17,34 +17,37 @@ The report bundle and the client currently offer the following features:
 Installation
 ============
 Add Packages to Project via Composer
-For the first step, both the Jasper Client and the Jasper Report Bundle must be added to the project's composer.json file.  
-```javascript
-"repositories": [
-        {
-            "type" : "vcs",
-            "url" : "https://github.com/MESD/JasperClient.git"
-        },
-        {
-            "type" : "vcs",
-            "url" : "https://github.com/MESD/JasperReportBundle.git"
-        }
-    ],
-    "require": {
-        "mesd/jasper-client": "1.0.0-alpha+001",
-        "mesd/jasper-report-bundle": "1.0.0-alpha+001"
-    }
+
+```bash
+$ composer require mesd/jasper-report-bundle "~1.0"
 ```
+
 After these have been added, perform a composer update to install the packages in your vendor directory.
 Register the Bundle in the App Kernel
 As with all other bundles, the report bundle will need to be registered in the application's app kernel.  
 ```php
+// app/AppKernel.php
+
 public function registerBundles()
 {
     $bundles = array(
+        // ...
         new Mesd\Jasper\ReportBundle\MesdJasperReportBundle()
     )
 } 
 ```
+###Configuring Report History
+Issue console command
+```bash
+app/console doctrine:schema:update --env = [whereever] --dump-sql
+```
+... to review, and then ...
+```bash
+app/console doctrine:schema:update --env = [whereever] --force
+```
+to add the history table to your schema.  You may need to add a mapping to your doctrine orm configuration if you have multiple entity managers.
+
+**Important**: add /report-store (or other parent specified in the cache_dir field of configuration) to .gitignore to avoid adding myriad reports to the repo.
 
 ###Connecting to the Jasper Report Server
 The next step is to add in the connection details to the config file so that the bundle can establish a connection with the report server
@@ -67,7 +70,7 @@ MESDJasperReportBundle:
 ```
 
 ###Setting the Configuration Options
-Finally, all that is left is to set the configuration options for the report bundle.  Most options have a default value, and for now there is only required option that needs to be set to get going, and that is just giving the bundle's configuration the name of the options handler service that was set up in the last step.  Visit the configuration section later to get a list of the configuration settings the report bundle has.
+Finally, all that is left is to set the configuration options for the report bundle.  Most options have a default value. There is only one required option that needs to be set: the bundle's configuration the name of the options handler service that was set up in the last step.  Visit the configuration section later to get a list of the configuration settings the report bundle has.
 
 Usage
 =====
@@ -118,10 +121,10 @@ Resource List
 $resources = $this->container->get('mesd.jasper.report.client')->getResourceList();
  
 //Get a list of resources from a particular directory
-$resources = $this->container->get('mesd.jasper.report.client')->('reports/super-secret-reports/');
+$resources = $this->container->get('mesd.jasper.report.client')->getResourceList('reports/super-secret-reports/');
  
 //Get all the resources below a particular directory (note that this can be a slow process)
-$resources = $this->container->get('mesd.jasper.report.client')->('reports/', true);
+$resources = $this->container->get('mesd.jasper.report.client')->getResourceList('reports/', true);
 ```
 
 ###Getting the Input Controls
@@ -130,7 +133,15 @@ To build a new report, we need to first get the input controls for a report and 
 //Display the report form
 public function formAction()
 {
-    $form = $this->container->get('mesd.jasper.report.client')->buildReportInputForm('report/sales/quarterly_report', 'route_to_next_action', array('routeParameters' => array('key' => 'value)));
+    $form = $this->container->get('mesd.jasper.report.client')
+        ->buildReportInputForm(
+            'report/sales/quarterly_report',
+            'route_to_next_action',
+            array('routeParameters' => array('key' => 'value')
+        )
+    );
+    
+    
  
     //Display and such
     ...

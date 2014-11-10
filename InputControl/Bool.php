@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilder;
 /**
  * Single Select
  */
-class SingleValueText extends AbstractReportBundleInputControl
+class Bool extends AbstractReportBundleInputControl
 {
     ///////////////
     // VARIABLES //
@@ -60,12 +60,13 @@ class SingleValueText extends AbstractReportBundleInputControl
         //Add a new text field
         $formBuilder->add(
             $this->id,
-            'text',
+            'checkbox',
             array(
-                'label'     => $this->label ,
-                'data'      => (string)$this->defaultValue,
-                'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly
+                'label'     => $this->label,
+                'data'      => (bool)$this->defaultValue,
+                'required'  => false,
+                'read_only' => !$this->readOnly,
+                'data_class'=> null
             )
         );
     }

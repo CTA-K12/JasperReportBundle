@@ -38,7 +38,8 @@ class SingleSelect extends AbstractReportBundleInputControl
      * @param string                  $getICFrom      How to handle getting the options
      * @param OptionsHandlerInterface $optionsHandler Symfony Security Context
      */
-    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler) {
+    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler)
+    {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->optionList = $this->createOptionList();
     }
@@ -54,7 +55,8 @@ class SingleSelect extends AbstractReportBundleInputControl
      *
      * @param  FormBuilder $formBuilder The form builder object to attach this input control to
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder) {
+    public function attachInputToFormBuilder(FormBuilder $formBuilder)
+    {
         //Convert the options to an array for the form builder
         $choices = array();
         $selected = null;
@@ -66,13 +68,17 @@ class SingleSelect extends AbstractReportBundleInputControl
         }
 
         //Add a new multi choice field to the builder
-        $formBuilder->add($this->id, 'choice', array(
+        $formBuilder->add(
+            $this->id,
+            'choice',
+            array(
                 'label'     => $this->label,
                 'choices'   => $choices,
                 'multiple'  => false,
                 'data'      => $selected,
                 'required'  => true,
-                'read_only' => !$this->readOnly
+                'read_only' => !$this->readOnly,
+                'data_class'=> null
             )
         );
     }
@@ -88,7 +94,8 @@ class SingleSelect extends AbstractReportBundleInputControl
      * Get the generated option list
      * @return array The generated option list
      */
-    public function getOptionList() {
+    public function getOptionList()
+    {
         return $this->optionList;
     }
 }

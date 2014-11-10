@@ -85,7 +85,7 @@ class HistoryService
      *
      * @return array                       The array of report history records
      */
-    public function loadHistoryForReport($reportUri, $limitByCurrentUser = true, $options = []) {
+    public function loadHistoryForReport($reportUri, $limitByCurrentUser = true, $options = array()) {
         //Setup the options array
         $options['resource'] = $reportUri;
 
@@ -108,7 +108,7 @@ class HistoryService
      *
      * @return array                       The array of report history records
      */
-    public function getReportHistoryDisplay($reportUri = null, $limitByCurrentUser = true, $options = []) {
+    public function getReportHistoryDisplay($reportUri = null, $limitByCurrentUser = true, $options = array()) {
         //Call the load method with the given parameters
         if ($reportUri) {
             $history = $this->loadHistoryForReport($reportUri, $limitByCurrentUser, $options);
@@ -141,7 +141,7 @@ class HistoryService
             //Convert the columns parameter into something easier to read
             $params = $this->prettifyParameters($record->getReportUri(), json_decode($record->getParameters(), true));
 
-            //Fill out the rest of the 
+            //Fill out the rest of the
             $recordArray['report'] = $record->getReportUri();
             $recordArray['requestId'] = $record->getRequestId();
             $recordArray['date'] = $record->getDate();
@@ -169,8 +169,17 @@ class HistoryService
      */
     public function prettifyParameters($reportUri, array $parameters) {
         //Get the report input controls
-        $inputControls = $this->getReportInputControls($reportUri, true);
-        
+        try {
+            $inputControls = $this->getReportInputControls($reportUri, true);
+        } catch (\Exception $e) {
+            $out="";
+            foreach ($parameters as $k =>$v){
+                foreach ($v as $item)
+                $out.=$k.": ".$item."<br/>";
+            }
+            return $out;
+        }
+
         //Convert the input controls and the parameters into a string
         $output = array();
         foreach($inputControls as $key => $inputControl) {
@@ -210,7 +219,7 @@ class HistoryService
         }
 
         //Glue the output array together into a string
-        return implode('<br>', $output);
+        return implode('<br/>', $output);
     }
 
 
@@ -241,7 +250,7 @@ class HistoryService
                     //Create an entry in the new array
                     $newArray[$ic->getId()] = array('control' => $ic);
 
-                    //Get the options, and index them by id => label and add it to the 
+                    //Get the options, and index them by id => label and add it to the
                     if (method_exists($ic, 'getOptionList')) {
                         foreach($ic->getOptionList() as $option) {
                             $newArray[$ic->getId()]['options'][$option->getId()] = $option->getLabel();
@@ -268,9 +277,9 @@ class HistoryService
      * @param  boolean $limitByCurrentUser Whether to limit by just the current user or to get all reports
      * @param  array   $options            Options to pass to the history repository's filter method
      *
-     * @return array                       
+     * @return array
      */
-    public function loadRecentHistory($limitByCurrentUser = true, $options = []) {
+    public function loadRecentHistory($limitByCurrentUser = true, $options = array()) {
         //Resitrict by the user if requested
         if ($limitByCurrentUser) {
             $options['username'] = $this->securityContext->getToken()->getUsername();

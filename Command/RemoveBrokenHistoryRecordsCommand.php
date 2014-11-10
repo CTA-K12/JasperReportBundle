@@ -26,7 +26,7 @@ class RemoveBrokenHistoryRecordsCommand extends ContainerAwareCommand
      */
     protected function configure() {
         $this
-            ->setName('mesd_jasper_report:history:delete_broken_records')
+            ->setName('mesd:jasper:delete-broken-records')
             ->setDescription('Removes any history record that points to a report that is no longer in the report store')
             ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Dont make any database changes, just display the records that will be deleted')
         ;
@@ -70,7 +70,7 @@ class RemoveBrokenHistoryRecordsCommand extends ContainerAwareCommand
 
             //For each records check if its report exists in the store, and delete it if it isnt
             foreach($records as $record) {
-                if ($record->getRequestId() 
+                if ($record->getRequestId()
                     && $this->getContainer()->get('mesd.jasper.report.loader')->getReportLoader()->checkIfReportIsStored($record->getRequestId())) {
                     //Do nothing for now the record is good
                 } else {

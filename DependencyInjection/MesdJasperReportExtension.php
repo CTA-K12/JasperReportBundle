@@ -37,6 +37,7 @@ class MesdJasperReportExtension extends Extension
         $reportClientDefinition->addMethodCall('setUseSecurity', array($config['report_security']['use_security']));
 
         //Set the input control settings
+        $reportClientDefinition->addMethodCall('setFormsHandlerServiceName', array($config['forms_handler']));
         $reportClientDefinition->addMethodCall('setOptionHandlerServiceName', array($config['options_handler']));
         $reportClientDefinition->addMethodCall('setDefaultInputOptionsSource', array($config['default_input_options_source']));
 
@@ -67,7 +68,7 @@ class MesdJasperReportExtension extends Extension
         //Setup the report history service
         $reportHistoryDefinition = $container->getDefinition('mesd.jasper.report.history');
 
-        //Set the entity manager name to the same as the client 
+        //Set the entity manager name to the same as the client
         $reportHistoryDefinition->addMethodCall('setEntityManager', array($config['report_history']['entity_manager']));
 
         //Get the security service definition

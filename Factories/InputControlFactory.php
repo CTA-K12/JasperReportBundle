@@ -45,7 +45,6 @@ class InputControlFactory implements InputControlAbstractFactory
     // BASE METHODS //
     //////////////////
 
-
     /**
      * Constructor
      *
@@ -55,7 +54,7 @@ class InputControlFactory implements InputControlAbstractFactory
      */
     public function __construct(
             AbstractOptionsHandler $optionsHandler,
-            $getICFrom = null, 
+            $getICFrom = null,
             $inputControlTypeNamespace = null
         ) {
         //Set stuff
@@ -73,10 +72,10 @@ class InputControlFactory implements InputControlAbstractFactory
     /**
      * Processes the XML return from the getInputControls call in the client
      * and constructs the collection of input controls as needed
-     * 
+     *
      * @param  SimpleXMLElement $specification XML detailing the reports input controls
-     * 
-     * @return array                           Collection of the reports input controls 
+     *
+     * @return array                           Collection of the reports input controls
      */
     public function processInputControlSpecification(\SimpleXMLElement $specification) {
         $collection = array();
@@ -84,7 +83,7 @@ class InputControlFactory implements InputControlAbstractFactory
         foreach($specification->inputControl as $key => $value) {
             //Get the class of the type where the class name is the input type in the specified namespace
             $inputClass = $this->inputControlTypeNamespace . ucfirst($value->type);
-            //Try to init the object 
+            //Try to init the object
             try {
                 $collection[] = new $inputClass(
                     (string)$value->id,

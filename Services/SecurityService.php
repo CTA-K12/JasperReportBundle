@@ -196,13 +196,23 @@ class SecurityService
             }
         }
 
-        //Call the check node method
+        //The exception message should pretty much explain the purpose of this block
         try {
-            $roles = array_map(function ($role) {return $role."";},$this->securityContext->getToken()->getRoles());
+            $roles = array_map(function ($role) {
+                if (
+                    $role instanceof \Symfony\Component\Security\Core\Role\SwitchUserRole ||
+                    $role instanceof \Symfony\Component\Security\Core\Role\Role
+                    ) {
+                    return $role->getRole();
+                } else {
+                    return (string)$role;
+                }
+            }, $this->securityContext->getToken()->getRoles());
         } catch (\Exception $e) {
-             throw new \Exception("Jasper Report Bundle security service requires roles to be returned as an array of strings or an array of objects with a __toString() method that returns the name of the role in the format specified by the security file. ", 0, $e);
+            throw new \Exception('The Report Bundle requires the roles to either be in string format or castable to a string');
         }
 
+        //Call the check node method
         return $this->checkNode($resourceUri, $roles);
     }
 

@@ -7,13 +7,7 @@
         "psr-0": { "Mesd\\Jasper\\ReportBundle": "" }
     }
     ,"target-dir": "Mesd/Jasper/ReportBundle"
-    ,"repositories": [
-    {
-        "type" : "vcs"
-        ,"url": "https://github.com/MESD/JasperClient.git"
-    }
-    ]
     ,"require": {
-        "mesd/jasper-client": "1.0.0-alpha-001"
+        "mesd/jasper-client": "~1.0"
     }
 }
