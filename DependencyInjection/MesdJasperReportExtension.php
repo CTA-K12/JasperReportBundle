@@ -24,6 +24,7 @@ class MesdJasperReportExtension extends Extension
         $reportClientDefinition->addMethodCall('setReportPassword', array($config['connection']['password']));
         $reportClientDefinition->addMethodCall('setReportHost', array($config['connection']['host']));
         $reportClientDefinition->addMethodCall('setReportPort', array($config['connection']['port']));
+        $reportClientDefinition->addMethodCall('setVersion', array($config['version']));
 
         //Set the report cache settings
         $reportClientDefinition->addMethodCall('setReportCacheDir', array($config['report_cache']['cache_dir']));

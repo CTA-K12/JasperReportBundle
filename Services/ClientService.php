@@ -175,6 +175,13 @@ class ClientService {
      */
     private $defaultInputOptionsSource;
 
+    /**
+     * The jasper server version
+     *
+     * @var string
+     */
+    private $version;
+
 
     //////////////////
     // BASE METHODS //
@@ -195,6 +202,7 @@ class ClientService {
 
         //Defaults
         $this->reportDefaultFolder = '';
+        $this->version = '5.5.0';
     }
 
 
@@ -228,7 +236,7 @@ class ClientService {
         //Attempt to initialize the client and login to the report server
         try {
             //Give this object's stored parameters to initialize the jasper client
-            $this->jasperClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUsername, $this->reportPassword);
+            $this->jasperClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUsername, $this->reportPassword, null, $this->version);
 
             //Login and set the connection flag to the return of the login method
             $this->connected = $this->jasperClient->login();
@@ -508,7 +516,7 @@ class ClientService {
      */
     public function getReportAsset($assetUri, $jSessionId) {
         //Create a connection with the given jSessionId
-        $assetClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUser, $this->reportPass, $jSessionId);
+        $assetClient = new Client($this->reportHost . ':' . $this->reportPort, $this->reportUser, $this->reportPass, $jSessionId, $this->version);
         return $assetClient->getReportAsset($assetUri);
     }
 
@@ -969,6 +977,30 @@ class ClientService {
      */
     public function setDefaultInputOptionsSource($defaultInputOptionsSource) {
         $this->defaultInputOptionsSource = $defaultInputOptionsSource;
+
+        return $this;
+    }
+
+    /**
+     * Gets the The jasper server version.
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Sets the The jasper server version.
+     *
+     * @param string $version the version
+     *
+     * @return self
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
 
         return $this;
     }

@@ -15,6 +15,7 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('default_folder')->defaultValue('/reports')->end()
+                ->scalarNode('version')->defaultValue('5.5.0')->end()
                 ->arrayNode('connection')
                     ->addDefaultsIfNotSet()
                     ->children()
