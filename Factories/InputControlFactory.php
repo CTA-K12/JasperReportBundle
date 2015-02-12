@@ -88,11 +88,11 @@ class InputControlFactory implements InputControlAbstractFactory
                 $collection[] = new $inputClass(
                     (string)$value->id,
                     (string)$value->label,
-                    (string)$value->mandatory,
-                    (string)$value->readOnly,
+                    filter_var($value->mandatory, FILTER_VALIDATE_BOOLEAN),
+                    filter_var($value->readOnly, FILTER_VALIDATE_BOOLEAN),
                     (string)$value->type,
                     (string)$value->uri,
-                    (string)$value->visible,
+                    filter_var($value->visible, FILTER_VALIDATE_BOOLEAN),
                     (object)$value->state,
                     $this->getICFrom,
                     $this->optionsHandler
