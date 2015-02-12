@@ -65,7 +65,7 @@ class Bool extends AbstractReportBundleInputControl
                 'label'     => $this->label,
                 'data'      => (bool)$this->defaultValue,
                 'required'  => false,
-                'read_only' => !$this->readOnly,
+                'read_only' => $this->readOnly,
                 'data_class'=> null
             )
         );
