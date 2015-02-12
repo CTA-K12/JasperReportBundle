@@ -79,7 +79,7 @@ class MultiSelect extends AbstractReportBundleInputControl
                 'multiple'  => true,
                 'data'      => $selected,
                 'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly,
+                'read_only' => $this->readOnly,
                 'data_class'=> null
             )
         );
