@@ -65,7 +65,7 @@ class SingleValueNumber extends AbstractReportBundleInputControl
                 'label'     => $this->label,
                 'data'      => $this->defaultValue,
                 'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly,
+                'read_only' => $this->readOnly,
                 'data_class'=> null
             )
         );
