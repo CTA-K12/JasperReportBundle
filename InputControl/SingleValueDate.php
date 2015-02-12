@@ -67,7 +67,7 @@ class SingleValueDate extends AbstractReportBundleInputControl
                 'input'     => 'string',
                 'data'      => (string)$this->defaultValue,
                 'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly,
+                'read_only' => $this->readOnly,
                 'data_class'=> null
             )
         );
