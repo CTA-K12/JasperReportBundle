@@ -77,7 +77,7 @@ class MultiSelectCheckbox extends AbstractReportBundleInputControl
                 'multiple'  => true,
                 'data'      => $selected,
                 'required'  => $this->mandatory,
-                'read_only' => !$this->readOnly,
+                'read_only' => $this->readOnly,
                 'expanded'  => true,
                 'data_class'=> null
             )
