@@ -63,7 +63,7 @@ class Bool extends AbstractReportBundleInputControl
             'checkbox',
             array(
                 'label'     => $this->label,
-                'data'      => (bool)$this->defaultValue,
+                'data'      => filter_var($this->defaultValue, FILTER_VALIDATE_BOOLEAN),
                 'required'  => false,
                 'read_only' => $this->readOnly,
                 'data_class'=> null
