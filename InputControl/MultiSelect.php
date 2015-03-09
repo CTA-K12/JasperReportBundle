@@ -20,6 +20,13 @@ class MultiSelect extends AbstractReportBundleInputControl
      */
     protected $optionList;
 
+    /**
+     * The input control gets its options via ajax
+     * 
+     * @var boolean
+     */
+    protected $isAjax;
+
 
     //////////////////
     // BASE METHODS //
@@ -44,6 +51,13 @@ class MultiSelect extends AbstractReportBundleInputControl
     {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->optionList = $this->createOptionList();
+
+        // Check if this selector is to get its options via ajax
+        if ($optionsHandler->supportsAjaxOption($id)) {
+            $this->isAjax = true;
+        } else {
+            $this->isAjax = false;
+        }
     }
 
 
@@ -53,26 +67,37 @@ class MultiSelect extends AbstractReportBundleInputControl
 
 
     /**
-     * Attaches this input control to the form builder
+     * Convert this field into a symfony form object and attach it the form builder
      *
-     * @param FormBuilder $formBuilder The form builder object to attach this input control to
+     * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
+     * @param  mixed       $data        The data for this input control if available
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder)
+    public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null)
     {
         //Convert the options to an array for the form builder
         $choices = array();
         $selected = array();
-        foreach ($this->optionList as $option) {
-            $choices[$option->getId()] = $option->getLabel();
-            if ($option->getSelected()) {
-                $selected[] = $option->getId();
+        if ($this->isAjax && $data !== null) {
+            if (is_array($data)) {
+                foreach($data as $d) {
+                    $choices[$d] = ' ';
+                }
+            } else {
+                $choices[$data] = ' ';
+            }
+        } else {
+            foreach ($this->optionList as $option) {
+                $choices[$option->getId()] = $option->getLabel();
+                if ($option->getSelected()) {
+                    $selected[] = $option->getId();
+                }
             }
         }
 
         //Add a new multi choice field to the builder
         $formBuilder->add(
             $this->id,
-            'choice',
+            $this->isAjax ? new AjaxSelectType() : 'choice',
             array(
                 'label'     => $this->label,
                 'choices'   => $choices,

@@ -5,6 +5,8 @@ namespace Mesd\Jasper\ReportBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Contains actions to help with display and interface.
@@ -66,5 +68,36 @@ class ReportController extends ContainerAware
 
         //Return the final response
         return $response;
+    }
+
+
+    /**
+     * Get the options for an ajax selector
+     *
+     * @param  Request      $request The request
+     * @param  string       $inputId The input control id
+     *
+     * @return JsonResponse          The requested list of options in json format
+     */
+    public function ajaxOptionsAction(Request $request, $inputId)
+    {
+        // Get the stuff from the request
+        $limit = $request->query->has('limit') ? $request->query->get('limit') : 20;
+        $page = $request->query->has('page') ? $request->query->get('page') : 1;
+        $search = $request->query->has('search') ? urldecode($request->query->get('search')) : null;
+
+        // Get the list of choices
+        if ($this->container->get('mesd.jasper.report.client')->getOptionsHandler()->supportsAjaxOption($inputId)) {
+            $options = $this->container->get('mesd.jasper.report.client')->getOptionsHandler()->getAjaxList($inputId, $limit, $page, $search);
+            $choices = array($inputId => array());
+            foreach($options as $option) {
+                $choices[$inputId][] = array('value' => $option->getId(), 'text' => $option->getLabel());
+            }
+        } else {
+            throw new \Exception(sprintf('The control id "%s" does not support ajax options.', $inputId));
+        }
+
+        // Return the json list
+        return new JsonResponse($choices);
     }
 }

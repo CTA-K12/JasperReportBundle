@@ -5,3 +5,7 @@ MesdJasperReportBundle_render_cached_asset:
 MesdJasperReportBundle_export_cached_report:
     pattern:    /export/{requestId}/{format}
     defaults:   { _controller: MesdJasperReportBundle:Report:exportCachedReport }
+
+MesdJasperReportBundle_ajax_options:
+    pattern:    /ajaxoptions/{inputId}
+    defaults:   { _controller: MesdJasperReportBundle:Report:ajaxOptions }

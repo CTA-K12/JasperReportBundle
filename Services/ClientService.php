@@ -295,7 +295,7 @@ class ClientService {
         //Load the input controls from the client using the factory and the options handler
         $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
         //Build the form
-        $form = $this->container->get('form.factory')->createBuilder('form', $data, $formOptions);
+        $form = $this->container->get('form.factory')->createBuilder('form', null, $formOptions);
 
         if ($targetRoute) {
             $form->setAction($this->container->get('router')->generate($targetRoute, $routeParameters));
@@ -306,15 +306,10 @@ class ClientService {
 
         //Add the input controls
         foreach ($inputControls as $inputControl) {
-            $inputControl->attachInputToFormBuilder($form);
-        }
-
-        //If a data array was given, set the controls if they have data in the data array
-        if (null !== $data) {
-            foreach($form->all() as $child) {
-                if (array_key_exists($child->getName(), $data)) {
-                    $child->setData($data[$child->getName()]);
-                }
+            if (null !== $data && array_key_exists($inputControl->getId(), $data)) {
+                $inputControl->attachInputToFormBuilder($form, $data[$inputControl->getId()]);
+            } else {
+                $inputControl->attachInputToFormBuilder($form);
             }
         }
 

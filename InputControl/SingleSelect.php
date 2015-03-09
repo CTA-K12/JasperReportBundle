@@ -4,6 +4,8 @@ namespace Mesd\Jasper\ReportBundle\InputControl;
 
 use Symfony\Component\Form\FormBuilder;
 
+use Mesd\Jasper\ReportBundle\FormType\AjaxSelectType;
+
 /**
  * Single Select
  */
@@ -15,9 +17,17 @@ class SingleSelect extends AbstractReportBundleInputControl
 
     /**
      * The options list
+     * 
      * @var array
      */
     protected $optionList;
+
+    /**
+     * The input control gets its options via ajax
+     * 
+     * @var boolean
+     */
+    protected $isAjax;
 
 
     //////////////////
@@ -27,6 +37,7 @@ class SingleSelect extends AbstractReportBundleInputControl
 
     /**
      * Constructor
+     * 
      * @param string                  $id             Input Control Id
      * @param string                  $label          Input Controls Label
      * @param string                  $mandatory      Whether an input control is mandatory
@@ -42,6 +53,13 @@ class SingleSelect extends AbstractReportBundleInputControl
     {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->optionList = $this->createOptionList();
+
+        // Check if this selector is to get its options via ajax
+        if ($optionsHandler->supportsAjaxOption($id)) {
+            $this->isAjax = true;
+        } else {
+            $this->isAjax = false;
+        }
     }
 
 
@@ -51,32 +69,43 @@ class SingleSelect extends AbstractReportBundleInputControl
 
 
     /**
-     * Attaches this input control to the form builder
+     * Convert this field into a symfony form object and attach it the form builder
      *
-     * @param  FormBuilder $formBuilder The form builder object to attach this input control to
+     * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
+     * @param  mixed       $data        The data for this input control if available
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder)
+    public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null)
     {
         //Convert the options to an array for the form builder
         $choices = array();
         $selected = null;
-        foreach($this->optionList as $option) {
-            $choices[$option->getId()] = $option->getLabel();
-            if ($option->getSelected()) {
-                $selected = $option->getId();
+        if ($this->isAjax && $data !== null) {
+            if (is_array($data)) {
+                foreach($data as $d) {
+                    $choices[$d] = ' ';
+                }
+            } else {
+                $choices[$data] = ' ';
+            }
+        } else {
+            foreach($this->optionList as $option) {
+                $choices[$option->getId()] = $option->getLabel();
+                if ($option->getSelected()) {
+                    $selected = $option->getId();
+                }
             }
         }
 
         //Add a new multi choice field to the builder
         $formBuilder->add(
             $this->id,
-            'choice',
+            $this->isAjax ? new AjaxSelectType() : 'choice',
             array(
                 'label'     => $this->label,
                 'choices'   => $choices,
                 'multiple'  => false,
                 'data'      => $selected,
-                'required'  => true,
+                'required'  => $this->mandatory,
                 'read_only' => $this->readOnly,
                 'data_class'=> null
             )
@@ -92,6 +121,7 @@ class SingleSelect extends AbstractReportBundleInputControl
 
     /**
      * Get the generated option list
+     * 
      * @return array The generated option list
      */
     public function getOptionList()

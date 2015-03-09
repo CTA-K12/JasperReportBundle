@@ -73,8 +73,9 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      * Convert this field into a symfony form object and attach it the form builder
      *
      * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
+     * @param  mixed       $data        The data for this input control if available
      */
-    abstract public function attachInputToFormBuilder(FormBuilder $formBuilder);
+    abstract public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null);
 
 
     ////////////////////////

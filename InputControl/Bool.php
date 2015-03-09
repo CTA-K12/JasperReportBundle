@@ -51,11 +51,12 @@ class Bool extends AbstractReportBundleInputControl
 
 
     /**
-     * Attaches this input control to the form builder
+     * Convert this field into a symfony form object and attach it the form builder
      *
-     * @param  FormBuilder $formBuilder The form builder object to attach this input control to
+     * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
+     * @param  mixed       $data        The data for this input control if available
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder)
+    public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null)
     {
         //Add a new text field
         $formBuilder->add(
