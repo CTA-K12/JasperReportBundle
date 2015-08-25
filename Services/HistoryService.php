@@ -209,8 +209,8 @@ class HistoryService
                     $output[] = $inputControl['control']->getLabel() . ': ' . implode(', ', $parameters[$key]);
                 } else {
                     //Check if a default value exists, else mark it as being empty
-                    if ($inputControl['control']->getLabel()->getDefaultValue()) {
-                        $output[] = $inputControl['control']->getLabel() . ': ' . implode(', ', $parameters[$key]);
+                    if ($inputControl['control']->getDefaultValue()) {
+                        $output[] = $inputControl['control']->getLabel() . ': ' . $inputControl['control']->getDefaultValue();
                     } else {
                         $output[] = $inputControl['control']->getLabel() . ': ---';
                     }
