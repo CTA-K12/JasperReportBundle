@@ -19,11 +19,9 @@ class SingleValueText extends AbstractReportBundleInputControl
      */
     protected $defaultValue;
 
-
     //////////////////
     // BASE METHODS //
     //////////////////
-
 
     /**
      * Constructor
@@ -38,17 +36,25 @@ class SingleValueText extends AbstractReportBundleInputControl
      * @param string                  $getICFrom How to handle getting the options
      * @param OptionsHandlerInterface $optionsHandler Symfony Security Context
      */
-    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler)
-    {
+    public function __construct(
+        $id,
+        $label,
+        $mandatory,
+        $readOnly,
+        $type,
+        $uri,
+        $visible,
+        $state,
+        $getICFrom,
+        $optionsHandler
+    ) {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->defaultValue = ($state->value && null != $state->value ? $state->value : null);
     }
 
-
     ///////////////////////
     // IMPLEMENT METHODS //
     ///////////////////////
-
 
     /**
      * Convert this field into a symfony form object and attach it the form builder
@@ -56,26 +62,30 @@ class SingleValueText extends AbstractReportBundleInputControl
      * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
      * @param  mixed       $data        The data for this input control if available
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null)
-    {
+    public function attachInputToFormBuilder(
+        FormBuilder $formBuilder,
+                    $data = null
+    ) {
+        // check type of data absent type hint
+        $data = is_string($data) ? $data : null;
+        $data ?: (string) $this->defaultValue;
+
         //Add a new text field
         $formBuilder->add(
             $this->id,
             'text',
-            array(
-                'label'     => $this->label ,
-                'data'      => (string)$this->defaultValue,
+            [
+                'label'     => $this->label,
+                'data'      => $data,
                 'required'  => $this->mandatory,
-                'read_only' => $this->readOnly
-            )
+                'read_only' => $this->readOnly,
+            ]
         );
     }
-
 
     ////////////////////
     // CLASS METHODS  //
     ////////////////////
-
 
     /**
      * Get the default value

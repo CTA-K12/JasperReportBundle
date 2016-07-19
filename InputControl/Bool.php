@@ -19,11 +19,9 @@ class Bool extends AbstractReportBundleInputControl
      */
     protected $defaultValue;
 
-
     //////////////////
     // BASE METHODS //
     //////////////////
-
 
     /**
      * Constructor
@@ -38,17 +36,25 @@ class Bool extends AbstractReportBundleInputControl
      * @param string                  $getICFrom How to handle getting the options
      * @param OptionsHandlerInterface $optionsHandler Symfony Security Context
      */
-    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler)
-    {
+    public function __construct(
+        $id,
+        $label,
+        $mandatory,
+        $readOnly,
+        $type,
+        $uri,
+        $visible,
+        $state,
+        $getICFrom,
+        $optionsHandler
+    ) {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->defaultValue = ($state->value && null != $state->value ? $state->value : null);
     }
 
-
     ///////////////////////
     // IMPLEMENT METHODS //
     ///////////////////////
-
 
     /**
      * Convert this field into a symfony form object and attach it the form builder
@@ -56,27 +62,35 @@ class Bool extends AbstractReportBundleInputControl
      * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
      * @param  mixed       $data        The data for this input control if available
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null)
-    {
+    public function attachInputToFormBuilder(
+        FormBuilder $formBuilder,
+                    $data = null
+    ) {
+        // cast data absent typehint
+
+        $data = is_bool($data) ? $data : null;
+
+        $data = $data
+        ? filter_var($data, FILTER_VALIDATE_BOOLEAN)
+        : filter_var($this->defaultValue, FILTER_VALIDATE_BOOLEAN);
+
         //Add a new text field
         $formBuilder->add(
             $this->id,
             'checkbox',
-            array(
-                'label'     => $this->label,
-                'data'      => filter_var($this->defaultValue, FILTER_VALIDATE_BOOLEAN),
-                'required'  => false,
-                'read_only' => $this->readOnly,
-                'data_class'=> null
-            )
+            [
+                'label'      => $this->label,
+                'data'       => $data,
+                'required'   => false,
+                'read_only'  => $this->readOnly,
+                'data_class' => null,
+            ]
         );
     }
-
 
     ////////////////////
     // CLASS METHODS  //
     ////////////////////
-
 
     /**
      * Get the default value
