@@ -3,27 +3,27 @@ parameters:
 services:
     mesd.jasper.report.client:
         class: Mesd\Jasper\ReportBundle\Services\ClientService
-        arguments: [ @service_container ]
+        arguments: [ "@service_container" ]
 
     mesd.jasper.report.loader:
         class: Mesd\Jasper\ReportBundle\Services\LoaderService
-        arguments: [ @router ]
+        arguments: [ "@router" ]
 
     mesd.jasper.report.history:
         class: Mesd\Jasper\ReportBundle\Services\HistoryService
-        arguments: [ @doctrine, @security.context, @mesd.jasper.report.client ]
+        arguments: [ "@doctrine", "@security.context", "@mesd.jasper.report.client" ]
 
     mesd.jasper.report.security:
         class: Mesd\Jasper\ReportBundle\Services\SecurityService
-        arguments: [ @security.context ]
+        arguments: [ "@security.context" ]
 
     mesd.jasper.report.display_helper:
         class: Mesd\Jasper\ReportBundle\Helper\DisplayHelper
-        arguments: [ @service_container ]
+        arguments: [ "@service_container" ]
 
     mesd.jasper.report.twig.extension.report:
         class: Mesd\Jasper\ReportBundle\Twig\Extension\ReportExtension
-        arguments: [ @mesd.jasper.report.display_helper ]
+        arguments: [ "@mesd.jasper.report.display_helper" ]
         tags:
             - { name: twig.extension }
 
