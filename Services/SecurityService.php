@@ -2,17 +2,15 @@
 
 namespace Mesd\Jasper\ReportBundle\Services;
 
-use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Security\Core\TokenStorage;
 use Symfony\Component\Yaml\Dumper;
-
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Yaml\Parser;
 
 class SecurityService
 {
     ///////////////
     // VARIABLES //
     ///////////////
-
 
     /**
      * Array that holds the report security settings
@@ -28,9 +26,9 @@ class SecurityService
 
     /**
      * Reference to the symfony security context
-     * @var SecurityContext
+     * @var TokenStorage
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * Whether the class has been initialized or not
@@ -62,48 +60,45 @@ class SecurityService
      */
     private $fileFound;
 
-
     //////////////////
     // BASE METHODS //
     //////////////////
 
-
     /**
      * Constructor
      *
-     * @param SecurityContext $securityContext Reference to symfony's security context
+     * @param TokenStorage $tokenStorage Reference to symfony's security context
      */
-    public function __construct(SecurityContext $securityContext) {
+    public function __construct(TokenStorage $tokenStorage)
+    {
         //Set stuff
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
 
         //Set ready to false until the init function is called
-        $this->ready = false;
+        $this->ready     = false;
         $this->fileFound = false;
     }
-
 
     ///////////////////
     // CLASS METHODS //
     ///////////////////
 
-
     /**
      * Loads the data and prepares this class
      */
-    public function init() {
+    public function init()
+    {
         //If available load the config from the security file, else create a new array
         if ($this->securityFile) {
             if (!$this->loadSecurityConfiguration()) {
-                $this->config = array();
+                $this->config = [];
             }
         } else {
-            $this->config = array();
+            $this->config = [];
         }
         //Set ready to true
         $this->ready = true;
     }
-
 
     /**
      * Loads the configuration from the
@@ -114,7 +109,10 @@ class SecurityService
      *
      * @return boolean               Whether the read was successful or not
      */
-    public function loadSecurityConfiguration($pathOverride = null, $debug = false) {
+    public function loadSecurityConfiguration(
+        $pathOverride = null,
+        $debug = false
+    ) {
         //Set the path to attempt to read from
         $path = $pathOverride ?: $this->securityFile;
 
@@ -123,7 +121,7 @@ class SecurityService
             $yaml = new Parser();
             try {
                 $this->config = $yaml->parse(file_get_contents($path));
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 if ($debug) {
                     throw $e;
                 } else {
@@ -135,11 +133,10 @@ class SecurityService
         }
 
         //Set ready to true
-        $this->ready = true;
+        $this->ready     = true;
         $this->fileFound = true;
         return true;
     }
-
 
     /**
      * Saves the security configuration settings to a file
@@ -149,7 +146,10 @@ class SecurityService
      *
      * @return boolean               Whether the write was successful or not
      */
-    public function saveSecurityConfiguration($pathOverride = null, $debug = false) {
+    public function saveSecurityConfiguration(
+        $pathOverride = null,
+        $debug = false
+    ) {
         if (!$this->ready) {
             //If the security file has not be loaded or started yet, return false
             return false;
@@ -174,7 +174,6 @@ class SecurityService
         return true;
     }
 
-
     /**
      * Determines whether the current user can view the resource with the given uri
      *
@@ -182,7 +181,8 @@ class SecurityService
      *
      * @return boolean              Whether the current user can view this resource or not
      */
-    public function canView($resourceUri) {
+    public function canView($resourceUri)
+    {
         //Check if the data has been loaded yet, and load it if not
         if (!$this->ready) {
             $this->init();
@@ -202,12 +202,12 @@ class SecurityService
                 if (
                     $role instanceof \Symfony\Component\Security\Core\Role\SwitchUserRole ||
                     $role instanceof \Symfony\Component\Security\Core\Role\Role
-                    ) {
+                ) {
                     return $role->getRole();
                 } else {
-                    return (string)$role;
+                    return (string) $role;
                 }
-            }, $this->securityContext->getToken()->getRoles());
+            }, $this->tokenStorage->getToken()->getRoles());
         } catch (\Exception $e) {
             throw new \Exception('The Report Bundle requires the roles to either be in string format or castable to a string');
         }
@@ -215,7 +215,6 @@ class SecurityService
         //Call the check node method
         return $this->checkNode($resourceUri, $roles);
     }
-
 
     /**
      * Sets the roles that can view a resource
@@ -225,7 +224,10 @@ class SecurityService
      *
      * @return boolean              Whether the node was set or not (false if the node does not exist)
      */
-    public function setRoles($resourceUri, $roles = null) {
+    public function setRoles(
+        $resourceUri,
+        $roles = null
+    ) {
         //Check if the data has been loaded yet, and load it if not
         if (!$this->ready) {
             $this->init();
@@ -238,7 +240,6 @@ class SecurityService
         return $this->createNode($resourceUri, $roles);
     }
 
-
     /**
      * Checks whether a requested node currently exists in the security configuration
      *
@@ -246,13 +247,14 @@ class SecurityService
      *
      * @return boolean              Whether the resource uri currently has a node in the configuration
      */
-    public function checkIfExists($resourceUri) {
+    public function checkIfExists($resourceUri)
+    {
         //Break up the uri on the slashes
         $nodes = preg_split('/(\\\|\\/)/', $resourceUri, -1, PREG_SPLIT_NO_EMPTY);
 
         //foreach node
         $ptr = &$this->config;
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             if (!isset($ptr[$node])) {
                 return false;
             }
@@ -261,31 +263,29 @@ class SecurityService
         return true;
     }
 
-
     /**
      * Determines the max depth of the config multidimensional array
      *
      * @return int The maximum depth
      */
-    public function determineMaxDepthOfConfig() {
+    public function determineMaxDepthOfConfig()
+    {
         return $this->arrayDepth($this->config, 1);
     }
-
 
     /**
      * Returns true if the configuration was successfully loaded from the report security file
      *
      * @return boolean Whether the config was loaded from the report security file
      */
-    public function isLoadedFromFile() {
+    public function isLoadedFromFile()
+    {
         return $this->fileFound;
     }
-
 
     //////////////////////
     // INTERNAL METHODS //
     //////////////////////
-
 
     /**
      * Recursively called function to determine the depth of an array
@@ -295,10 +295,13 @@ class SecurityService
      *
      * @return int            Depth at this point
      */
-    protected function arrayDepth($element, $depth = 1) {
+    protected function arrayDepth(
+        $element,
+        $depth = 1
+    ) {
         if (is_array($element)) {
             $maxDepth = $depth;
-            foreach($element as $el) {
+            foreach ($element as $el) {
                 $d = $this->arrayDepth($el, $depth + 1);
                 if ($d > $maxDepth) {
                     $maxDepth = $d;
@@ -310,27 +313,28 @@ class SecurityService
         }
     }
 
-
     /**
      * Creates a node in the configuration
      *
      * @param  string $resourceUri The uri of the resource on the report server to create a security configuration setting for
      * @param  array  $roles       The array of roles that will be allowed to view this resource
      */
-    protected function createNode($resourceUri, $roles) {
+    protected function createNode(
+        $resourceUri,
+        $roles
+    ) {
         //Break up the uri on the slashes
         $nodes = preg_split('/(\\\|\\/)/', $resourceUri, -1, PREG_SPLIT_NO_EMPTY);
 
         //foreach node, check if it currently exits, else create it
         $ptr = &$this->config;
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             if (!isset($ptr[$node])) {
-                $ptr[$node] = array('_roles' => $roles);
+                $ptr[$node] = ['_roles' => $roles];
             }
             $ptr = &$ptr[$node];
         }
     }
-
 
     /**
      * Checks whether a resource can be viewed with the given roles
@@ -340,7 +344,10 @@ class SecurityService
      *
      * @return boolean              Whether this resource is viewable by the given roles
      */
-    protected function checkNode($resourceUri, $roles) {
+    protected function checkNode(
+        $resourceUri,
+        $roles
+    ) {
         //Break up the uri on the slashes
         $nodes = preg_split('/(\\\|\\/)/', $resourceUri, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -349,7 +356,7 @@ class SecurityService
 
         //Go through the config until the resource is found, or its closest node and return what valid was at that point
         $ptr = &$this->config;
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             if (isset($ptr[$node])) {
                 //Increment the pointer
                 $ptr = &$ptr[$node];
@@ -370,7 +377,6 @@ class SecurityService
         //return the valid flag
         return $valid;
     }
-
 
     /////////////////////////
     // GETTERS AND SETTERS //
@@ -403,23 +409,23 @@ class SecurityService
     /**
      * Gets the Reference to the symfony security context.
      *
-     * @return SecurityContext
+     * @return TokenStorage
      */
-    public function getSecurityContext()
+    public function getTokenStorage()
     {
-        return $this->securityContext;
+        return $this->tokenStorage;
     }
 
     /**
      * Sets the Reference to the symfony security context.
      *
-     * @param SecurityContext $securityContext the security context
+     * @param TokenStorage $tokenStorage the security context
      *
      * @return self
      */
-    public function setSecurityContext(SecurityContext $securityContext)
+    public function setTokenStorage(TokenStorage $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
 
         return $this;
     }

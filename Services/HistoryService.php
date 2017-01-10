@@ -3,10 +3,8 @@
 namespace Mesd\Jasper\ReportBundle\Services;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Routing\Router;
-
 use Mesd\Jasper\ReportBundle\Services\ClientService;
+use Symfony\Component\Security\Core\TokenStorage;
 
 class HistoryService
 {
@@ -28,9 +26,9 @@ class HistoryService
 
     /**
      * Symfony Security Context
-     * @var SecurityContext
+     * @var TokenStorage
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * The Client Service
@@ -44,37 +42,37 @@ class HistoryService
      */
     private $inputControlStash;
 
-
     //////////////////
     // BASE METHODS //
     //////////////////
-
 
     /**
      * Constructor
      *
      * @param Registry        $doctrine        The doctrine registry interface
-     * @param SecurityContext $securityContext The security context of the current active user
+     * @param TokenStorage    $tokenStorage    The security context of the current active user
      * @param ClientService   $clientService   The client service
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, ClientService $clientService) {
+    public function __construct(
+        Registry      $doctrine,
+        TokenStorage  $tokenStorage,
+        ClientService $clientService
+    ) {
         //Set stuff
-        $this->doctrine = $doctrine;
-        $this->securityContext = $securityContext;
+        $this->doctrine      = $doctrine;
+        $this->tokenStorage  = $tokenStorage;
         $this->clientService = $clientService;
 
         //Set the entity manager to default
         $this->entityManager = 'default';
 
         //Prep the input control stash
-        $this->inputControlStash = array();
+        $this->inputControlStash = [];
     }
-
 
     ///////////////////
     // CLASS METHODS //
     ///////////////////
-
 
     /**
      * Gets history records for a particular report
@@ -85,19 +83,22 @@ class HistoryService
      *
      * @return array                       The array of report history records
      */
-    public function loadHistoryForReport($reportUri, $limitByCurrentUser = true, $options = array()) {
+    public function loadHistoryForReport(
+        $reportUri,
+        $limitByCurrentUser = true,
+        $options = []
+    ) {
         //Setup the options array
         $options['resource'] = $reportUri;
 
         //Restrict by the user if requested
         if ($limitByCurrentUser) {
-            $options['username'] = $this->securityContext->getToken()->getUsername();
+            $options['username'] = $this->tokenStorage->getToken()->getUsername();
         }
 
         //Call the repository class and return the record entries
         return $this->getReportHistoryRepository()->filter($options);
     }
-
 
     /**
      * Gets history records for a particular report or all reports and places them in more display friendly fashion
@@ -108,7 +109,11 @@ class HistoryService
      *
      * @return array                       The array of report history records
      */
-    public function getReportHistoryDisplay($reportUri = null, $limitByCurrentUser = true, $options = array()) {
+    public function getReportHistoryDisplay(
+        $reportUri = null,
+        $limitByCurrentUser = true,
+        $options = []
+    ) {
         //Call the load method with the given parameters
         if ($reportUri) {
             $history = $this->loadHistoryForReport($reportUri, $limitByCurrentUser, $options);
@@ -117,12 +122,12 @@ class HistoryService
         }
 
         //Create an array to hold the pieces
-        $displayArray = array();
+        $displayArray = [];
 
         //Foreach history record, prettify the selection and check that it is showable to the current user
-        foreach($history as $record) {
+        foreach ($history as $record) {
             //If the return is false, skip the rest for this record as this user cannot view it at this time
-            $recordArray = array();
+            $recordArray = [];
 
             // //Get the input controls for the report
             // $inputControls = $this->clientService->getReportInputControls($record->getReportUri(), $this->clientService->getDefaultInputOptionsSource());
@@ -142,12 +147,12 @@ class HistoryService
             $params = $this->prettifyParameters($record->getReportUri(), json_decode($record->getParameters(), true));
 
             //Fill out the rest of the
-            $recordArray['report'] = $record->getReportUri();
-            $recordArray['requestId'] = $record->getRequestId();
-            $recordArray['date'] = $record->getDate();
-            $recordArray['username'] = $record->getUsername();
-            $recordArray['status'] = $record->getStatus();
-            $recordArray['formats'] = $record->getFormats();
+            $recordArray['report']     = $record->getReportUri();
+            $recordArray['requestId']  = $record->getRequestId();
+            $recordArray['date']       = $record->getDate();
+            $recordArray['username']   = $record->getUsername();
+            $recordArray['status']     = $record->getStatus();
+            $recordArray['formats']    = $record->getFormats();
             $recordArray['parameters'] = $params;
 
             //Add the record array to the display array
@@ -158,7 +163,6 @@ class HistoryService
         return $displayArray;
     }
 
-
     /**
      * Converts the JSON parameters column into something human readable
      *
@@ -167,29 +171,34 @@ class HistoryService
      *
      * @return string             The string output of the prettified parameters
      */
-    public function prettifyParameters($reportUri, array $parameters) {
+    public function prettifyParameters(
+              $reportUri,
+        array $parameters
+    ) {
         //Get the report input controls
         try {
             $inputControls = $this->getReportInputControls($reportUri, true);
         } catch (\Exception $e) {
-            $out="";
-            foreach ($parameters as $k =>$v){
-                foreach ($v as $item)
-                $out.=$k.": ".$item."<br/>";
+            $out = "";
+            foreach ($parameters as $k => $v) {
+                foreach ($v as $item) {
+                    $out .= $k . ": " . $item . "<br/>";
+                }
+
             }
             return $out;
         }
 
         //Convert the input controls and the parameters into a string
-        $output = array();
-        foreach($inputControls as $key => $inputControl) {
+        $output = [];
+        foreach ($inputControls as $key => $inputControl) {
             //If the input control has options or not
             if (null !== $inputControl['options']) {
                 //If the parameter has values for the input control
                 if (isset($parameters[$key])) {
                     //Foreach selection in the parameters array, convert to the option label
-                    $labels = array();
-                    foreach($parameters[$key] as $selection) {
+                    $labels = [];
+                    foreach ($parameters[$key] as $selection) {
                         if (isset($inputControl['options'][$selection])) {
                             $labels[] = $inputControl['options'][$selection];
                         } else {
@@ -222,7 +231,6 @@ class HistoryService
         return implode('<br/>', $output);
     }
 
-
     /**
      * Gets the input controls for the given report
      *   Will stash the return from a call to retrieve from if called again in the history classes lifespan
@@ -233,7 +241,10 @@ class HistoryService
      *
      * @return array              The input controls
      */
-    protected function getReportInputControls($reportUri, $reindex = true) {
+    protected function getReportInputControls(
+        $reportUri,
+        $reindex = true
+    ) {
         //Check if the reporturi is in the ic stash
         if (isset($this->inputControlStash[$reportUri])) {
             //Get them from the stash
@@ -245,14 +256,14 @@ class HistoryService
 
             //If the rekey is set, rekey em
             if ($reindex) {
-                $newArray = array();
-                foreach($inputControls as $ic) {
+                $newArray = [];
+                foreach ($inputControls as $ic) {
                     //Create an entry in the new array
-                    $newArray[$ic->getId()] = array('control' => $ic);
+                    $newArray[$ic->getId()] = ['control' => $ic];
 
                     //Get the options, and index them by id => label and add it to the
                     if (method_exists($ic, 'getOptionList')) {
-                        foreach($ic->getOptionList() as $option) {
+                        foreach ($ic->getOptionList() as $option) {
                             $newArray[$ic->getId()]['options'][$option->getId()] = $option->getLabel();
                         }
                     } else {
@@ -270,7 +281,6 @@ class HistoryService
         return $inputControls;
     }
 
-
     /**
      * Load all the recently executed reports
      *
@@ -279,41 +289,42 @@ class HistoryService
      *
      * @return array
      */
-    public function loadRecentHistory($limitByCurrentUser = true, $options = array()) {
+    public function loadRecentHistory(
+        $limitByCurrentUser = true,
+        $options = []
+    ) {
         //Resitrict by the user if requested
         if ($limitByCurrentUser) {
-            $options['username'] = $this->securityContext->getToken()->getUsername();
+            $options['username'] = $this->tokenStorage->getToken()->getUsername();
         }
 
         //Call the repo class and the return the record entries
         return $this->getReportHistoryRepository()->filter($options);
     }
 
-
     /**
      * Return the entity manager assigned to handle report history records
      *
      * @return Doctrine\ORM\EntityManager The entity manager used by this service
      */
-    public function getEM() {
+    public function getEM()
+    {
         return $this->doctrine->getEntityManager($this->entityManager);
     }
-
 
     /**
      * Returns the report history repository using this services entity manager
      *
      * @return Mesd\Jasper\ReportBundle\Repository\ReportHistoryRepository The report history repo
      */
-    public function getReportHistoryRepository() {
+    public function getReportHistoryRepository()
+    {
         return $this->getEM()->getRepository('MesdJasperReportBundle:ReportHistory');
     }
-
 
     /////////////////////////
     // GETTERS AND SETTERS //
     /////////////////////////
-
 
     /**
      * Gets the String name of the entity manager that is handling the report history records.

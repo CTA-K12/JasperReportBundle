@@ -3,7 +3,7 @@
 namespace Mesd\Jasper\ReportBundle\Services;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\TokenStorage;
 use Symfony\Component\Routing\Router;
 
 use Mesd\Jasper\ReportBundle\Services\ClientService;
@@ -28,9 +28,9 @@ class HistoryService
 
     /**
      * Symfony Security Context
-     * @var SecurityContext
+     * @var TokenStorage
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * The Client Service
@@ -54,13 +54,13 @@ class HistoryService
      * Constructor
      *
      * @param Registry        $doctrine        The doctrine registry interface
-     * @param SecurityContext $securityContext The security context of the current active user
+     * @param TokenStorage $tokenStorage The security context of the current active user
      * @param ClientService   $clientService   The client service
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, ClientService $clientService) {
+    public function __construct(Registry $doctrine, TokenStorage $tokenStorage, ClientService $clientService) {
         //Set stuff
         $this->doctrine = $doctrine;
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->clientService = $clientService;
 
         //Set the entity manager to default
@@ -91,7 +91,7 @@ class HistoryService
 
         //Restrict by the user if requested
         if ($limitByCurrentUser) {
-            $options['username'] = $this->securityContext->getToken()->getUsername();
+            $options['username'] = $this->tokenStorage->getToken()->getUsername();
         }
 
         //Call the repository class and return the record entries
@@ -273,7 +273,7 @@ class HistoryService
     public function loadRecentHistory($limitByCurrentUser = true, $options = []) {
         //Resitrict by the user if requested
         if ($limitByCurrentUser) {
-            $options['username'] = $this->securityContext->getToken()->getUsername();
+            $options['username'] = $this->tokenStorage->getToken()->getUsername();
         }
 
         //Call the repo class and the return the record entries

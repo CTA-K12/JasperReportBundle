@@ -5,7 +5,7 @@ namespace Mesd\Jasper\ReportBundle\Services;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
 
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\TokenStorage;
 
 class SecurityService
 {
@@ -28,9 +28,9 @@ class SecurityService
 
     /**
      * Reference to the symfony security context
-     * @var SecurityContext
+     * @var TokenStorage
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * Whether the class has been initialized or not
@@ -71,11 +71,11 @@ class SecurityService
     /**
      * Constructor
      *
-     * @param SecurityContext $securityContext Reference to symfony's security context
+     * @param TokenStorage $tokenStorage Reference to symfony's security context
      */
-    public function __construct(SecurityContext $securityContext) {
+    public function __construct(TokenStorage $tokenStorage) {
         //Set stuff
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
 
         //Set ready to false until the init function is called
         $this->ready = false;
@@ -197,7 +197,7 @@ class SecurityService
         }
 
         //Call the check node method
-        return $this->checkNode($resourceUri, $this->securityContext->getToken()->getRoles());
+        return $this->checkNode($resourceUri, $this->tokenStorage->getToken()->getRoles());
     }
 
 
@@ -387,23 +387,23 @@ class SecurityService
     /**
      * Gets the Reference to the symfony security context.
      *
-     * @return SecurityContext
+     * @return TokenStorage
      */
-    public function getSecurityContext()
+    public function getTokenStorage()
     {
-        return $this->securityContext;
+        return $this->tokenStorage;
     }
 
     /**
      * Sets the Reference to the symfony security context.
      *
-     * @param SecurityContext $securityContext the security context
+     * @param TokenStorage $tokenStorage the security context
      *
      * @return self
      */
-    public function setSecurityContext(SecurityContext $securityContext)
+    public function setTokenStorage(TokenStorage $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
 
         return $this;
     }

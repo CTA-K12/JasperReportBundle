@@ -256,12 +256,12 @@ use Mesd\Jasper\ReportBundle\InputControl\Option;
  
 class MyOptionsHandler extends AbstractOptionsHandler
 {
-    //The Symfony SecurityContext object
-    private $securityContext;
+    //The Symfony TokenStorage object
+    private $tokenStorage;
  
     //Override the constructor to allow the injection of the security context
-    public function __construct($securityContext) {
-        $this->securityContext = $securityContext;
+    public function __construct($tokenStorage) {
+        $this->tokenStorage = $tokenStorage;
          
         //Call the parent constructor (this is important)
         parent::__construct();
@@ -277,7 +277,7 @@ class MyOptionsHandler extends AbstractOptionsHandler
     //Get the options for the department selector
     public function getOptionsForDept() {
         $options = array();
-        foreach($this->securityContext->getUser()->getDepartments() as $dept) {
+        foreach($this->tokenStorage->getUser()->getDepartments() as $dept) {
             $options[] = new Option($dept->getId(), $dept->getName());
         }
         return $options;

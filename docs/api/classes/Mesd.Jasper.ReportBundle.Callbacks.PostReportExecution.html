@@ -534,7 +534,7 @@
                                                             </section>
                             <section class="span4">
                                                                     <a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportExecution.html#property_em" class="">$em</a><br />
-                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportExecution.html#property_securityContext" class="">$securityContext</a><br />
+                                                                    <a href="../classes/Mesd.Jasper.ReportBundle.Callbacks.PostReportExecution.html#property_tokenStorage" class="">$tokenStorage</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -604,15 +604,15 @@
 
                                     <div class="row-fluid">
         <div class="span8 content class">
-            <a id="property_securityContext" name="property_securityContext" class="anchor"></a>
+            <a id="property_tokenStorage" name="property_tokenStorage" class="anchor"></a>
             <article class="property">
-                <h3 class="private ">$securityContext</h3>
-                <pre class="signature">$securityContext : \Symfony\Component\Security\Core\SecurityContext</pre>
+                <h3 class="private ">$tokenStorage</h3>
+                <pre class="signature">$tokenStorage : \Symfony\Component\Security\Core\TokenStorage</pre>
                 <p><em>Reference to Symfony&#039;s security context</em></p>
                 
 
                                 <h4>Type</h4>
-                \Symfony\Component\Security\Core\SecurityContext
+                \Symfony\Component\Security\Core\TokenStorage
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -639,7 +639,7 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(\Doctrine\ORM\EntityManager <span class="argument">$em</span>, \Symfony\Component\Security\Core\SecurityContext <span class="argument">$securityContext</span>)</pre>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Doctrine\ORM\EntityManager <span class="argument">$em</span>, \Symfony\Component\Security\Core\TokenStorage <span class="argument">$tokenStorage</span>)</pre>
                 <p><em>Constructor</em></p>
                 
 
@@ -651,8 +651,8 @@
                                 <td><p>The entity manager to use when placing report execution records into the database</p></td>
                             </tr>
                                                     <tr>
-                                <td>\Symfony\Component\Security\Core\SecurityContext</td>
-                                <td>$securityContext </td>
+                                <td>\Symfony\Component\Security\Core\TokenStorage</td>
+                                <td>$tokenStorage </td>
                                 <td><p>The security context to use when saving information into the database</p></td>
                             </tr>
                                             </table>

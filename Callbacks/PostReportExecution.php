@@ -2,12 +2,11 @@
 
 namespace Mesd\Jasper\ReportBundle\Callbacks;
 
-use JasperClient\Interfaces\PostReportExecutionCallback;
-
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Security\Core\SecurityContext;
-use Mesd\Jasper\ReportBundle\Entity\ReportHistory;
 use JasperClient\Client\JasperHelper;
+use JasperClient\Interfaces\PostReportExecutionCallback;
+use Mesd\Jasper\ReportBundle\Entity\ReportHistory;
+use Symfony\Component\Security\Core\TokenStorage;
 
 class PostReportExecution implements PostReportExecutionCallback
 {
@@ -23,42 +22,45 @@ class PostReportExecution implements PostReportExecutionCallback
 
     /**
      * Reference to Symfony's security context
-     * @var SecurityContext
+     * @var TokenStorage
      */
-    private $securityContext;
-
+    private $tokenStorage;
 
     //////////////////
     // BASE METHODS //
     //////////////////
 
-
     /**
      * Constructor
      *
      * @param EntityManager   $em              The entity manager to use when placing report execution records into the database
-     * @param SecurityContext $securityContext The security context to use when saving information into the database
+     * @param TokenStorage $tokenStorage The security context to use when saving information into the database
      */
-    public function __construct(EntityManager $em, SecurityContext $securityContext) {
+    public function __construct(
+        EntityManager $em,
+        TokenStorage  $tokenStorage
+    ) {
         //Set stuff
-        $this->em = $em;
-        $this->securityContext = $securityContext;
+        $this->em           = $em;
+        $this->tokenStorage = $tokenStorage;
     }
-
 
     /////////////////////////
     // IMPLEMENTED METHODS //
     /////////////////////////
 
-
     /**
      * The function to be invoked once the report has been executed
      *
      * @param string           $requestId        The request Id of the report being cached
-     * @param array            $options          The options 
+     * @param array            $options          The options
      * @param SimpleXMLElement $executionDetails The report execution request details XML
      */
-    public function postReportExecution($resource, $options, $response) {
+    public function postReportExecution(
+        $resource,
+        $options,
+        $response
+    ) {
         //Create a new instance of the report history entity
         $rh = new ReportHistory();
 
@@ -78,7 +80,7 @@ class PostReportExecution implements PostReportExecutionCallback
         //Set everything else
         $rh->setDate(new \DateTime());
         $rh->setReportUri($resource);
-        $rh->setUsername($this->securityContext->getToken()->getUsername());
+        $rh->setUsername($this->tokenStorage->getToken()->getUsername());
         $rh->setStatus('executed');
 
         //Persist and flush
