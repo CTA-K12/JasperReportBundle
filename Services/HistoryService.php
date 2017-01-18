@@ -4,7 +4,7 @@ namespace Mesd\Jasper\ReportBundle\Services;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Mesd\Jasper\ReportBundle\Services\ClientService;
-use Symfony\Component\Security\Core\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class HistoryService
 {

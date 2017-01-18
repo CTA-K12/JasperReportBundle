@@ -252,7 +252,7 @@ class ClientService
         if ($this->jasperClient) {
             //Get the entity manager
             $em = $this->container->get('doctrine')->getManager($this->entityManager);
-            $this->jasperClient->addPostReportExecutionCallback(new PostReportExecution($em, $this->container->get('security.context')));
+            $this->jasperClient->addPostReportExecutionCallback(new PostReportExecution($em, $this->container->get('security.token_storage')));
             $this->jasperClient->addPostReportCacheCallback(new PostReportCache($em));
         }
     }

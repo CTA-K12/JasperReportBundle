@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use JasperClient\Client\JasperHelper;
 use JasperClient\Interfaces\PostReportExecutionCallback;
 use Mesd\Jasper\ReportBundle\Entity\ReportHistory;
-use Symfony\Component\Security\Core\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class PostReportExecution implements PostReportExecutionCallback
 {

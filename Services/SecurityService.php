@@ -2,7 +2,7 @@
 
 namespace Mesd\Jasper\ReportBundle\Services;
 
-use Symfony\Component\Security\Core\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
 

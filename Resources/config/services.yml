@@ -11,11 +11,11 @@ services:
 
     mesd.jasper.report.history:
         class: Mesd\Jasper\ReportBundle\Services\HistoryService
-        arguments: [ "@doctrine", "@security.context", "@mesd.jasper.report.client" ]
+        arguments: [ "@doctrine", "@security.token_storage", "@mesd.jasper.report.client" ]
 
     mesd.jasper.report.security:
         class: Mesd\Jasper\ReportBundle\Services\SecurityService
-        arguments: [ "@security.context" ]
+        arguments: [ "@security.token_storage" ]
 
     mesd.jasper.report.display_helper:
         class: Mesd\Jasper\ReportBundle\Helper\DisplayHelper
