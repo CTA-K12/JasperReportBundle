@@ -23,7 +23,7 @@ services:
 
     mesd.jasper.report.twig.extension.report:
         class: Mesd\Jasper\ReportBundle\Twig\Extension\ReportExtension
-        arguments: [ "@mesd.jasper.report.display_helper" ]
+        arguments: [ "@mesd.jasper.report.display_helper", "@twig" ]
         tags:
             - { name: twig.extension }
 
