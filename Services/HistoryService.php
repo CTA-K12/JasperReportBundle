@@ -193,7 +193,7 @@ class HistoryService
         $output = [];
         foreach ($inputControls as $key => $inputControl) {
             //If the input control has options or not
-            if (null !== $inputControl['options']) {
+            if (isset($inputControl['options']) && null !== $inputControl['options']) {
                 //If the parameter has values for the input control
                 if (isset($parameters[$key])) {
                     //Foreach selection in the parameters array, convert to the option label
@@ -218,7 +218,7 @@ class HistoryService
                     $output[] = $inputControl['control']->getLabel() . ': ' . implode(', ', $parameters[$key]);
                 } else {
                     //Check if a default value exists, else mark it as being empty
-                    if ($inputControl['control']->getDefaultValue()) {
+                    if (method_exists($inputControl['control'], 'getDefaultValue') && $inputControl['control']->getDefaultValue()) {
                         $output[] = $inputControl['control']->getLabel() . ': ' . $inputControl['control']->getDefaultValue();
                     } else {
                         $output[] = $inputControl['control']->getLabel() . ': ---';
