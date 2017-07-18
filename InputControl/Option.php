@@ -5,12 +5,11 @@ namespace Mesd\Jasper\ReportBundle\InputControl;
 /**
  * Option
  */
-class Option 
+class Option
 {
     ///////////////
     // VARIABLES //
     ///////////////
-
 
     /**
      * The id of the option
@@ -30,32 +29,31 @@ class Option
      */
     private $selected;
 
-
     //////////////////
     // BASE METHODS //
     //////////////////
 
-
     /**
      * Constructor
-     * 
+     *
      * @param string  $id       The options id
      * @param string  $label    The options label
      * @param boolean $selected Whether the option is selected or not
      */
-    function __construct($id, $label, $selected = false)
-    {
+    public function __construct(
+        $id,
+        $label,
+        $selected = false
+    ) {
         //Set stuff
-        $this->id        = $id;
-        $this->label     = $label;
-        $this->selected  = $selected;
+        $this->id       = $id;
+        $this->label    = $label;
+        $this->selected = $selected;
     }
-
 
     /////////////////////////
     // GETTERS AND SETTERS //
     /////////////////////////
-
 
     /**
      * Get the id

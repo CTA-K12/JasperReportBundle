@@ -4,9 +4,7 @@ namespace Mesd\Jasper\ReportBundle\InputControl;
 
 use JasperClient\Client\AbstractInputControl;
 use JasperClient\Client\JasperHelper;
-
 use Mesd\Jasper\ReportBundle\Interfaces\OptionHandlerInterface;
-
 use Symfony\Component\Form\FormBuilder;
 
 /**
@@ -36,7 +34,6 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      */
     protected $optionHandler;
 
-
     //////////////////
     // BASE METHODS //
     //////////////////
@@ -55,15 +52,24 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      * @param string                  $getICFrom How to handle getting the options
      * @param OptionHandlerInterface $optionHandler Symfony Security Context
      */
-    function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionHandler)
-    {
+    public function __construct(
+        $id,
+        $label,
+        $mandatory,
+        $readOnly,
+        $type,
+        $uri,
+        $visible,
+        $state,
+        $getICFrom,
+        $optionHandler
+    ) {
         //Set up the super class
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom);
 
         //Set stuff
         $this->optionHandler = $optionHandler;
     }
-
 
     //////////////////////
     // ABSTRACT METHODS //
@@ -75,13 +81,14 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
      * @param  mixed       $data        The data for this input control if available
      */
-    abstract public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null);
-
+    abstract public function attachInputToFormBuilder(
+        FormBuilder $formBuilder,
+                    $data = null
+    );
 
     ////////////////////////
     // OVERRIDDEN METHODS //
     ////////////////////////
-
 
     /**
      * Gets the list of options to display for this input control
@@ -95,11 +102,18 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
             //If custom, assume that the options handler will full handle it
             $optionList = $this->optionHandler->getList($this->getId());
             if (null === $optionList) {
-              throw new \Exception("Input control " . $this->getId() . " not defined with option default_input_options_source set to Custom");
+                throw new \Exception("Input control " . $this->getId() . " not defined with option default_input_options_source set to Custom");
             }
         } elseif (self::GET_IC_FROM_FALLBACK == $this->getICFrom) {
             //If fallback, check if the options handler returns null (doesnt handle) and then make use of the jasper method
-            $optionList = $this->optionHandler->getList($this->getId());
+
+            // old.
+            // $optionList = $this->optionHandler->getList($this->getId());
+            // need this to send preselect option via option handled
+            $optionList = $this->optionHandler->getList($this->getId()) ?: array_filter(
+                $this->optionHandler->getAjaxList($this->getId())
+                , function ($o) {return $o->getSelected();}
+            );
             if (null === $optionList) {
                 $optionList = $this->getOptionListFromJasper();
             }
@@ -114,7 +128,6 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
         return $optionList;
     }
 
-
     /**
      * Gets a list of options for the input control from the jasper server
      *
@@ -122,14 +135,14 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      */
     protected function getOptionListFromJasper()
     {
-        $optionList = array();
+        $optionList = [];
 
         //Get the options from the jasper server
         $inputControlStateArray = JasperHelper::convertInputControlState($this->state);
 
         foreach ($inputControlStateArray["option"] as $key => $option) {
             //Create an option instance for each option
-            $optionList[] = new Option (
+            $optionList[] = new Option(
                 $option["value"],
                 $option["label"],
                 $option["selected"]

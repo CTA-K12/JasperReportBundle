@@ -2,9 +2,8 @@
 
 namespace Mesd\Jasper\ReportBundle\InputControl;
 
-use Symfony\Component\Form\FormBuilder;
-
 use Mesd\Jasper\ReportBundle\FormType\AjaxSelectType;
+use Symfony\Component\Form\FormBuilder;
 
 /**
  * Single Select
@@ -17,27 +16,25 @@ class SingleSelect extends AbstractReportBundleInputControl
 
     /**
      * The options list
-     * 
+     *
      * @var array
      */
     protected $optionList;
 
     /**
      * The input control gets its options via ajax
-     * 
+     *
      * @var boolean
      */
     protected $isAjax;
-
 
     //////////////////
     // BASE METHODS //
     //////////////////
 
-
     /**
      * Constructor
-     * 
+     *
      * @param string                  $id             Input Control Id
      * @param string                  $label          Input Controls Label
      * @param string                  $mandatory      Whether an input control is mandatory
@@ -49,8 +46,18 @@ class SingleSelect extends AbstractReportBundleInputControl
      * @param string                  $getICFrom      How to handle getting the options
      * @param OptionsHandlerInterface $optionsHandler Symfony Security Context
      */
-    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler)
-    {
+    public function __construct(
+        $id,
+        $label,
+        $mandatory,
+        $readOnly,
+        $type,
+        $uri,
+        $visible,
+        $state,
+        $getICFrom,
+        $optionsHandler
+    ) {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->optionList = $this->createOptionList();
 
@@ -62,11 +69,9 @@ class SingleSelect extends AbstractReportBundleInputControl
         }
     }
 
-
     ///////////////////////
     // IMPLEMENT METHODS //
     ///////////////////////
-
 
     /**
      * Convert this field into a symfony form object and attach it the form builder
@@ -74,21 +79,29 @@ class SingleSelect extends AbstractReportBundleInputControl
      * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
      * @param  mixed       $data        The data for this input control if available
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null)
-    {
+    public function attachInputToFormBuilder(
+        FormBuilder $formBuilder,
+                    $data = null
+    ) {
         //Convert the options to an array for the form builder
-        $choices = array();
+        $choices  = [];
         $selected = null;
         if ($this->isAjax && $data !== null) {
             if (is_array($data)) {
-                foreach($data as $d) {
+                foreach ($data as $d) {
                     $choices[$d] = ' ';
                 }
             } else {
                 $choices[$data] = ' ';
             }
+            foreach ($this->optionList as $option) {
+                $choices[$option->getId()] = $option->getLabel();
+                if ($option->getSelected()) {
+                    $selected = $option->getId();
+                }
+            }
         } else {
-            foreach($this->optionList as $option) {
+            foreach ($this->optionList as $option) {
                 $choices[$option->getId()] = $option->getLabel();
                 if ($option->getSelected()) {
                     $selected = $option->getId();
@@ -96,32 +109,31 @@ class SingleSelect extends AbstractReportBundleInputControl
             }
         }
 
+        $options = [
+            'label'      => $this->label,
+            'choices'    => $choices,
+            'multiple'   => false,
+            'data'       => $selected,
+            'required'   => $this->mandatory,
+            'read_only'  => $this->readOnly,
+            'data_class' => null,
+        ];
+
         //Add a new multi choice field to the builder
         $formBuilder->add(
             $this->id,
             $this->isAjax ? new AjaxSelectType() : 'choice',
-            array(
-                'label'     => $this->label,
-                'choices'   => $choices,
-                'multiple'  => false,
-                'data'      => $selected,
-                'required'  => $this->mandatory,
-                'read_only' => $this->readOnly,
-                'data_class'=> null
-            )
+            $options
         );
     }
-
-
 
     ////////////////////
     // CLASS METHODS  //
     ////////////////////
 
-
     /**
      * Get the generated option list
-     * 
+     *
      * @return array The generated option list
      */
     public function getOptionList()
