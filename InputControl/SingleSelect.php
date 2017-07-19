@@ -89,23 +89,18 @@ class SingleSelect extends AbstractReportBundleInputControl
         if ($this->isAjax && $data !== null) {
             if (is_array($data)) {
                 foreach ($data as $d) {
-                    $choices[$d] = ' ';
+                    $choices[$d] = $d;
                 }
             } else {
-                $choices[$data] = ' ';
-            }
-            foreach ($this->optionList as $option) {
-                $choices[$option->getId()] = $option->getLabel();
-                if ($option->getSelected()) {
-                    $selected = $option->getId();
-                }
+                $choices[$data] = $data;
             }
         } else {
-            foreach ($this->optionList as $option) {
-                $choices[$option->getId()] = $option->getLabel();
-                if ($option->getSelected()) {
-                    $selected = $option->getId();
-                }
+        }
+
+        foreach ($this->optionList as $option) {
+            $choices[$option->getId()] = $option->getLabel();
+            if ($option->getSelected()) {
+                $selected = $option->getId();
             }
         }
 

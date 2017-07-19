@@ -19,11 +19,9 @@ class SingleValueDate extends AbstractReportBundleInputControl
      */
     protected $defaultValue;
 
-
     //////////////////
     // BASE METHODS //
     //////////////////
-
 
     /**
      * Constructor
@@ -38,17 +36,25 @@ class SingleValueDate extends AbstractReportBundleInputControl
      * @param string                  $getICFrom How to handle getting the options
      * @param OptionsHandlerInterface $optionsHandler Symfony Security Context
      */
-    public function __construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler)
-    {
+    public function __construct(
+        $id,
+        $label,
+        $mandatory,
+        $readOnly,
+        $type,
+        $uri,
+        $visible,
+        $state,
+        $getICFrom,
+        $optionsHandler
+    ) {
         parent::__construct($id, $label, $mandatory, $readOnly, $type, $uri, $visible, $state, $getICFrom, $optionsHandler);
         $this->defaultValue = ($state->value && null != $state->value ? $state->value : null);
     }
 
-
     ///////////////////////
     // IMPLEMENT METHODS //
     ///////////////////////
-
 
     /**
      * Convert this field into a symfony form object and attach it the form builder
@@ -56,35 +62,36 @@ class SingleValueDate extends AbstractReportBundleInputControl
      * @param  FormBuilder $formBuilder Form Builder object to attach this input control to
      * @param  mixed       $data        The data for this input control if available
      */
-    public function attachInputToFormBuilder(FormBuilder $formBuilder, $data = null)
-    {
+    public function attachInputToFormBuilder(
+        FormBuilder $formBuilder,
+                    $data = null
+    ) {
         //Add a new date field
         $formBuilder->add(
             $this->id,
             'date',
-            array(
-                'label'     => $this->label,
-                'widget'    => 'single_text',
-                'input'     => 'string',
-                'data'      => (string)$this->defaultValue,
-                'required'  => $this->mandatory,
-                'read_only' => $this->readOnly,
-                'data_class'=> null
-            )
+            [
+                'label'      => $this->label,
+                'widget'     => 'single_text',
+                'input'      => 'string',
+                'data'       => $data ?: (string) $this->defaultValue,
+                'required'   => $this->mandatory,
+                'read_only'  => $this->readOnly,
+                'data_class' => null,
+            ]
         );
     }
-
 
     ////////////////////
     // CLASS METHODS  //
     ////////////////////
 
-
     /**
      * Get the default value
      * @return array The default value
      */
-    public function getDefaultValue() {
-        return (string)$this->defaultValue;
+    public function getDefaultValue()
+    {
+        return (string) $this->defaultValue;
     }
 }
