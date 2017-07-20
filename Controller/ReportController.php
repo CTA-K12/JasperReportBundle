@@ -92,7 +92,7 @@ class ReportController extends ContainerAware
 
         // Get the list of choices
         if ($this->container->get('mesd.jasper.report.client')->getOptionsHandler()->supportsAjaxOption($inputId)) {
-            $options = $this->container->get('mesd.jasper.report.client')->getOptionsHandler()->getAjaxList($inputId, $limit, $page, $search);
+            $options = $this->container->get('mesd.jasper.report.client')->getOptionsHandler()->getAjaxList($inputId, ['limit' => $limit, 'page' => $page, 'search' => $search]);
             $choices = [$inputId => []];
             foreach ($options as $option) {
                 $choices[$inputId][] = ['value' => $option->getId(), 'text' => $option->getLabel()];

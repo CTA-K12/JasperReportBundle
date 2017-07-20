@@ -100,13 +100,12 @@ abstract class AbstractOptionsHandler
      */
     public function getAjaxList(
         $inputControlId,
-        $limit = 20,
-        $page = 1,
-        $search = null,
-        $data = null
+        $options
     ) {
+        $options = $this->normalizeOptions($options);
+
         if (array_key_exists($inputControlId, $this->ajaxFunctionMap)) {
-            return call_user_func([$this, $this->ajaxFunctionMap[$inputControlId]], $limit, $page, $search, $data);
+            return call_user_func([$this, $this->ajaxFunctionMap[$inputControlId]], $options);
         } else {
             return null;
         }
@@ -134,5 +133,18 @@ abstract class AbstractOptionsHandler
     public function supportsAjaxOption($inputControlId)
     {
         return array_key_exists($inputControlId, $this->ajaxFunctionMap);
+    }
+
+    private function normalizeOptions($options)
+    {
+        return array_merge(
+            [
+                'limit'  => 20,
+                'page'   => 1,
+                'search' => 'null',
+                'data'   => null,
+            ],
+            $options
+        );
     }
 }
