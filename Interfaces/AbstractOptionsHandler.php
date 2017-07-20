@@ -2,8 +2,6 @@
 
 namespace Mesd\Jasper\ReportBundle\Interfaces;
 
-use Mesd\Jasper\ReportBundle\InputControl\AbstractReportBundleInputControl;
-
 /**
  * Interface that defines the methods required by an options manager
  */
@@ -15,14 +13,14 @@ abstract class AbstractOptionsHandler
 
     /**
      * The map of ids to functions that return their option lists
-     * 
+     *
      * @var array
      */
     protected $functionMap;
 
     /**
      * The maps of ides to functions that return option lists for ajax selectors
-     * 
+     *
      * @var array
      */
     protected $ajaxFunctionMap;
@@ -31,22 +29,19 @@ abstract class AbstractOptionsHandler
     // BASE METHODS //
     //////////////////
 
-
     /**
      * Constructor
      */
     public function __construct()
     {
         //Register the functions
-        $this->functionMap = $this->registerFunctions();
+        $this->functionMap     = $this->registerFunctions();
         $this->ajaxFunctionMap = $this->registerAjaxFunctions();
     }
-
 
     //////////////////////////////
     // METHODS TO BE OVERRIDDEN //
     //////////////////////////////
-
 
     /**
      * Register the fucntions (meant to overriden by inheriting class)
@@ -56,9 +51,8 @@ abstract class AbstractOptionsHandler
     protected function registerFunctions()
     {
         // Overwrite in application
-        return array();
+        return [];
     }
-
 
     /**
      * Register the functions that will be used in an ajax fashion
@@ -68,14 +62,12 @@ abstract class AbstractOptionsHandler
     protected function registerAjaxFunctions()
     {
         // Overwrite in application
-        return array();
+        return [];
     }
-
 
     ///////////////////
     // CLASS METHODS //
     ///////////////////
-
 
     /**
      * Returns the list of options for a given input control id, or returns null if the option is not supported
@@ -83,19 +75,18 @@ abstract class AbstractOptionsHandler
      *
      * @param  string     $inputControlId The id of the input control to get a list of options for
      *
-     * @return array|null                 The array of options or null if the input control is not supported (and will use jasper if fallback mode is in place) 
+     * @return array|null                 The array of options or null if the input control is not supported (and will use jasper if fallback mode is in place)
      */
     public function getList($inputControlId)
     {
         if (array_key_exists($inputControlId, $this->functionMap)) {
-            return call_user_func(array($this, $this->functionMap[$inputControlId]));
+            return call_user_func([$this, $this->functionMap[$inputControlId]]);
         } elseif (array_key_exists($inputControlId, $this->ajaxFunctionMap)) {
-            return array();
+            return [];
         } else {
             return null;
         }
     }
-
 
     /**
      * Returns the list of the options for a given ajax selector control id, or returns null if that input control is not supported
@@ -107,15 +98,19 @@ abstract class AbstractOptionsHandler
      *
      * @return array|null                 The array of options, or null if not supported
      */
-    public function getAjaxList($inputControlId, $limit = 20, $page = 1, $search = null)
-    {
+    public function getAjaxList(
+        $inputControlId,
+        $limit = 20,
+        $page = 1,
+        $search = null,
+        $data = null
+    ) {
         if (array_key_exists($inputControlId, $this->ajaxFunctionMap)) {
-            return call_user_func(array($this, $this->ajaxFunctionMap[$inputControlId]), $limit, $page, $search);
+            return call_user_func([$this, $this->ajaxFunctionMap[$inputControlId]], $limit, $page, $search, $data);
         } else {
             return null;
         }
     }
-
 
     /**
      * Checks whether this option handler supports the given inputControlId in a non ajax fashion
@@ -128,7 +123,6 @@ abstract class AbstractOptionsHandler
     {
         return array_key_exists($inputControlId, $this->functionMap);
     }
-
 
     /**
      * Checks whether this option handler supports the given inputControlId in an ajax fashion

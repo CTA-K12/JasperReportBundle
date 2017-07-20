@@ -84,7 +84,12 @@ class SingleSelect extends AbstractReportBundleInputControl
                     $data = null
     ) {
         //Convert the options to an array for the form builder
-        $choices  = [];
+        $choices = [];
+
+        if ($data) {
+            $this->optionList = $this->createOptionList($data);
+        }
+
         $selected = null;
         if ($this->isAjax && $data !== null) {
             if (is_array($data)) {

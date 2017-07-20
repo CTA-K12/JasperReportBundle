@@ -326,7 +326,6 @@ class ClientService
                 $inputControl->attachInputToFormBuilder($form);
             }
         }
-
         //Add the submit button
         $form->add('Run', 'submit');
 
@@ -1064,8 +1063,4 @@ class ClientService
 
         return $this;
     }
-}
-{
-}
-{
 }

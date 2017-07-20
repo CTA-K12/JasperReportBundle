@@ -95,12 +95,12 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
      *
      * @return array Array of input options
      */
-    public function createOptionList()
+    public function createOptionList($data = null)
     {
         //Get the options list
         if (self::GET_IC_FROM_CUSTOM == $this->getICFrom) {
             //If custom, assume that the options handler will full handle it
-            $optionList = $this->optionHandler->getList($this->getId());
+            $optionList = $this->optionHandler->getList($this->getId(), $data);
             if (null === $optionList) {
                 throw new \Exception("Input control " . $this->getId() . " not defined with option default_input_options_source set to Custom");
             }
@@ -110,10 +110,12 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
             // old.
             // $optionList = $this->optionHandler->getList($this->getId());
             // need this to send preselect option via option handled
-            $optionList = $this->optionHandler->getList($this->getId()) ?: array_filter(
-                $this->optionHandler->getAjaxList($this->getId())
+
+            $optionList = $this->optionHandler->getList($this->getId(), $data) ?: array_filter(
+                $this->optionHandler->getAjaxList($this->getId(), null, null, null, $data)
                 , function ($o) {return $o->getSelected();}
             );
+
             if (null === $optionList) {
                 $optionList = $this->getOptionListFromJasper();
             }
