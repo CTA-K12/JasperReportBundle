@@ -308,6 +308,7 @@ class ClientService
 
         //Load the input controls from the client using the factory and the options handler
         $inputControls = $this->jasperClient->getReportInputControl($reportUri, $getICFrom, $icFactory);
+
         //Build the form
         $form = $this->container->get('form.factory')->createBuilder('form', null, $formOptions);
 
@@ -326,6 +327,7 @@ class ClientService
                 $inputControl->attachInputToFormBuilder($form);
             }
         }
+
         //Add the submit button
         $form->add('Run', 'submit');
 

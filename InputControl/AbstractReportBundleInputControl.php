@@ -100,7 +100,7 @@ abstract class AbstractReportBundleInputControl extends AbstractInputControl
         //Get the options list
         if (self::GET_IC_FROM_CUSTOM == $this->getICFrom) {
             //If custom, assume that the options handler will full handle it
-            $optionList = $this->optionHandler->getList($this->getId());
+            $optionList = $this->optionHandler->getList($this->getId(), $data);
             if (null === $optionList) {
                 throw new \Exception("Input control " . $this->getId() . " not defined with option default_input_options_source set to Custom");
             }
