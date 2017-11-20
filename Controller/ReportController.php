@@ -2,7 +2,7 @@
 
 namespace Mesd\Jasper\ReportBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Contains actions to help with display and interface.
  * To use these actions the report bundle's routes will need to be included into the main projects route file
  */
-class ReportController extends ContainerAware
+class ReportController extends Controller
 {
     ///////////////
     // CONSTANTS //
