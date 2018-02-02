@@ -82,6 +82,9 @@ class InputControlFactory implements InputControlAbstractFactory
         //Create the input type class for each element
         foreach($specification->inputControl as $key => $value) {
             //Get the class of the type where the class name is the input type in the specified namespace
+            if ($value->type == 'bool') {
+                $value->type = 'checkbox';
+            }
             $inputClass = $this->inputControlTypeNamespace . ucfirst($value->type);
             //Try to init the object
             try {
