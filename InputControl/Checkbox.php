@@ -5,9 +5,9 @@ namespace Mesd\Jasper\ReportBundle\InputControl;
 use Symfony\Component\Form\FormBuilder;
 
 /**
- * Single Select
+ * Checkbox
  */
-class Bool extends AbstractReportBundleInputControl
+class Checkbox extends AbstractReportBundleInputControl
 {
     ///////////////
     // VARIABLES //
