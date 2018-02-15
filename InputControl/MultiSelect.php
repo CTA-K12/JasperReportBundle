@@ -3,6 +3,7 @@
 namespace Mesd\Jasper\ReportBundle\InputControl;
 
 use Symfony\Component\Form\FormBuilder;
+use Mesd\Jasper\ReportBundle\FormType\AjaxSelectType;
 
 /**
  * Multiselect
