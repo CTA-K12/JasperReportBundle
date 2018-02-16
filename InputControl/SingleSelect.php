@@ -5,6 +5,7 @@ namespace Mesd\Jasper\ReportBundle\InputControl;
 use Symfony\Component\Form\FormBuilder;
 
 use Mesd\Jasper\ReportBundle\FormType\AjaxSelectType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Single Select
@@ -107,7 +108,8 @@ class SingleSelect extends AbstractReportBundleInputControl
                 'data'      => $selected,
                 'required'  => $this->mandatory,
                 'read_only' => $this->readOnly,
-                'data_class'=> null
+                'data_class'=> null,
+                'constraints' => $this->mandatory ? [new NotBlank()] : []
             )
         );
     }
