@@ -22,7 +22,7 @@ Mesd\Jasper\ReportBundle\Entity\ReportHistory:
             unique: false
         requestId:
             column: requestId
-            type: text
+            type: string
             nullable: false
             unique: true
         reportUri:
